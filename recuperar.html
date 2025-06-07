@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Senha</title>
+    <link rel="stylesheet" href="components/header.css">
+    <link rel="stylesheet" href="components/login.css">
+    <link rel="stylesheet" href="components/footer.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Baumans&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet"/>
+</head>
+<body>
+    <header>
+        <div class="header-1">
+            <h1 class="header-title">menthfy</h1>
+        </div>
+        <nav class="header-nav">
+            <ul>
+                <li><a href="login.html" class="header-link">Login</a></li>
+                <li><a href="#" class="header-link">Sobre</a></li>
+                <li><a href="#" class="header-link">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main style="margin-bottom: 80px;">
+        <form class="login-container" id="recuperarForm">
+            <h2>Recuperar Senha</h2>
+            <div>
+                <label for="email">E-mail cadastrado</label>
+                <input type="email" id="email" name="email" required autocomplete="username">
+            </div>
+            <button type="submit">Enviar recuperação</button>
+        </form>
+    </main>
+    <footer>
+        <div class="footer-left">
+            <span>&copy; 2025 Menthfy</span>
+        </div>
+        <div class="footer-right">
+            <a href="#" class="footer-link">Política de Privacidade</a>
+            <a href="#" class="footer-link">Termos de Uso</a>
+            <a href="#" class="footer-link">Contato</a>
+        </div>
+    </footer>
+    <script src="scripts/recuperar.js"></script>
+</body>
+</html>

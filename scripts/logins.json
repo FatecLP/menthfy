@@ -1,0 +1,17 @@
+[
+  {
+    "email": "usuario1@email.com",
+    "password": "senha123",
+    "tipo": "aluno"
+  },
+  {
+    "email": "admin@menthfy.com",
+    "password": "admin2025",
+    "tipo": "professor"
+  },
+  {
+    "email": "teste@exemplo.com",
+    "password": "teste456",
+    "tipo": "aluno"
+  }
+]
