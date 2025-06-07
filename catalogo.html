@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Catálogo de Professores</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -36,11 +37,46 @@
       <button class="search-btn">Buscar</button>
     </section>
     <section class="subjects">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+      <div class="subject-component">
+        <div class="subject-icon">
+          <i class="fa-solid fa-square-root-variable"></i>
+        </div>
+        <p class="subject-name">
+          Matemática
+        </p>
+      </div>
+      <div class="subject-component">
+        <div class="subject-icon">
+          <i class="fa-solid fa-code"></i>
+        </div>
+        <p class="subject-name">
+          Programação
+        </p>
+      </div>
+      <div class="subject-component">
+        <div class="subject-icon">
+          <i class="fa-solid fa-music"></i>
+        </div>
+        <p class="subject-name">
+          Música
+        </p>
+      </div>
+      <div class="subject-component">
+        <div class="subject-icon">
+          <i class="fa-solid fa-book-open"></i>
+        </div>
+        <p class="subject-name">
+          Português
+        </p>
+      </div>
+      <div class="subject-component">
+        <div class="subject-icon">
+           <i class="fa-solid fa-computer"></i>
+        </div>
+        <p class="subject-name">
+          Tecnologia
+        </p>
+      </div>
     </section>
     <main>
       <section class="card-professor">
@@ -80,9 +116,81 @@
         <button>Entrar em contato</button>
       </section>
       <section class="card-professor">
-        <img src="https://img.cdndsgni.com/preview/12161359.jpg" alt="" />
+        <div class="teacher-img">
+          <img src="assets/img/img3.jpg" alt="" class="img-person"/>
+        </div>
         <div class="prof">
-          <h2>Fulano</h2>
+          <h2>Carla</h2>
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/10134/10134048.png"
+            alt=""
+            class="star"
+          />
+        </div>
+        <div class="hours-subject">
+          <p>Excel</p>
+          <p>R$ 80,00/h</p>
+        </div>
+        <button>Entrar em contato</button>
+      </section>
+      <section class="card-professor">
+        <div class="teacher-img">
+          <img src="assets/img/img4.jpg" alt="" class="img-person" />
+        </div>
+        <div class="prof">
+          <h2>Fabiana</h2>
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/10134/10134048.png"
+            alt=""
+            class="star"
+          />
+        </div>
+        <div class="hours-subject">
+          <p>Música</p>
+          <p>R$ 60,00/h</p>
+        </div>
+        <button>Entrar em contato</button>
+      </section>
+      <section class="card-professor">
+        <img src="assets/img/img5.jpg" alt="" />
+        <div class="prof">
+          <h2>Eduardo</h2>
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/10134/10134048.png"
+            alt=""
+            class="star"
+          />
+        </div>
+        <div class="hours-subject">
+          <p>Artes</p>
+          <p>R$ 90,00/h</p>
+        </div>
+        <button>Entrar em contato</button>
+      </section>
+      <section class="card-professor">
+        <div class="teacher-img">
+          <img src="assets/img/img6.jpg" alt="" class="img-person"/>
+        </div>
+        <div class="prof">
+          <h2>Otávio</h2>
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/10134/10134048.png"
+            alt=""
+            class="star"
+          />
+        </div>
+        <div class="hours-subject">
+          <p>Geografia</p>
+          <p>R$ 50,00/h</p>
+        </div>
+        <button>Entrar em contato</button>
+      </section>
+      <section class="card-professor">
+        <div class="teacher-img">
+          <img src="assets/img/img7.jpg" alt="" class="img-person"/>
+        </div>
+        <div class="prof">
+          <h2>Karina</h2>
           <img
             src="https://cdn-icons-png.flaticon.com/512/10134/10134048.png"
             alt=""
@@ -96,9 +204,11 @@
         <button>Entrar em contato</button>
       </section>
       <section class="card-professor">
-        <img src="https://img.cdndsgni.com/preview/12161359.jpg" alt="" />
+        <div class="teacher-img">
+          <img src="assets/img/img8.jpg" alt="" class="img-person"/>
+        </div>
         <div class="prof">
-          <h2>Fulano</h2>
+          <h2>Edson</h2>
           <img
             src="https://cdn-icons-png.flaticon.com/512/10134/10134048.png"
             alt=""
@@ -106,15 +216,17 @@
           />
         </div>
         <div class="hours-subject">
-          <p>Programação</p>
+          <p>Educação Física</p>
           <p>R$ 50,00/h</p>
         </div>
         <button>Entrar em contato</button>
       </section>
       <section class="card-professor">
-        <img src="https://img.cdndsgni.com/preview/12161359.jpg" alt="" />
+        <div class="teacher-img">
+          <img src="https://img.cdndsgni.com/preview/12161359.jpg" alt="" class="img-person" />
+        </div>
         <div class="prof">
-          <h2>Fulano</h2>
+          <h2>Renato</h2>
           <img
             src="https://cdn-icons-png.flaticon.com/512/10134/10134048.png"
             alt=""
@@ -122,76 +234,15 @@
           />
         </div>
         <div class="hours-subject">
-          <p>Programação</p>
-          <p>R$ 50,00/h</p>
-        </div>
-        <button>Entrar em contato</button>
-      </section>
-      <section class="card-professor">
-        <img src="https://img.cdndsgni.com/preview/12161359.jpg" alt="" />
-        <div class="prof">
-          <h2>Fulano</h2>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/10134/10134048.png"
-            alt=""
-            class="star"
-          />
-        </div>
-        <div class="hours-subject">
-          <p>Programação</p>
-          <p>R$ 50,00/h</p>
-        </div>
-        <button>Entrar em contato</button>
-      </section>
-      <section class="card-professor">
-        <img src="https://img.cdndsgni.com/preview/12161359.jpg" alt="" />
-        <div class="prof">
-          <h2>Fulano</h2>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/10134/10134048.png"
-            alt=""
-            class="star"
-          />
-        </div>
-        <div class="hours-subject">
-          <p>Programação</p>
-          <p>R$ 50,00/h</p>
-        </div>
-        <button>Entrar em contato</button>
-      </section>
-      <section class="card-professor">
-        <img src="https://img.cdndsgni.com/preview/12161359.jpg" alt="" />
-        <div class="prof">
-          <h2>Fulano</h2>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/10134/10134048.png"
-            alt=""
-            class="star"
-          />
-        </div>
-        <div class="hours-subject">
-          <p>Programação</p>
-          <p>R$ 50,00/h</p>
-        </div>
-        <button>Entrar em contato</button>
-      </section>
-      <section class="card-professor">
-        <img src="https://img.cdndsgni.com/preview/12161359.jpg" alt="" />
-        <div class="prof">
-          <h2>Fulano</h2>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/10134/10134048.png"
-            alt=""
-            class="star"
-          />
-        </div>
-        <div class="hours-subject">
-          <p>Programação</p>
-          <p>R$ 50,00/h</p>
+          <p>Filosofia</p>
+          <p>R$ 80,00/h</p>
         </div>
         <button>Entrar em contato</button>
       </section>
     </main>
+    <div class="more-teachers">
+      <button class="more-teachers-btn"></button>
+    </div>
     <script src="script/cardInteractivity.js"></script>
   </body>
 </html>
