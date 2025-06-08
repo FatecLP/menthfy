@@ -1,4 +1,7 @@
 let card = document.querySelectorAll('.card-professor')
+card[0].addEventListener('click', function perfil(){
+    window.location.href = 'Alberto.html'
+})
 for(let i = 0; i < card.length; i++){
     card[i].addEventListener('mouseout', function animation(){
         card[i].classList.add('classAnimation')

@@ -5,50 +5,83 @@
 }
 
 
-header{
-    height: 50px;
-    padding: 25px 58px;
-    background-color:#5F688F;
+header {
+    height: 54px;
+    padding: 14px 32px;
+    background-color: #5F688F;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-radius: 0 0 16px 16px;
 }
 
-h1{
-    font-family: baumans, Arial, Helvetica, sans-serif;
+h1, .header-title {
+    font-family: 'Baumans', Arial, Helvetica, sans-serif;
     font-weight: 400;
-    font-size: 30px;
+    font-size: 32px;
     color: #fff;
+    margin: 0;
 }
 
-.header-1{
-    display: flex;
-    gap: 10rem;
-}
-.header-1 div{
+.header-1 {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 2rem;
 }
 
-.header-1 div h2{
-    font-size: 20px;
-    font-family: Inter, sans-serif;
-    font-weight: 600;
-}
-
-header ul{
+.header-nav ul {
     display: flex;
     list-style: none;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
-    gap: 25px;
+    gap: 32px;
+    margin: 0;
+    padding: 0;
 }
 
-header ul li{
-    font-family: Inter, Arial, sans-serif;
+.header-nav ul li {
+    font-family: 'Inter', Arial, sans-serif;
     font-weight: 400;
-    font-size: 20px;
+    font-size: 16px;
     border-bottom: 1.5px solid white;
-    padding-bottom: 7px;
+    padding-bottom: 4px;
+    color: #fff;
+    background: none;
+    cursor: pointer;
+    transition: color 0.2s, border-bottom 0.2s;
+}
+
+.header-nav ul li a {
+    color: inherit;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.header-nav ul li:hover {
+    color: #e0e4f6;
+    border-bottom: 1.5px solid #e0e4f6;
+}
+
+@media (max-width: 800px) {
+    header {
+        flex-direction: column;
+        padding: 8px 12px;
+        min-height: 70px;
+        height: auto;
+    }
+    .header-1 {
+        gap: 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+    }
+    .header-nav ul {
+        gap: 10px;
+        margin-left: 0;
+        height: auto;
+    }
+    .header-nav ul li {
+        height: auto;
+    }
 }
