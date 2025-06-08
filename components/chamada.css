@@ -1,0 +1,64 @@
+*{
+    border: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+}
+
+main{
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+div#camera{
+    height: 100vh;
+    width: 75vw;
+    background-color: #333;
+    background-image: url(../Imagens/placeholderVideoCall.jpg);
+    background-position: center center;
+    background-size: 99% 99%;
+    background-repeat: no-repeat;
+}
+
+menu{
+    height: 100vh;
+    width: 25vw;
+    background-color: #333;
+}
+
+div#menuChamada{
+    background-color: #49507a;
+    height: 85%;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 10px;
+
+}
+
+div#menuChamadaBottom{
+    background-color: #e0e4f6;
+    height: 15%;
+    width: 100%;
+    position: sticky;
+}
+
+.botoes > img{
+    height: 30px;
+    width: 30px;
+    float: left;
+    
+}
+
+.botoes{
+    height: 55px;
+    width: fit-content;
+    margin: 10px;
+    font-size: 1.3em;
+    background-color: transparent;
+    color: black;
+}
