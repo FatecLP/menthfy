@@ -1,0 +1,16 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+main{
+    display: grid;
+    grid-template: repeat(10, 10%) / repeat(10, 10%);
+    background-color: red;
+}
+
+#opcoesDeAjuda{
+    grid-column: 1 / 4 ;
+    grid-row: 1 / 1 ;
+}
