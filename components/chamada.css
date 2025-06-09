@@ -19,8 +19,8 @@ div#camera{
     width: 75vw;
     background-color: #333;
     background-image: url(../Imagens/placeholderVideoCall.jpg);
-    background-position: center center;
-    background-size: 99% 99%;
+    background-position: right center;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
 }
 
@@ -31,9 +31,10 @@ menu{
 }
 
 div#menuChamada{
-    background-color: #49507a;
+    background-color: #e0e4f6;
     height: 85%;
     width: 100%;
+    border-radius: 5px 0px 0px 0px;
     display: flex;
     flex-flow: column nowrap;
     padding: 10px;
@@ -41,7 +42,8 @@ div#menuChamada{
 }
 
 div#menuChamadaBottom{
-    background-color: #e0e4f6;
+    background-color: #5F688F;
+    border-radius: 0px 0px 0px 5px;
     height: 15%;
     width: 100%;
     position: sticky;
@@ -51,14 +53,20 @@ div#menuChamadaBottom{
     height: 30px;
     width: 30px;
     float: left;
+    margin: 0px 7px;
     
 }
 
 .botoes{
-    height: 55px;
-    width: fit-content;
+    height: 60px;
+    width: max-content;
     margin: 10px;
     font-size: 1.3em;
     background-color: transparent;
     color: black;
+}
+
+.botoes:hover{
+    background-color: #5F688F;
+    border-radius: 10px;
 }
