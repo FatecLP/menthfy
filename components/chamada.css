@@ -12,15 +12,16 @@ body{
 main{
     display: flex;
     flex-flow: row nowrap;
+    background-color: #333;
 }
 
 div#camera{
     height: 100vh;
     width: 75vw;
     background-color: #333;
-    background-image: url(../Imagens/placeholderVideoCall.jpg);
-    background-position: right center;
-    background-size: 100% 100%;
+    background-image: url(../Imagens/placeholdervideocall.jpg);
+    background-position: center center;
+    background-size: 95% 95%;
     background-repeat: no-repeat;
 }
 
@@ -52,21 +53,35 @@ div#menuChamadaBottom{
 .botoes > img{
     height: 30px;
     width: 30px;
-    float: left;
-    margin: 0px 7px;
-    
+    float: left; 
+    margin: -2px 3px;
 }
 
 .botoes{
     height: 60px;
-    width: max-content;
+    width: fit-content;
     margin: 10px;
+    padding: 5px;
     font-size: 1.3em;
     background-color: transparent;
     color: black;
 }
 
+#menuChamadaBottom > .botoes {
+    margin: 10px 50px;
+    
+}
+
+#menuChamadaBottom > .botoes:hover{
+    background-color: #e0e4f6;
+    color: #5F688F;
+    
+}
+
 .botoes:hover{
     background-color: #5F688F;
     border-radius: 10px;
+    color: #e0e4f6;
+    text-decoration: underline;
+    transition: 550ms;
 }
