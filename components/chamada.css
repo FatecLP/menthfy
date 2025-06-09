@@ -67,8 +67,19 @@ div#menuChamadaBottom{
     color: black;
 }
 
+#menuChamadaBottom > a > .botoes {
+    margin: 10px 50px;
+    
+}
+
 #menuChamadaBottom > .botoes {
     margin: 10px 50px;
+    
+}
+
+#menuChamadaBottom > a > .botoes:hover{
+    background-color: #e0e4f6;
+    color: #5F688F;
     
 }
 
