@@ -17,4 +17,13 @@
 .search-btn{
     width: 100px;
     background-color:#3E8EFF ;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+}
+.search-btn:hover{
+    scale: 1.03;
+    background-color: #5887ee;
+    transition: scale 0.5s;
+    cursor: pointer;
 }

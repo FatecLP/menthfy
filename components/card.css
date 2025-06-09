@@ -1,4 +1,4 @@
-main{
+.catalog{
     display: grid;
     grid-template-columns: 300px 300px 300px;
     grid-template-rows: 300px 300px 300px;
@@ -25,6 +25,7 @@ main{
     margin-top:30px ;
     border-radius: 10px ;
     background-color: #fff;
+    
 }
 h2{
     display: inline;
@@ -33,16 +34,16 @@ h2{
     width: 20px;
     
 }
-button{
+.contact{
     background-color: #3E8EFF;
     color: #fff;
     border: none;
     padding: 10px;
     border-radius: 30px;
 }
-button:hover{
+.contact:hover{
     scale: 1.03;
-    background-color: rgb(56, 56, 221);
+    background-color: #5887ee;
     transition: scale 0.5s;
     cursor: pointer;
 }
@@ -53,4 +54,25 @@ button:hover{
 .classAnimation{
     scale: 1;
     transition: scale 0.5s 
+}
+.more-teachers{
+    margin-top: 70px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.more-teachers-btn{
+    width: 250px;
+    border: none;
+    background-color: #7cdd7c;
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    color: #000;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+.down-arrow{
+    width: 20px;
 }
