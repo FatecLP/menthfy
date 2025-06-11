@@ -4,13 +4,71 @@
     box-sizing: border-box;
 }
 
+
 main{
     display: grid;
     grid-template: repeat(10, 10%) / repeat(10, 10%);
     background-color: red;
+    width: 100vw;
+    padding: 10px;
 }
 
 #opcoesDeAjuda{
     grid-column: 1 / 4 ;
     grid-row: 1 / 1 ;
+    background-color: #101432;
+    border-radius: 10px;
+    width: fit-content;
+    padding: 7px;
+}
+
+/* Configuração dos links */
+
+#opcoesDeAjuda > a, #btnsGerenciamento > a{
+    text-decoration: none;
+    color: rgb(227, 227, 227);
+    margin: 5px;
+}
+
+#barraDeBusca{
+    grid-column: 6 / 10;
+    grid-row: 1 / 1;
+    display: flex;
+    flex-flow: row nowrap;
+    background-color: #101432;
+    border-radius: 10px;
+    
+}
+
+#barraDeBusca > img{
+    height: 15px;
+    width: 15px;
+    margin: 9px 5px;
+}
+
+#barraDeBusca > input{
+    background-color: transparent;
+    color: rgb(227, 227, 227);
+    border: none;
+    border-radius: 10px;
+    float: right;
+    margin: 5px;
+}
+
+#btnsGerenciamento{
+    grid-column: 1 / span 10 ;
+    grid-row: 2 / 2;
+    display: flex;
+    flex-flow: row nowrap;
+    align-content: space-around;
+    width: 100%;
+}
+
+#btnsGerenciamento > a{
+    text-align: center;
+    width: 30%;
+    height: 100%;
+    background-color: #3E8EFF;
+    border-radius: 10px;
+    padding: 10px;
 }
