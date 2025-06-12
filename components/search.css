@@ -6,13 +6,27 @@
     padding-left: 300px;
     padding-right: 300px;
 }
-#search-input{
+#search-input {
     width: 500px;
-    border:none;
-    background-color:#7baaecb1;
+    border: none;
+    background-color: #7baaecb1;
     outline: none;
     border-radius: 7px;
     padding: 15px;
+    transition: background 0.25s cubic-bezier(0.4,0,0.2,1),
+                box-shadow 0.25s cubic-bezier(0.4,0,0.2,1),
+                color 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+#search-input:hover {
+    background-color: #a2c6f7c9;
+    color: #222;
+    box-shadow: 0 2px 8px rgba(62,142,255,0.08);
+}
+#search-input:focus {
+    background-color: #eaf3ff;
+    color: #111;
+    box-shadow: 0 0 0 3px rgba(62,142,255,0.18);
+    outline: none;
 }
 .search-btn{
     width: 100px;

@@ -1,0 +1,46 @@
+.more-teachers {
+    margin-top: 70px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.more-teachers-btn {
+    width: 250px;
+    border: none;
+    background-color: #7cdd7c;
+    padding: 10px 30px;
+    color: #000;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.22s cubic-bezier(0.4,0,0.2,1),
+                color 0.22s cubic-bezier(0.4,0,0.2,1),
+                box-shadow 0.22s cubic-bezier(0.4,0,0.2,1),
+                transform 0.18s cubic-bezier(0.4,0,0.2,1);
+    box-shadow: 0 1px 2px rgba(124,221,124,0.04);
+}
+.more-teachers-btn:hover {
+    background: #a6f5a6;
+    color: #1a4d1a;
+    box-shadow: 0 4px 16px rgba(124,221,124,0.10);
+    transform: translateY(-2px) scale(1.03);
+}
+.more-teachers-btn:focus {
+    background: #eaffea;
+    color: #000;
+    box-shadow: 0 0 0 3px rgba(124,221,124,0.13);
+    outline: none;
+    transform: scale(1.04);
+}
+.down-arrow {
+    width: 20px;
+    transition: transform 0.22s cubic-bezier(0.4,0,0.2,1);
+}
+.more-teachers-btn:hover .down-arrow,
+.more-teachers-btn:focus .down-arrow {
+    transform: translateY(2px) rotate(180deg) scale(1.1);
+}
