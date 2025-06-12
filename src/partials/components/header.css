@@ -1,0 +1,139 @@
+@import url(../styles/colors.css);
+@import url(../styles/fonts.css);
+
+@keyframes scaleButton {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+header {
+    height: 80px;
+    width: 100%;
+    background-color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--text-color);
+    top: 0;
+    z-index: 1;
+}
+
+h1 {
+    color: var(--text-color);
+    font-size: 21px;
+    font-family: "Knewave";
+    margin-bottom: 0 !important;
+}
+
+a h6 {
+    font-family: "Inter";
+    font-weight: var(--regular-inter);
+    font-size: 16px;
+}
+
+h6 {
+    text-decoration: none;
+    margin: 0;
+}
+
+.akatsuki {
+    width: 70px;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 50px;
+}
+
+.title a {
+    display: flex;
+}
+
+.intern-nav {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 65px;
+}
+
+.home {
+    display: flex;
+    gap: 15px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.profile {
+    margin-left: 50px;
+}
+
+.about {
+    display: flex;
+    margin-top: 5px;
+    gap: 15px;
+}
+
+.home a {
+    border-bottom: 1.5px solid white;
+}
+
+a {
+    gap: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.4s;
+    margin: 0;
+}
+
+.home a:hover,
+.about a:hover {
+    text-decoration: none;
+    color: var(--akatsuki-color);
+}
+
+a:hover {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+#cart, #user {
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#cart:hover, #user:hover {
+    animation: scaleButton 0.8s alternate infinite;
+    text-shadow: 0 0 8px #e9656b;
+    color: var(--akatsuki-color);
+}
+
+.user {
+    font-size: 30px;
+}
+
+.fa-cart-shopping {
+    font-size: 25px;
+}
+
+.carousel-control-prev-icon.bg-dark,
+.carousel-control-next-icon.bg-dark {
+    background-color: #292828 !important;
+    padding: 1.2rem;
+    border-radius: 50%;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 5%;
+    background: none;
+}
