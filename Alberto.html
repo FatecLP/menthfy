@@ -22,79 +22,15 @@
             </ul>
         </nav>
     </header>
-    <main class="bio">
-        <section class="brief-presentation">
-            <h2 class="teacher-name">Alberto</h2>
-            <p class="bio-text">
-                Olá! Eu sou o Professor Alberto, especialista em programação e desenvolvimento de software.
-                Tenho mais de 10 anos de experiência ensinando linguagens como JavaScript, Python e C#, além de áreas como algoritmos, estrutura de dados e lógica de programação.
-                Minha missão é ajudar você a entender a base da programação de forma simples, prática e com muitos exemplos do mundo real.
-                Vamos codar juntos e transformar ideias em projetos incríveis!
-            </p>
-            <div class="tags" aria-label="Áreas de atuação">
-                <span class="tag-component">Programação</span>
-                <span class="tag-component">Desenvolvimento</span>
-                <span class="tag-component">Linguagem de programação</span>
-            </div>
-        </section>
-        <section class="bio-card">
-            <figure class="teacher">
-                <img src="assets/img/img1.jpg" alt="Foto do Professor Alberto" class="bio-teacher-img" loading="lazy">
-            </figure>
-            <div class="bio-stars-feedback" aria-label="Avaliação do professor">
-                <img src="https://cdn-icons-png.flaticon.com/512/10134/10134048.png" alt="Estrela" class="star" loading="lazy">
-                <h5>5 (200 Avaliações)</h5>
-            </div>
-            <h3>Tempo de resposta <i class="fa-solid fa-clock" aria-hidden="true"></i></h3>
-            <p>1H</p>
-            <h3>Número de alunos <i class="fa-solid fa-person" aria-hidden="true"></i></h3>
-            <p>+100</p>
-            <div class="contact-me-container">
-                <button class="contact" type="button"><i class="fa-solid fa-comments" aria-hidden="true"></i> Contatar-me</button>
-            </div>
-        </section>
+    <main class="teacher-profile-main">
+        <section class="teacher-profile-brief"></section>
+        <section class="teacher-profile-card"></section>
     </main>
-    <section class="feedbacks" aria-labelledby="feedback-title">
+    <section class="teacher-profile-feedbacks" aria-labelledby="feedback-title">
         <h2 id="feedback-title" class="feedback">Avaliações</h2>
-        <div class="comments">
-            <article class="comment">
-                <div class="student">
-                    <div class="user-id">
-                        <span class="round-representation" aria-hidden="true"></span>
-                        <span>Usuário1</span>
-                    </div>
-                    <div class="stars">
-                        5 <img src="https://cdn-icons-png.flaticon.com/512/10134/10134048.png" alt="Estrela" class="star" loading="lazy">
-                    </div>
-                </div>
-                <p>O Professor Alberto explica os conceitos de programação de um jeito super claro e fácil de entender. Finalmente entendi lógica de verdade!</p>
-            </article>
-            <article class="comment">
-                <div class="student">
-                    <div class="user-id">
-                        <span class="round-representation" aria-hidden="true"></span>
-                        <span>Usuário2</span>
-                    </div>
-                    <div class="stars">
-                        5 <img src="https://cdn-icons-png.flaticon.com/512/10134/10134048.png" alt="Estrela" class="star" loading="lazy">
-                    </div>
-                </div>
-                <p>A didática dele é excelente! Cada aula é prática e focada no que realmente importa no mercado.</p>
-            </article>
-            <article class="comment">
-                <div class="student">
-                    <div class="user-id">
-                        <span class="round-representation" aria-hidden="true"></span>
-                        <span>Usuário3</span>
-                    </div>
-                    <div class="stars">
-                        5 <img src="https://cdn-icons-png.flaticon.com/512/10134/10134048.png" alt="Estrela" class="star" loading="lazy">
-                    </div>
-                </div>
-                <p>Sempre disponível para tirar dúvidas e ajudar. Um dos melhores professores de programação que já tive!</p>
-            </article>
-        </div>
+        <div class="teacher-profile-comments"></div>
     </section>
+    <div style="height: 32px;"></div>
     <footer>
         <div class="footer-left">
             <span>&copy; 2025 Menthfy</span>
@@ -105,5 +41,6 @@
             <a href="#" class="footer-link">Contato</a>
         </div>
     </footer>
+    <script src="script/alberto.js"></script>
 </body>
 </html>

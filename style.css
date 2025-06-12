@@ -1,19 +1,33 @@
+@import url(components/teacher/profile/profile.css);
 @import url(components/card.css);
 @import url(components/search.css);
 @import url(components/subject-component.css);
-@import url(components/teacher-presentation.css);
 @import url(components/feedback-component.css);
 @import url(components/footer.css);
 @import url(components/header.css);
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-*{
+:root {
+    --primary-bg: #f7faff;
+    --primary: #3E8EFF;
+    --primary-light: #eaf3ff;
+    --accent: #085f08;
+    --accent-bg: #c8f4c8;
+    --header-bg: #5F688F;
+    --header-bg-light: #e0e4f6;
+    --card-bg: #fff;
+    --border: #e0e4f6;
+    --shadow: 0 2px 16px rgba(62,142,255,0.08);
+    --text: #222;
+    --text-light: #555;
+}
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
 }
-body{
-    background-image: linear-gradient(to bottom, #d4e1f3, #fff);
-    background-repeat: no-repeat;
-    height: 100vh;
+body {
+    background: var(--primary-bg);
+    color: var(--text);
+    min-height: 100vh;
 }
