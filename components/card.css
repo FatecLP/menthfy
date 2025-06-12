@@ -55,24 +55,3 @@ h2{
     scale: 1;
     transition: scale 0.5s 
 }
-.more-teachers{
-    margin-top: 70px;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-.more-teachers-btn{
-    width: 250px;
-    border: none;
-    background-color: #7cdd7c;
-    padding: 10px;
-    padding-left: 30px;
-    padding-right: 30px;
-    color: #000;
-    border-radius: 30px;
-    display: flex;
-    justify-content: space-between;
-}
-.down-arrow{
-    width: 20px;
-}
