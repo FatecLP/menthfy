@@ -3,8 +3,6 @@
 [![Status do Projeto](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow)]()
 [![GitHub last commit](https://img.shields.io/github/last-commit/FatecLP/Menthfy)]()
 
-<img height="275rem" src="assets/img/menthfytxt.png">
-
 ## 👥 Nomes dos Integrantes
 - André Diogo Melchior da Silva
 - Juan Pablo Firmino Ferreira
