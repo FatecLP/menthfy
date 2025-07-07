@@ -1,0 +1,115 @@
+body {
+    background: #F4F6FA;
+    font-family: Inter, Arial, sans-serif;
+}
+
+.login-container {
+    max-width: 400px;
+    margin: 80px auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    padding: 40px 32px 32px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.login-container h2 {
+    text-align: center;
+    color: #5F688F;
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.login-container label {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 16px;
+    margin-bottom: 16px;
+    background: #f9fafb;
+}
+
+.login-container button {
+    background: #5F688F;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.login-container button:hover {
+    background: #49507a;
+}
+
+/* Estilo para quando o usuário já está logado */
+.already-logged-alert {
+    max-width: 400px;
+    margin: 80px auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    border-left: 4px solid #28a745;
+}
+
+.alert-content {
+    padding: 32px;
+    text-align: center;
+}
+
+.alert-content h3 {
+    color: #28a745;
+    font-size: 24px;
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.alert-content p {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.logout-btn, .dashboard-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.logout-btn {
+    background: #dc3545;
+    color: white;
+}
+
+.logout-btn:hover {
+    background: #c82333;
+}
+
+.dashboard-btn {
+    background: #5F688F;
+    color: white;
+}
+
+.dashboard-btn:hover {
+    background: #49507a;
+    color: white;
+}

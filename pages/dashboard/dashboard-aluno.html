@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Lexend%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Knewave&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous"/>
+    <link href="https://fonts.googleapis.com/css2?family=Baumans&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../src/styles/pages/dashboard.css">
+    <title>Dashboard Aluno</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body>
+    <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: Lexend, "Noto Sans", sans-serif;'>
+      <div class="layout-container flex h-full grow flex-col">
+        <header>
+            <h1>menthfy</h1>
+            <div class="header-1">
+                <ul>
+                  <li id="li1"><a href="../../public/index.html">Home</a></li>
+                  <li id="li2"><a href="../catalog/catalogo.html">Catalogo</a></li>
+                  <li id="li3"><a href="">Contato</a></li>
+                </ul>
+                <div>
+                    <button id="logoutBtn" class="btn btn-danger" style="padding: 7px 17px; border-radius: 20px;">Logout</button>
+                </div>
+            </div>
+        </header>
+        <div class="px-40 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+            <div class="flex flex-wrap justify-between gap-3 p-4">
+              <p class="text-[#111418] tracking-light text-[32px] font-bold leading-tight min-w-72">Bem-vindo(a) ao Dashboard</p>
+            </div>
+            <div class="flex flex-wrap gap-3 px-4 py-3">
+              <div class="flex min-w-[111px] flex-1 basis-[fit-content] flex-col gap-2 rounded-lg border border-[#dce0e5] p-3 items-start">
+                <p class="text-[#111418] tracking-light text-2xl font-bold leading-tight">0</p>
+                <div class="flex items-center gap-2"><p class="text-[#637588] text-sm font-normal leading-normal">Sessões agendadas</p></div>
+              </div>
+              <div class="flex min-w-[111px] flex-1 basis-[fit-content] flex-col gap-2 rounded-lg border border-[#dce0e5] p-3 items-start">
+                <p class="text-[#111418] tracking-light text-2xl font-bold leading-tight">0</p>
+                <div class="flex items-center gap-2"><p class="text-[#637588] text-sm font-normal leading-normal">Professores</p></div>
+              </div>
+              <div class="flex min-w-[111px] flex-1 basis-[fit-content] flex-col gap-2 rounded-lg border border-[#dce0e5] p-3 items-start">
+                <p class="text-[#111418] tracking-light text-2xl font-bold leading-tight">0</p>
+                <div class="flex items-center gap-2"><p class="text-[#637588] text-sm font-normal leading-normal">Próximas Sessões</p></div>
+              </div>
+            </div>
+            <h2 class="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Próximas sessões</h2>
+            <div class="px-4 py-3 @container">
+              <div class="flex overflow-hidden rounded-xl border border-[#dce0e5] bg-white">
+                <table class="flex-1">
+                  <thead>
+                    <tr class="bg-white">
+                      <th class="table-5ff3165a-5c46-4378-ad8a-12906c5b0ae3-column-120 px-4 py-3 text-left text-[#111418] w-[400px] text-sm font-medium leading-normal">Data</th>
+                      <th class="table-5ff3165a-5c46-4378-ad8a-12906c5b0ae3-column-240 px-4 py-3 text-left text-[#111418] w-[400px] text-sm font-medium leading-normal">Tempo</th>
+                      <th class="table-5ff3165a-5c46-4378-ad8a-12906c5b0ae3-column-360 px-4 py-3 text-left text-[#111418] w-[400px] text-sm font-medium leading-normal">Matéria</th>
+                      <th class="table-5ff3165a-5c46-4378-ad8a-12906c5b0ae3-column-480 px-4 py-3 text-left text-[#111418] w-[400px] text-sm font-medium leading-normal">Professor</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-t border-t-[#dce0e5]">
+                      <td class="table-5ff3165a-5c46-4378-ad8a-12906c5b0ae3-column-120 h-[72px] px-4 py-2 w-[400px] text-[#637588] text-sm font-normal leading-normal">
+                        Nenhuma data definida
+                      </td>
+                      <td class="table-5ff3165a-5c46-4378-ad8a-12906c5b0ae3-column-240 h-[72px] px-4 py-2 w-[400px] text-[#637588] text-sm font-normal leading-normal">Nenhum horário definido</td>
+                      <td class="table-5ff3165a-5c46-4378-ad8a-12906c5b0ae3-column-360 h-[72px] px-4 py-2 w-[400px] text-[#637588] text-sm font-normal leading-normal">Nenhuma matéria definida</td>
+                      <td class="table-5ff3165a-5c46-4378-ad8a-12906c5b0ae3-column-480 h-[72px] px-4 py-2 w-[400px] text-[#637588] text-sm font-normal leading-normal">
+                        Nenhum professor definido
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <style>
+                          @container(max-width:120px){.table-5ff3165a-5c46-4378-ad8a-12906c5b0ae3-column-120{display: none;}}
+                @container(max-width:240px){.table-5ff3165a-5c46-4378-ad8a-12906c5b0ae3-column-240{display: none;}}
+                @container(max-width:360px){.table-5ff3165a-5c46-4378-ad8a-12906c5b0ae3-column-360{display: none;}}
+                @container(max-width:480px){.table-5ff3165a-5c46-4378-ad8a-12906c5b0ae3-column-480{display: none;}}
+              </style>
+            </div>
+            <h2 class="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Comunicação</h2>
+            <div class="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2">
+              <div
+                class="text-[#111418] flex items-center justify-center rounded-lg bg-[#f0f2f4] shrink-0 size-12"
+                data-icon="ChatCircleDots"
+                data-size="24px"
+                data-weight="regular"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path
+                    d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z"
+                  ></path>
+                </svg>
+              </div>
+              <div class="flex flex-col justify-center">
+                <p class="text-[#111418] text-base font-medium leading-normal line-clamp-1">Mensagens</p>
+                <p class="text-[#637588] text-sm font-normal leading-normal line-clamp-2">Envie uma mensagem ao Professor</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2">
+              <div class="text-[#111418] flex items-center justify-center rounded-lg bg-[#f0f2f4] shrink-0 size-12" data-icon="Video" data-size="24px" data-weight="regular">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path
+                    d="M164.44,105.34l-48-32A8,8,0,0,0,104,80v64a8,8,0,0,0,12.44,6.66l48-32a8,8,0,0,0,0-13.32ZM120,129.05V95l25.58,17ZM216,40H40A16,16,0,0,0,24,56V168a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,128H40V56H216V168Zm16,40a8,8,0,0,1-8,8H32a8,8,0,0,1,0-16H224A8,8,0,0,1,232,208Z"
+                  ></path>
+                </svg>
+              </div>
+              <div class="flex flex-col justify-center">
+                <p class="text-[#111418] text-base font-medium leading-normal line-clamp-1">Videochamada</p>
+                <p class="text-[#637588] text-sm font-normal leading-normal line-clamp-2">Inicie uma videochamada com seu Professor
+                                  </p>
+              </div>
+            </div>            
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-1">
+      <div class="footer-left">
+        <h1>menthfy</h1>
+      </div>
+      <div class="footer-center">
+        <div class="icones">
+          <a href=""><img src="../../public/assets/icons/facebook.png" alt="Facebook"></a>
+          <a href=""><img src="../../public/assets/icons/instagram.png" alt="Instagram"></a>
+          <a href=""><img src="../../public/assets/icons/x.png" alt="X (Twitter)"></a>
+          <a href=""><img src="../../public/assets/icons/in.png" alt="LinkedIn"></a>
+          <a href=""><img src="../../public/assets/icons/youtube-app-white-icon 1.png" alt="YouTube"></a>
+        </div>
+        <span class="footer-copy">Copyright &copy; 2025 | Menthfy - Todos os direitos reservados.</span>
+      </div>
+      <div class="footer-right">
+        <a href="#" class="topo-btn">Topo</a>
+      </div>
+    </div>
+    
+    <script>
+    // Script específico da dashboard
+    document.addEventListener('DOMContentLoaded', function() {
+        // Verificar se usuário está logado
+        const usuario = sessionStorage.getItem('usuario');
+        if (!usuario) {
+            alert('Você precisa fazer login primeiro!');
+            window.location.href = '../auth/login.html';
+            return;
+        }
+        
+        // Atualizar nome do usuário na dashboard
+        const welcomeText = document.querySelector('p[class*="text-[32px]"]');
+        if (welcomeText) {
+            welcomeText.textContent = `Bem-vindo(a), ${usuario}!`;
+        }
+        
+        // Configurar botão de logout
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', function() {
+                if (confirm('Tem certeza que deseja fazer logout?')) {
+                    sessionStorage.removeItem('usuario');
+                    sessionStorage.removeItem('tipoUsuario');
+                    alert('Logout realizado com sucesso!');
+                    window.location.href = '../auth/login.html';
+                }
+            });
+        }
+          // Configurar funcionalidade do botão "Topo"
+        const topoBtn = document.querySelector('.topo-btn');
+        if (topoBtn) {
+            topoBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+    });
+  </script>
+  </body>
+</html>

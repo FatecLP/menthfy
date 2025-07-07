@@ -1,0 +1,149 @@
+/* Dashboard Aluno - Estilos */
+@import url(../components/header.css);
+@import url(../components/footer.css);
+@import url(../global/colors.css);
+@import url(../global/fonts.css);
+
+/* Estilos específicos da dashboard */
+body {
+    font-family: Lexend, "Noto Sans", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+
+/* Layout principal */
+.layout-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ajustes específicos para o header da dashboard */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Ajustes do conteúdo principal */
+.px-40 {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .px-40 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .header-1 {
+        gap: 2rem;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    header {
+        padding: 15px 20px;
+        flex-direction: column;
+        height: auto;
+    }
+    
+    header h1 {
+        font-size: 28px;
+        margin-bottom: 10px;
+    }
+    
+    header ul {
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .px-40 {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    
+    .layout-content-container {
+        max-width: 100%;
+    }
+    
+    .flex-wrap {
+        flex-direction: column;
+    }
+}
+
+/* Ajustes para o footer da dashboard */
+.footer-1 {
+    margin-top: 3rem;
+}
+
+/* Melhorias nos cards */
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+
+.border-\[#dce0e5\] {
+    border-color: #dce0e5;
+}
+
+/* Ajustes da tabela */
+.table-container {
+    overflow-x: auto;
+}
+
+/* Estilo do botão de logout */
+#logoutBtn {
+    transition: all 0.3s ease;
+}
+
+#logoutBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Estilos para o footer unificado da dashboard */
+.footer-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.topo-btn {
+    border: 3px solid white;
+    background-color: transparent;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: white;
+    font-family: inter;
+    font-weight: 800;
+    box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.233);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.topo-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    color: white;
+}
+
+.footer-actions address {
+    margin: 0;
+    text-align: center;
+}
+
+.footer-actions address h4 {
+    font-family: inter;
+    font-weight: 500;
+    font-size: 16px;
+    color: white;
+    margin: 0;
+    font-style: normal;
+}
