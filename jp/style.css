@@ -1,0 +1,128 @@
+header{
+    height: 115px;
+    padding: 25px 58px;
+    background-color:#5F688F;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+header h1{
+    font-family: baumans, Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 40px;
+    color: white;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+
+.header-1{
+    display: flex;
+    gap: 10rem;
+}
+.header-1 div{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-1 div h2{
+    font-size: 20px;
+    font-family: Inter, sans-serif;
+    font-weight: 600;
+}
+
+header ul{
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    color: white;
+}
+
+.header-1 div h2{
+    color: white;
+}
+
+.header-1 {
+    margin-right: 20px;
+}
+
+#li1, #li2, #li3 {
+    position: relative;
+}
+  
+#li1::after, #li2::after, #li3::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    border-bottom: 2px solid white;
+}
+
+header ul li{
+    font-family: Inter, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    padding-bottom: 7px;
+}
+
+@import url(/src/partials/styles/colors.css);
+@import url(/src/partials/styles/fonts.css);
+
+footer {
+    min-height: 72px;
+    margin-top: 0;
+    background-color: #848484;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.footer-1 {
+    min-height: 137px;
+    margin-top: 50px;
+    background-color: #C0C0C0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: baumans;
+    color: white;
+    font-weight: 500;
+}
+
+.footer-1 h1{
+    font-size: 40px;
+}
+
+.icones{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+address {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+address h4 {
+    font-family: "Inter", sans-serif;
+    font-weight: var(--medium-inter);
+    font-size: 20px;
+    color: var(--text-color);
+    margin: 0;
+    font-style: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

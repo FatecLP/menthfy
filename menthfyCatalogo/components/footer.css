@@ -17,7 +17,14 @@ footer {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    color: white;
 }
+
+.footer-1 h1{
+    font-family: baumans;
+    font-size: 40px;
+}
+
 .icones{
     display: flex;
     justify-content: center;
@@ -32,7 +39,7 @@ address {
 }
 
 address h4 {
-    font-family: "Inter", sans-serif;
+    font-family: inter;
     font-weight: var(--medium-inter);
     font-size: 20px;
     color: var(--text-color);
