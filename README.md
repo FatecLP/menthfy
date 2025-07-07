@@ -9,6 +9,8 @@
 - Michael Akira de Lima Kuwahara
 - Murilo de Oliveira Sartori
 - Nickolas Lopes Araújo
+- Vinicius Lima Carneiro
+- Vitor de Almeida Bernardo
 
 ## 👨🏻‍🏫 Professores
 - **PhD - Bruno Zolotareff dos Santos** (Desenvolvimento Web I: FATEC Diadema - Luigi Papaiz)
@@ -120,7 +122,6 @@ Adicionadas via CDN para desenvolvimento ágil:
 ### Design Digital
 - **Prototipagem** de interfaces centradas no usuário
 - **Design System** com componentes reutilizáveis
-- **UX/UI Design** aplicado na jornada do usuário
 - **Design Responsivo** para diferentes dispositivos
 - **Acessibilidade** e usabilidade
 
