@@ -15,12 +15,13 @@
 ## 👨🏻‍🏫 Professores
 - **PhD - Bruno Zolotareff dos Santos** (Desenvolvimento Web I: FATEC Diadema - Luigi Papaiz)
 - **PhD - Patrícia Gallo de França** (Design Digital: FATEC Diadema - Luigi Papaiz)
+- **MSc - Lucio Nunes de Lira** (Algoritmos e Lógica de Programação: FATEC Diadema - Luigi Papaiz)
 
 ## 📝 Descrição do Projeto
 
 **Menthfy** é uma plataforma educacional inovadora que conecta alunos e professores em um ambiente digital moderno e intuitivo. O sistema oferece uma experiência completa de ensino personalizado, permitindo que estudantes encontrem o mentor ideal para suas necessidades acadêmicas.
 
-A plataforma aplica conceitos abordados nas matérias de **Design Digital** e **Desenvolvimento Web I**, criando uma solução tecnológica que será expandida ao longo dos próximos semestres com novas funcionalidades. <br><br>
+A plataforma aplica conceitos abordados nas matérias de **Design Digital**, **Desenvolvimento Web I** e **Algoritmos e Lógica de Programação**, criando uma solução tecnológica que será expandida ao longo dos próximos semestres com novas funcionalidades. <br><br>
 
 ## 💻 Tecnologias Utilizadas
 
@@ -29,11 +30,13 @@ A plataforma aplica conceitos abordados nas matérias de **Design Digital** e **
 [![JavaScript](https://shields.io/badge/JavaScript-F7DF1E?logo=JavaScript&logoColor=000&style=flat-square)]()
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?logo=bootstrap&logoColor=white)]()
 [![Font Awesome](https://img.shields.io/badge/Font_Awesome-528DD7?logo=font-awesome&logoColor=white)]()
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwind-css&logoColor=white)]()
 
 - **HTML5** - Estruturação semântica e acessível do conteúdo
 - **CSS3** - Estilização avançada com layouts responsivos e animações
 - **JavaScript** - Interatividade dinâmica e manipulação de dados locais
 - **Bootstrap 5** - Framework para componentes responsivos e design system
+- **Tailwind CSS** - Utilitários CSS para prototipagem rápida
 - **Font Awesome 6** - Biblioteca completa de ícones
 - **Google Fonts** - Tipografia moderna com Baumans, Inter e Lexend
 
@@ -131,6 +134,11 @@ Adicionadas via CDN para desenvolvimento ágil:
 - **Estrutura de dados** em JSON e localStorage
 - **Validação de formulários** e tratamento de erros
 - **Arquitetura de componentes** modulares
+
+### Algoritmos e Lógica de Programação
+- **Estruturas de controle**
+- **Algoritmos de busca** e validação
+- **Lógica de programação** aplicada em funcionalidades
 
 ## 🔮 Roadmap Futuro
 
