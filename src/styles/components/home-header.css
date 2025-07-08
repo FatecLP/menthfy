@@ -2,8 +2,8 @@
 .home-header {
     position: absolute;
     z-index: 9999;
-    height: 115px;
-    padding: 25px 58px;
+    height: 90px;
+    padding: 20px 58px;
     background-color: transparent;
     display: flex;
     justify-content: space-between;
@@ -15,7 +15,7 @@
 .home-header h1 {
     font-family: baumans, Arial, Helvetica, sans-serif;
     font-weight: 400;
-    font-size: 40px;
+    font-size: 36px;
     color: white;
     margin: 0;
 }
@@ -32,8 +32,8 @@
 .home-header ul li {
     font-family: Inter, Arial, sans-serif;
     font-weight: 400;
-    font-size: 20px;
-    padding-bottom: 3px;
+    font-size: 18px;
+    padding-bottom: 2px;
 }
 
 .home-header ul li a {
@@ -43,8 +43,10 @@
 
 .home-header .header-1 {
     display: flex;
-    gap: 4rem;
     align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    margin-left: 4rem;
 }
 
 .home-header .header-1 div {
@@ -61,19 +63,20 @@
 }
 
 /* Estilo para os botões de navegação */
-#li1 {
-    border-bottom: 2px solid white;
-}
-
-#li2, #li3 {
+#li1, #li2, #li3 {
     position: relative;
 }
 
-#li2::after, #li3::after {
+#li1::after, #li2::after, #li3::after {
     content: "";
     position: absolute;
     bottom: 0;
     left: 0;
     width: 50%;
     border-bottom: 2px solid white;
+    transition: width 0.3s ease;
+}
+
+#li1:hover::after, #li2:hover::after, #li3:hover::after {
+    width: 100%;
 }

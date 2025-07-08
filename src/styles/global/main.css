@@ -22,8 +22,8 @@ body {
 header {
     position: absolute;
     z-index: 9999;
-    height: 115px;
-    padding: 25px 58px;
+    height: 90px;
+    padding: 20px 58px;
     background-color: transparent;
     display: flex;
     justify-content: space-between;
@@ -44,8 +44,8 @@ header ul {
 header ul li {
     font-family: Inter, Arial, sans-serif;
     font-weight: 400;
-    font-size: 20px;
-    padding-bottom: 3px;
+    font-size: 18px;
+    padding-bottom: 2px;
 }
 
 #li1, #li2, #li3 {
@@ -69,8 +69,10 @@ header ul li {
 /* Header-1 */
 .header-1 {
     display: flex;
-    gap: 4rem;
     align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    margin-left: 4rem;
 }
 
 .header-1 div {

@@ -33,7 +33,8 @@ footer {
 }
 
 .footer-1 h1 {
-    font-family: baumans;
+    font-family: baumans, Arial, Helvetica, sans-serif !important;
+    font-weight: 400 !important;
     font-size: 28px;
     margin: 0;
 }
