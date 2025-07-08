@@ -3,6 +3,12 @@
 [![Status do Projeto](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow)]()
 [![GitHub last commit](https://img.shields.io/github/last-commit/FatecLP/Menthfy)]()
 
+## 🌐 Acesso ao Site
+
+**🔗 [Menthfy](https://fateclp.github.io/menthfy/public/)**
+
+> Acesse a versão live da plataforma Menthfy hospedada no GitHub Pages.
+
 ## 👥 Nomes dos Integrantes
 - André Diogo Melchior da Silva
 - Juan Pablo Firmino Ferreira
