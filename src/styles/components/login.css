@@ -1,6 +1,15 @@
 body {
     background: #F4F6FA;
     font-family: Inter, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
 }
 
 .login-container {
@@ -112,4 +121,19 @@ body {
 .dashboard-btn:hover {
     background: #49507a;
     color: white;
+}
+
+.login-container a {
+    color: #5F688F !important;
+    text-decoration: underline !important;
+    font-size: 0.98rem;
+}
+
+.login-container a:hover {
+    color: #49507a !important;
+    text-decoration: underline !important;
+}
+
+.footer-1 {
+    margin-top: auto;
 }

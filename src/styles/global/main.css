@@ -48,21 +48,22 @@ header ul li {
     padding-bottom: 3px;
 }
 
-#li1 {
-    border-bottom: 2px solid white;
-}
-
-#li2, #li3 {
+#li1, #li2, #li3 {
     position: relative;
 }
 
-#li2::after, #li3::after {
+#li1::after, #li2::after, #li3::after {
     content: "";
     position: absolute;
     bottom: 0;
     left: 0;
     width: 50%;
     border-bottom: 2px solid white;
+    transition: width 0.3s ease;
+}
+
+#li1:hover::after, #li2:hover::after, #li3:hover::after {
+    width: 100%;
 }
 
 /* Header-1 */
