@@ -1,3 +1,5 @@
+import { showAlreadyLogged } from '../utils/showAlreadyLogged.js';
+
 // se não houver dados no localStorage, inicializa com os usuários em logins.json
 if (!localStorage.getItem("menthfyUsers")) {
   initializeDefaultUsers();
@@ -49,28 +51,12 @@ function logar(event){
 // verifica se o usuário já está logado ao carregar a página
 document.addEventListener('DOMContentLoaded', function() {
     if (window.location.pathname.includes('login.html')) {
-      const usuario = sessionStorage.getItem("usuario");
-      if (usuario) {
-          const main = document.querySelector('main');
-          if (main) {
-              main.innerHTML = `
-                  <div class="already-logged-alert">
-                      <div class="alert-content">
-                          <h3>Você já está logado!</h3>
-                          <p>Logado como: <strong>${usuario}</strong></p>
-                          <button id="logoutBtn" class="logout-btn">Fazer logout</button>
-                          <a href="../dashboard/dashboard-aluno.html" class="dashboard-btn">Ir para Dashboard</a>
-                      </div>
-                  </div>
-              `;
-              document.getElementById('logoutBtn').onclick = function() {
-                  sessionStorage.removeItem("usuario");
-                  sessionStorage.removeItem("tipoUsuario");
-                  sessionStorage.removeItem("userEmail");
-                  sessionStorage.removeItem("userCpf");
-                  window.location.reload();
-              }
-          }
-      }
+        // verifica se o usuário já está logado
+        // se estiver, exibe mensagem e não exibe o formulário de recuperação
+        if (showAlreadyLogged()) return;
+        const form = document.getElementById('loginForm');
+        if (form) {
+            form.addEventListener('submit', logar);
+        }
     }
 });
