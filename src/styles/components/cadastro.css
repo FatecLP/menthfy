@@ -43,3 +43,12 @@
 .cadastro-container button:hover {
     background: #49507a;
 }
+.cadastro-container a {
+    color: #5F688F !important;
+    text-decoration: underline !important;
+    font-size: 0.98rem;
+}
+.cadastro-container a:hover {
+    color: #49507a !important;
+    text-decoration: underline !important;
+}
