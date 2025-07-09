@@ -1,35 +1,38 @@
-if (!localStorage.getItem("bancodedados")) {
-  data_base();
+// se não houver dados no localStorage, inicializa com os usuários em logins.json
+if (!localStorage.getItem("menthfyUsers")) {
+  initializeDefaultUsers();
 }
 
-function data_base() {
-  let db = [
-    { id: 1, usuario: "Konan", email: "konan@mail", senha: "1234" },
-    { id: 2, usuario: "Pain", email: "pain@mail", senha: "1212" },
-    { id: 3, usuario: "Itachi", email: "itachi@mail", senha: "1111" },
-  ];
-
-  let json = JSON.stringify(db);
-  localStorage.setItem("bancodedados", json);
+// async para carregar ao mesmo tempo que a página
+async function initializeDefaultUsers() {
+  try {
+    const response = await fetch('./logins.json');
+    const defaultUsers = await response.json();
+    localStorage.setItem("menthfyUsers", JSON.stringify(defaultUsers));
+  } catch (error) {
+    console.error('Erro ao carregar logins:', error);
+  }
 }
 
 function logar(event){
   event.preventDefault();
 
-  let mail = document.querySelector("#email").value;
-  let sn = document.querySelector("#senha").value;
+  let email = document.querySelector("#email").value;
+  let password = document.querySelector("#senha").value;
   
-  // Verificar primeiro nos usuários cadastrados
+  // verificar primeiro nos usuários cadastrados
   let usuariosCadastrados = localStorage.getItem("menthfyUsers");
   if (usuariosCadastrados) {
     let users = JSON.parse(usuariosCadastrados);
     for (let i = 0; i < users.length; i++) {
-      if (mail === users[i].email && sn === users[i].password) {
+      if (email === users[i].email && password === users[i].password) {
         sessionStorage.setItem("usuario", users[i].username);
         sessionStorage.setItem("tipoUsuario", users[i].tipo);
+        sessionStorage.setItem("userEmail", users[i].email);
+        sessionStorage.setItem("userCpf", users[i].cpf);
         alert(`Bem-vindo(a), ${users[i].username}!`);
         
-        // Redirecionar baseado no tipo de usuário
+        // redirecionar baseado no tipo de usuário
         if (users[i].tipo === 'professor') {
           window.location.href = "../dashboard/dashboard-professor.html";
         } else {
@@ -40,21 +43,10 @@ function logar(event){
     }
   }
   
-  // Se não encontrou nos cadastrados, verificar nos usuários padrão
-  let dadosPadrao = JSON.parse(localStorage.getItem("bancodedados"));
-  for (let i = 0; i < dadosPadrao.length; i++) {
-    if (mail === dadosPadrao[i].email && sn === String(dadosPadrao[i].senha)){
-      sessionStorage.setItem("usuario", dadosPadrao[i].usuario);
-      sessionStorage.setItem("tipoUsuario", "aluno");
-      alert(`Bem-vindo(a), ${dadosPadrao[i].usuario}!`);
-      window.location.href = "../dashboard/dashboard-aluno.html";
-      return;
-    }
-  }
-  
   alert("E-mail ou senha incorretos!");
 }
 
+// verifica se o usuário já está logado ao carregar a página
 document.addEventListener('DOMContentLoaded', function() {
     if (window.location.pathname.includes('login.html')) {
       const usuario = sessionStorage.getItem("usuario");
@@ -74,6 +66,8 @@ document.addEventListener('DOMContentLoaded', function() {
               document.getElementById('logoutBtn').onclick = function() {
                   sessionStorage.removeItem("usuario");
                   sessionStorage.removeItem("tipoUsuario");
+                  sessionStorage.removeItem("userEmail");
+                  sessionStorage.removeItem("userCpf");
                   window.location.reload();
               }
           }

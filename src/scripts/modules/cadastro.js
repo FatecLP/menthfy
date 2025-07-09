@@ -1,56 +1,68 @@
-document.addEventListener('DOMContentLoaded', function () { // aguarda o carregamento do DOM
-    const form = document.getElementById('cadastroForm'); // pega o formulário
+// aguarda o carregamento do DOM para inicializar o formulário de cadastro
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('cadastroForm');
 
     form.addEventListener('submit', function (e) {
         e.preventDefault();
 
+        // dados do formulário
         const username = document.getElementById('username').value.trim();
         const cpf = document.getElementById('cpf').value.trim();
         const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value;
         const tipo = document.getElementById('tipo').value;
 
+        // validar nome de usuário
         if (!username || username.length < 3) {
             alert('Nome de usuário deve ter pelo menos 3 caracteres.');
             return;
         }
-        if (!cpf || !/^\d{11}$/.test(cpf)) { // regex para verificar se o CPF tem exatamente 11 dígitos
-            alert('CPF deve conter exatamente 11 dígitos numéricos.');
+        
+        // validar CPF (11 números)
+        if (!cpf || !/^\d{11}$/.test(cpf)) {
+            alert('CPF deve conter exatamente 11 números.');
             return;
         }
-        if (!email || !/^\S+@\S+\.\S+$/.test(email)) { // regex para verificar se o e-mail é válido
+        
+        // validar e-mail
+        if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
             alert('Informe um e-mail válido.');
             return;
         }
+        
+        // validar senha (mínimo 6 caracteres)
         if (!password || password.length < 6) {
             alert('A senha deve ter pelo menos 6 caracteres.');
             return;
         }
+        
+        // validar tipo de usuário
         if (!tipo || (tipo !== 'aluno' && tipo !== 'professor')) {
             alert('Selecione o tipo de usuário.');
             return;
         }
 
         try {
+            // carregar usuários existentes do localStorage
             let users = [];
             const localUsers = localStorage.getItem('menthfyUsers');
             if (localUsers) {
                 users = JSON.parse(localUsers);
             }
 
-            // Verificar se email já existe
+            // verificar se email já existe
             if (users.some(u => u.email === email)) {
                 alert('E-mail já cadastrado.');
                 return;
             }
 
-            // Verificar se CPF já existe
+            // verificar se CPF já existe
             if (users.some(u => u.cpf === cpf)) {
                 alert('CPF já cadastrado.');
                 return;
             }
-
-            // Adicionar novo usuário
+            
+            // adicionar novo usuário ao array
             const novoUsuario = {
                 username: username,
                 cpf: cpf,
@@ -62,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () { // aguarda o carrega
 
             users.push(novoUsuario);
 
-            // Salvar no localStorage
+            // salvar lista atualizada no localStorage
             localStorage.setItem('menthfyUsers', JSON.stringify(users));
             
             alert('Cadastro realizado com sucesso! Faça login para continuar.');

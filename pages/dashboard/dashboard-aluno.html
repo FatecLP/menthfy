@@ -31,7 +31,8 @@
                   <li id="li3"><a href="">Contato</a></li>
                 </ul>
                 <div>
-                    <button id="logoutBtn" class="btn btn-danger" style="padding: 7px 17px; border-radius: 20px;">Logout</button>
+                    <h2>Maria Silva</h2>
+                    <img src="../../public/assets/images/maria-silva.png" alt="">
                 </div>
             </div>
         </header>
@@ -144,45 +145,74 @@
         <a href="#" class="topo-btn">Topo</a>
       </div>
     </div>
-    
     <script>
-    // Script específico da dashboard
-    document.addEventListener('DOMContentLoaded', function() {
-        // Verificar se usuário está logado
-        const usuario = sessionStorage.getItem('usuario');
-        if (!usuario) {
-            alert('Você precisa fazer login primeiro!');
-            window.location.href = '../auth/login.html';
-            return;
-        }
+    // script de autenticação e inicialização do dashboard
+    (function() {
+        'use strict';
         
-        // Atualizar nome do usuário na dashboard
-        const welcomeText = document.querySelector('p[class*="text-[32px]"]');
-        if (welcomeText) {
-            welcomeText.textContent = `Bem-vindo(a), ${usuario}!`;
-        }
-        
-        // Configurar botão de logout
-        const logoutBtn = document.getElementById('logoutBtn');
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', function() {
-                if (confirm('Tem certeza que deseja fazer logout?')) {
-                    sessionStorage.removeItem('usuario');
-                    sessionStorage.removeItem('tipoUsuario');
-                    alert('Logout realizado com sucesso!');
+        // verificar se usuário está autenticado
+        function verificarAutenticacao() {
+            try {
+                const usuario = sessionStorage.getItem('usuario');
+                const tipoUsuario = sessionStorage.getItem('tipoUsuario');
+                
+                debugLog(`Usuário: ${usuario || 'NULL'}`);
+                debugLog(`Tipo: ${tipoUsuario || 'NULL'}`);
+                
+                // verificar se usuário está logado
+                if (!usuario || usuario === 'null' || usuario === '') {
+                    debugLog('Usuário não logado - redirecionando', 'ERRO');
+                    alert('Você precisa fazer login para acessar o dashboard.');
                     window.location.href = '../auth/login.html';
+                    return false;
                 }
-            });
+                
+                debugLog('Usuário autenticado com sucesso', 'SUCESSO');
+                return true;
+                
+            } catch (error) {
+                debugLog(`Erro na verificação: ${error.message}`, 'ERRO');
+                alert('Erro ao verificar autenticação. Faça login novamente.');
+                window.location.href = '../auth/login.html';
+                return false;
+            }
         }
-          // Configurar funcionalidade do botão "Topo"
-        const topoBtn = document.querySelector('.topo-btn');
-        if (topoBtn) {
-            topoBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
+        
+        // função para inicializar o dashboard após autenticação
+        function inicializarDashboard() {
+            const usuario = sessionStorage.getItem('usuario');
+
+            // atualizar texto de boas-vindas com o nome
+            const welcomeText = document.querySelector('p[class*="text-[32px]"]');
+            if (welcomeText) {
+                welcomeText.textContent = `Bem-vindo(a), ${usuario}!`;
+                debugLog('Texto de boas-vindas atualizado');
+            }
+            
+            // configurar botão "Topo" para scroll suave
+            const topoBtn = document.querySelector('.topo-btn');
+            if (topoBtn) {
+                topoBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+                debugLog('Botão topo configurado');
+            }
+            
+            debugLog('Dashboard inicializada com sucesso!', 'SUCESSO');
         }
-    });
-  </script>
+        
+        // aguardar DOM carregar antes de inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            debugLog('DOM carregado - iniciando verificação');
+            
+            if (verificarAutenticacao()) {
+                inicializarDashboard();
+            }
+        });
+        
+    })();
+    </script>
+    <script src="../../src/scripts/modules/header-auth.js"></script>
   </body>
 </html>

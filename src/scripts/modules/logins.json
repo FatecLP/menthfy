@@ -1,17 +1,37 @@
 [
   {
-    "email": "usuario1@email.com",
+    "username": "João Silva",
+    "cpf": "12345678901",
+    "email": "joao.silva@email.com",
     "password": "senha123",
     "tipo": "aluno"
   },
   {
-    "email": "admin@menthfy.com",
-    "password": "admin2025",
+    "username": "Maria Santos",
+    "cpf": "98765432109",
+    "email": "maria.santos@email.com",
+    "password": "senha456",
     "tipo": "professor"
   },
   {
-    "email": "teste@exemplo.com",
-    "password": "teste456",
+    "username": "Carlos Oliveira",
+    "cpf": "11122233344",
+    "email": "carlos.oliveira@email.com",
+    "password": "senha789",
+    "tipo": "aluno"
+  },
+  {
+    "username": "Ana Costa",
+    "cpf": "55566677788",
+    "email": "ana.costa@email.com",
+    "password": "senha321",
+    "tipo": "professor"
+  },
+  {
+    "username": "Pedro Rodrigues",
+    "cpf": "99988877766",
+    "email": "pedro.rodrigues@email.com",
+    "password": "senha654",
     "tipo": "aluno"
   }
 ]
