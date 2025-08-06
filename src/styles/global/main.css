@@ -6,19 +6,16 @@
 @import url(../components/footer.css);
 @import url(../components/cart.css);
 
-/* Reset e Box Model */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Body */
 body {
     color: white;
 }
 
-/* Header */
 header {
     position: absolute;
     z-index: 9999;
@@ -87,24 +84,25 @@ header ul li {
     font-weight: 600;
 }
 
-/* Títulos */
 h1 {
     font-family: baumans, Arial, Helvetica, sans-serif;
     font-weight: 400;
     font-size: 40px;
 }
 
-/* Principal */
 .principal {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 140px;
+    gap: 100px;
     margin-top: 30px;
 }
 
-/* Container */
+.principal img{
+    width: 55%;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -119,7 +117,6 @@ h1 {
     color: aliceblue !important;
 }
 
-/* Cards */
 .card-top,
 .card-bottom {
     display: flex;
@@ -153,16 +150,13 @@ h1 {
     font-size: 1rem;
 }
 
-/* Imagem de fundo */
 .image {
     height: 600px;
     background: url(../../../public/assets/images/Frame-bg.png) no-repeat top center/cover;
     position: relative;
 }
 
-/* Modais */
-.mod,
-.mod2 {
+.mod, .mod2 {
     height: 100%;
     width: 100%;
     position: absolute;
@@ -181,12 +175,10 @@ h1 {
     opacity: 40%;
 }
 
-/* Navegação */
 .navigation {
     position: fixed;
 }
 
-/* Título principal */
 .titulo {
     height: 100%;
     width: 100%;
@@ -217,7 +209,6 @@ h1 {
     color: var(--text-color);
 }
 
-/* Botão de contato */
 .button-contact {
     padding: 14px 20px;
     color: #ffffff;
@@ -235,7 +226,6 @@ h1 {
     box-shadow: 0 0 10px 0 #d94140;
 }
 
-/* Botões */
 .btn {
     transition: all 0.2s;
 }
@@ -244,7 +234,6 @@ h1 {
     background-color: #2569d8 !important;
 }
 
-/* Carousel */
 .carousel-control-prev-icon.bg-dark,
 .carousel-control-next-icon.bg-dark {
     background-color: #292828 !important;
@@ -263,7 +252,6 @@ h1 {
     overflow: visible !important;
 }
 
-/* Animações */
 @keyframes scaleButton {
     from {
         transform: scale(1);
@@ -273,7 +261,6 @@ h1 {
     }
 }
 
-/* Responsividade */
 @media (max-width: 600px) {
     header {
         display: flex;
