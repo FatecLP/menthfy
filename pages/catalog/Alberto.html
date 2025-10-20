@@ -19,7 +19,17 @@
                 <li id="li3"><a href="">Contato</a></li>
             </ul>
             <div>
-                <h2>Maria Silva</h2>
+                <h2 id="username">Faça login!</h2>
+                <script>
+                    let user = document.querySelector('#username');
+                    usuario = sessionStorage.getItem("usuario");
+
+                    if (usuario) {
+                        user.innerHTML = usuario;
+                    } else {
+                        user.innerHTML = "Faça login";
+                    }
+                </script>
                 <img src="../../public/assets/images/maria-silva.png" alt="">
             </div>
         </div>

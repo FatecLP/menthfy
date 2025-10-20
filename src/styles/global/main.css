@@ -87,7 +87,6 @@ header ul li {
     font-weight: 600;
 }
 
-/* Títulos */
 h1 {
     font-family: baumans, Arial, Helvetica, sans-serif;
     font-weight: 400;
@@ -104,7 +103,7 @@ h1 {
     margin-top: 30px;
 }
 
-/* Seção da marca (logo à esquerda, texto à direita) */
+/* Marca */
 .marca {
     display: flex;
     align-items: center;
@@ -215,7 +214,7 @@ h1 {
     font-size: 1rem;
 }
 
-/* Imagem de fundo */
+/* Imagem de Fundo */
 .image {
     height: 600px;
     background: url(../../../public/assets/images/Frame-bg.png) no-repeat top center/cover;
@@ -223,8 +222,7 @@ h1 {
 }
 
 /* Modais */
-.mod,
-.mod2 {
+.mod, .mod2 {
     height: 100%;
     width: 100%;
     position: absolute;
@@ -248,7 +246,7 @@ h1 {
     position: fixed;
 }
 
-/* Título principal */
+/* Títulos */
 .titulo {
     height: 100%;
     width: 100%;
@@ -279,7 +277,7 @@ h1 {
     color: var(--text-color);
 }
 
-/* Botão de contato */
+/* Botões */
 .button-contact {
     padding: 14px 20px;
     color: #ffffff;
@@ -297,7 +295,6 @@ h1 {
     box-shadow: 0 0 10px 0 #d94140;
 }
 
-/* Botões */
 .btn {
     transition: all 0.2s;
 }

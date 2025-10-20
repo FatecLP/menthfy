@@ -31,7 +31,11 @@
                   <li id="li3"><a href="">Contato</a></li>
                 </ul>
                 <div>
-                    <h2>Maria Silva</h2>
+                    <h2 id="username"></h2>
+                    <script>
+                      let user = document.querySelector('#username');
+                      user.innerHTML = sessionStorage.getItem("usuario");
+                    </script>
                     <img src="../../public/assets/images/maria-silva.png" alt="">
                 </div>
             </div>
@@ -146,11 +150,9 @@
       </div>
     </div>
     <script>
-    // script de autenticação e inicialização do dashboard
     (function() {
         'use strict';
         
-        // verificar se usuário está autenticado
         function verificarAutenticacao() {
             try {
                 const usuario = sessionStorage.getItem('usuario');
@@ -159,7 +161,6 @@
                 debugLog(`Usuário: ${usuario || 'NULL'}`);
                 debugLog(`Tipo: ${tipoUsuario || 'NULL'}`);
                 
-                // verificar se usuário está logado
                 if (!usuario || usuario === 'null' || usuario === '') {
                     debugLog('Usuário não logado - redirecionando', 'ERRO');
                     alert('Você precisa fazer login para acessar o dashboard.');
@@ -178,18 +179,15 @@
             }
         }
         
-        // função para inicializar o dashboard após autenticação
         function inicializarDashboard() {
             const usuario = sessionStorage.getItem('usuario');
 
-            // atualizar texto de boas-vindas com o nome
             const welcomeText = document.querySelector('p[class*="text-[32px]"]');
             if (welcomeText) {
                 welcomeText.textContent = `Bem-vindo(a), ${usuario}!`;
                 debugLog('Texto de boas-vindas atualizado');
             }
             
-            // configurar botão "Topo" para scroll suave
             const topoBtn = document.querySelector('.topo-btn');
             if (topoBtn) {
                 topoBtn.addEventListener('click', function(e) {
@@ -202,7 +200,6 @@
             debugLog('Dashboard inicializada com sucesso!', 'SUCESSO');
         }
         
-        // aguardar DOM carregar antes de inicializar
         document.addEventListener('DOMContentLoaded', function() {
             debugLog('DOM carregado - iniciando verificação');
             
