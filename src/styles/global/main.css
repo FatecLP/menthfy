@@ -104,6 +104,68 @@ h1 {
     margin-top: 30px;
 }
 
+/* Seção da marca (logo à esquerda, texto à direita) */
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    max-width: 1100px;
+    width: 100%;
+    padding: 0 24px;
+    flex-wrap: nowrap;
+}
+
+.marca-logo {
+    height: clamp(192px, 24vw, 384px);
+    width: auto;
+    flex: 0 0 auto;
+}
+
+.marca-texto {
+    flex: 1 1 0;
+    min-width: 0;
+    margin-top: 32px;
+}
+
+.marca-texto h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    margin: 0 0 8px 0;
+    color: #000000;
+    text-transform: uppercase;
+    line-height: 1.2;
+}
+
+.marca-texto p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.6;
+    margin: 0;
+    color: #000000;
+}
+
+@media (max-width: 768px) {
+    .marca {
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+    }
+    .marca-logo {
+        height: 264px;
+    }
+    .marca-texto {
+        margin-top: 29px;
+    }
+    .marca-texto h3 {
+        font-size: 26px;
+    }
+    .marca-texto p {
+        font-size: 18px;
+    }
+}
+
 /* Container */
 .container {
     display: flex;
@@ -244,7 +306,7 @@ h1 {
     background-color: #2569d8 !important;
 }
 
-/* Carousel */
+/* Carrossel */
 .carousel-control-prev-icon.bg-dark,
 .carousel-control-next-icon.bg-dark {
     background-color: #292828 !important;
