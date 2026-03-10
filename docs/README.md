@@ -19,7 +19,7 @@
 
 ## 👨🏻‍🏫 Professores
 - **PhD - Bruno Zolotareff dos Santos** (Metodologias Ágeis: FATEC Diadema - Luigi Papaiz)
-- **PhD - Patrícia Gallo de França** (Desenvolvimento Web II: FATEC Diadema - Luigi Papaiz)
+- **PhD - Vinicius Heltai Pacheco** (Desenvolvimento Web II: FATEC Diadema - Luigi Papaiz)
 - **MSc - Lucio Nunes de Lira** (Interação Humano-Computador: FATEC Diadema - Luigi Papaiz)
 
 ## 📝 Descrição do Projeto
