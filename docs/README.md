@@ -14,14 +14,13 @@
 - Juan Pablo Firmino Ferreira
 - Michael Akira de Lima Kuwahara
 - Murilo de Oliveira Sartori
-- Nickolas Lopes Araújo
 - Vinicius Lima Carneiro
 - Vitor de Almeida Bernardo
 
 ## 👨🏻‍🏫 Professores
-- **PhD - Bruno Zolotareff dos Santos** (Desenvolvimento Web I: FATEC Diadema - Luigi Papaiz)
-- **PhD - Patrícia Gallo de França** (Design Digital: FATEC Diadema - Luigi Papaiz)
-- **MSc - Lucio Nunes de Lira** (Algoritmos e Lógica de Programação: FATEC Diadema - Luigi Papaiz)
+- **PhD - Bruno Zolotareff dos Santos** (Metodologias Ágeis: FATEC Diadema - Luigi Papaiz)
+- **PhD - Patrícia Gallo de França** (Desenvolvimento Web II: FATEC Diadema - Luigi Papaiz)
+- **MSc - Lucio Nunes de Lira** (Interação Humano-Computador: FATEC Diadema - Luigi Papaiz)
 
 ## 📝 Descrição do Projeto
 
