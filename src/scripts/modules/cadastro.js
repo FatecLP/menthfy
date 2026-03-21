@@ -1,7 +1,7 @@
 import { showAlreadyLogged } from "../utils/showAlreadyLogged.js";
 
 document.addEventListener("DOMContentLoaded", function () {
-    if (window.location.pathname.includes("cadastro.html")) {
+    if (window.location.pathname.includes("/cadastro") || window.location.pathname.includes("cadastro.html")) {
         if (showAlreadyLogged()) return;
         const form = document.getElementById("cadastroForm");
         if (form) {
@@ -46,17 +46,6 @@ async function cadastrarUsuario(e) {
         return;
     }
 
-    // Verificar duplicados no localStorage (opcional)
-    const localUsers = JSON.parse(localStorage.getItem("menthfyUsers") || "[]");
-    if (localUsers.some((u) => u.email === email)) {
-        alert("E-mail já cadastrado.");
-        return;
-    }
-    if (localUsers.some((u) => u.cpf === cpf)) {
-        alert("CPF já cadastrado.");
-        return;
-    }
-
     const novoUsuario = {
         nome: username,
         cpf: Number(cpf),
@@ -66,7 +55,7 @@ async function cadastrarUsuario(e) {
     };
 
     try {
-        const res = await fetch("http://localhost:3333/usuarios", {
+        const res = await fetch("/usuarios", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(novoUsuario),
@@ -79,12 +68,8 @@ async function cadastrarUsuario(e) {
             return;
         }
 
-        // Salvar localmente (opcional)
-        localUsers.push(novoUsuario);
-        localStorage.setItem("menthfyUsers", JSON.stringify(localUsers));
-
         alert("Cadastro realizado com sucesso! Faça login para continuar.");
-        window.location.href = "login.html";
+        window.location.href = "/login";
     } catch (err) {
         console.error("Erro ao cadastrar usuário:", err);
         alert("Erro interno ao cadastrar. Tente novamente.");

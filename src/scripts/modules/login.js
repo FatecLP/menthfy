@@ -1,9 +1,9 @@
 import { showAlreadyLogged } from "../utils/showAlreadyLogged.js";
 
-const API_URL = "http://localhost:3333";
+const API_URL = "";
 
 document.addEventListener("DOMContentLoaded", function () {
-    if (window.location.pathname.includes("login.html")) {
+    if (window.location.pathname.includes("/login") || window.location.pathname.includes("login.html")) {
         if (showAlreadyLogged()) return;
         const form = document.getElementById("loginForm");
         if (form) {
@@ -34,19 +34,19 @@ async function logar(event) {
 
         if (!response.ok) {
             if (response.status === 401) {
-              await Swal.fire({
-                  icon: "error",
-                  title: "Oops...",
-                  text: "E-mail ou senha incorretos!",
-                  footer: '<a href="#">Por que estou tendo esse problema?</a>',
-              });
+                await Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "E-mail ou senha incorretos!",
+                    footer: '<a href="#">Por que estou tendo esse problema?</a>',
+                });
             } else {
-              await Swal.fire({
-                  icon: "error",
-                  title: "Oops...",
-                  text: "Erro ao tentar logar. Tente novamente.",
-                  footer: '<a href="#">Por que estou tendo esse problema?</a>',
-              });
+                await Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Erro ao tentar logar. Tente novamente.",
+                    footer: '<a href="#">Por que estou tendo esse problema?</a>',
+                });
             }
             return;
         }
@@ -64,11 +64,11 @@ async function logar(event) {
             icon: "success",
             draggable: true,
         });
-      
+
         if (data.usuario.tipoUsuario === "Professor") {
-            window.location.href = "../dashboard/dashboard-professor.html";
+            window.location.href = "/dashboard-professor";
         } else {
-            window.location.href = "../dashboard/dashboard-aluno.html";
+            window.location.href = "/dashboard";
         }
     } catch (error) {
         console.error("Erro ao logar:", error);

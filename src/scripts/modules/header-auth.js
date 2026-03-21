@@ -13,7 +13,10 @@ window.debugLog = function (msg) {
             window.location.pathname.includes("index.html") ||
             window.location.pathname === "/" ||
             window.location.pathname.endsWith("/") ||
-            window.location.pathname.includes("/auth/")
+            window.location.pathname.includes("/auth/") ||
+            window.location.pathname.includes("/login") ||
+            window.location.pathname.includes("/cadastro") ||
+            window.location.pathname.includes("/recuperar")
         ) {
             debugLog("Página não elegível para alteração do header");
             return;
@@ -65,7 +68,7 @@ window.debugLog = function (msg) {
 
         // determinar caminhos baseado na localização atual
         let basePath = "";
-        const pathname = window.location.pathname;
+        const { pathname } = window.location;
 
         if (
             pathname.includes("/catalog/") ||
@@ -107,7 +110,7 @@ window.debugLog = function (msg) {
                         sessionStorage.removeItem("userCpf");
 
                         alert("Logout realizado com sucesso!");
-                        window.location.href = basePath + "public/index.html";
+                        window.location.href = "/";
                     }
                 });
                 debugLog("Event listener de logout adicionado");
@@ -118,8 +121,8 @@ window.debugLog = function (msg) {
             // usuário não logado - mostrar botões de login e cadastro
             headerUserDiv.innerHTML = `
                 <div style="display: flex; gap: 8px; align-items: center;">
-                    <a href="${basePath}pages/auth/login.html" class="login-btn" style="border-radius: 20px; background-color: #3E8EFF; border: none; padding: 8px 16px; text-decoration: none; color: white; font-size: 14px; font-weight: 500;">Login</a>
-                    <a href="${basePath}pages/auth/cadastro.html" class="signup-btn" style="border-radius: 20px; background-color: #3E8EFF; border: none; padding: 8px 16px; text-decoration: none; color: white; font-size: 14px; font-weight: 500;">Cadastro</a>
+                    <a href="/login" class="login-btn" style="border-radius: 20px; background-color: #3E8EFF; border: none; padding: 8px 16px; text-decoration: none; color: white; font-size: 14px; font-weight: 500;">Login</a>
+                    <a href="/cadastro" class="signup-btn" style="border-radius: 20px; background-color: #3E8EFF; border: none; padding: 8px 16px; text-decoration: none; color: white; font-size: 14px; font-weight: 500;">Cadastro</a>
                 </div>
             `;
         }
