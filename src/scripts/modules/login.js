@@ -1,62 +1,77 @@
-import { showAlreadyLogged } from '../utils/showAlreadyLogged.js';
+import { showAlreadyLogged } from "../utils/showAlreadyLogged.js";
 
-// se não houver dados no localStorage, inicializa com os usuários em logins.json
-if (!localStorage.getItem("menthfyUsers")) {
-  initializeDefaultUsers();
-}
+const API_URL = "http://localhost:3333";
 
-// async para carregar ao mesmo tempo que a página
-async function initializeDefaultUsers() {
-  try {
-    const response = await fetch('./logins.json');
-    const defaultUsers = await response.json();
-    localStorage.setItem("menthfyUsers", JSON.stringify(defaultUsers));
-  } catch (error) {
-    console.error('Erro ao carregar logins:', error);
-  }
-}
-
-function logar(event){
-  event.preventDefault();
-
-  let email = document.querySelector("#email").value;
-  let password = document.querySelector("#senha").value;
-  
-  // verificar primeiro nos usuários cadastrados
-  let usuariosCadastrados = localStorage.getItem("menthfyUsers");
-  if (usuariosCadastrados) {
-    let users = JSON.parse(usuariosCadastrados);
-    for (let i = 0; i < users.length; i++) {
-      if (email === users[i].email && password === users[i].password) {
-        sessionStorage.setItem("usuario", users[i].username);
-        sessionStorage.setItem("tipoUsuario", users[i].tipo);
-        sessionStorage.setItem("userEmail", users[i].email);
-        sessionStorage.setItem("userCpf", users[i].cpf);
-        alert(`Bem-vindo(a), ${users[i].username}!`);
-        
-        // redirecionar baseado no tipo de usuário
-        if (users[i].tipo === 'professor') {
-          window.location.href = "../dashboard/dashboard-professor.html";
-        } else {
-          window.location.href = "../dashboard/dashboard-aluno.html";
-        }
-        return;
-      }
-    }
-  }
-  
-  alert("E-mail ou senha incorretos!");
-}
-
-// verifica se o usuário já está logado ao carregar a página
-document.addEventListener('DOMContentLoaded', function() {
-    if (window.location.pathname.includes('login.html')) {
-        // verifica se o usuário já está logado
-        // se estiver, exibe mensagem e não exibe o formulário de recuperação
+document.addEventListener("DOMContentLoaded", function () {
+    if (window.location.pathname.includes("login.html")) {
         if (showAlreadyLogged()) return;
-        const form = document.getElementById('loginForm');
+        const form = document.getElementById("loginForm");
         if (form) {
-            form.addEventListener('submit', logar);
+            form.addEventListener("submit", logar);
         }
     }
 });
+
+async function logar(event) {
+    event.preventDefault();
+
+    const email = document.querySelector("#email").value.trim();
+    const password = document.querySelector("#senha").value;
+
+    if (!email || !password) {
+        alert("Preencha todos os campos!");
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_URL}/usuarios/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, senha: password }),
+        });
+
+        if (!response.ok) {
+            if (response.status === 401) {
+              await Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "E-mail ou senha incorretos!",
+                  footer: '<a href="#">Por que estou tendo esse problema?</a>',
+              });
+            } else {
+              await Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "Erro ao tentar logar. Tente novamente.",
+                  footer: '<a href="#">Por que estou tendo esse problema?</a>',
+              });
+            }
+            return;
+        }
+
+        const data = await response.json();
+
+        sessionStorage.setItem("usuario", data.usuario.nome);
+        sessionStorage.setItem("tipoUsuario", data.usuario.tipoUsuario);
+        sessionStorage.setItem("userEmail", data.usuario.email);
+        sessionStorage.setItem("userCpf", data.usuario.cpf);
+
+        await Swal.fire({
+            title: "Login realizado com sucesso!",
+            text: `Bem-vindo(a), ${data.usuario.nome}!`,
+            icon: "success",
+            draggable: true,
+        });
+      
+        if (data.usuario.tipoUsuario === "Professor") {
+            window.location.href = "../dashboard/dashboard-professor.html";
+        } else {
+            window.location.href = "../dashboard/dashboard-aluno.html";
+        }
+    } catch (error) {
+        console.error("Erro ao logar:", error);
+        alert("Erro interno. Tente novamente mais tarde.");
+    }
+}
