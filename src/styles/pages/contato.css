@@ -1,0 +1,119 @@
+@import url('../components/header.css');
+@import url('../components/footer.css');
+
+/* Página de Contato */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #F4F6FA;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    position: relative !important;
+    width: 100%;
+}
+
+main.container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+}
+
+/* Card do contato */
+.contact-section {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    text-align: center;
+}
+
+.contact-section h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.contact-section p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* Formulário e inputs */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: left;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
+.form-group input, 
+.form-group textarea {
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+    background-color: #fcfcfc;
+    transition: all 0.3s ease;
+    resize: vertical;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+    outline: none;
+    border-color: #3E8EFF;
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(62, 142, 255, 0.1);
+}
+
+/* Botão */
+.btn-submit {
+    margin-top: 10px;
+    background-color: #3E8EFF;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-submit:hover {
+    background-color: #2b7cf5;
+}
+
+/* Responsividade pra celular */
+@media (max-width: 480px) {
+    .contact-section {
+        padding: 30px 20px;
+    }
+}
