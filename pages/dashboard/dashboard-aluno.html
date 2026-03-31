@@ -27,7 +27,7 @@
             <div class="header-1">
                 <ul>
                   <li id="li1"><a href="/">Home</a></li>
-                  <li id="li2"><a href="../catalog/catalogo.html">Catálogo</a></li>
+                  <li id="li2"><a href="/catalogo">Catálogo</a></li>
                   <li id="li3"><a href="/contato">Contato</a></li>
                 </ul>
                 <div>
@@ -149,67 +149,7 @@
         <a href="#" class="topo-btn">Topo</a>
       </div>
     </div>
-    <script>
-    (function() {
-        'use strict';
-        
-        function verificarAutenticacao() {
-            try {
-                const usuario = sessionStorage.getItem('usuario');
-                const tipoUsuario = sessionStorage.getItem('tipoUsuario');
-                
-                debugLog(`Usuário: ${usuario || 'NULL'}`);
-                debugLog(`Tipo: ${tipoUsuario || 'NULL'}`);
-                
-                if (!usuario || usuario === 'null' || usuario === '') {
-                    debugLog('Usuário não logado - redirecionando', 'ERRO');
-                    alert('Você precisa fazer login para acessar o dashboard.');
-                    window.location.href = '../auth/login.html';
-                    return false;
-                }
-                
-                debugLog('Usuário autenticado com sucesso', 'SUCESSO');
-                return true;
-                
-            } catch (error) {
-                debugLog(`Erro na verificação: ${error.message}`, 'ERRO');
-                alert('Erro ao verificar autenticação. Faça login novamente.');
-                window.location.href = '../auth/login.html';
-                return false;
-            }
-        }
-        
-        function inicializarDashboard() {
-            const usuario = sessionStorage.getItem('usuario');
-
-            const welcomeText = document.querySelector('p[class*="text-[32px]"]');
-            if (welcomeText) {
-                welcomeText.textContent = `Bem-vindo(a), ${usuario}!`;
-                debugLog('Texto de boas-vindas atualizado');
-            }
-            
-            const topoBtn = document.querySelector('.topo-btn');
-            if (topoBtn) {
-                topoBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                });
-                debugLog('Botão topo configurado');
-            }
-            
-            debugLog('Dashboard inicializada com sucesso!', 'SUCESSO');
-        }
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            debugLog('DOM carregado - iniciando verificação');
-            
-            if (verificarAutenticacao()) {
-                inicializarDashboard();
-            }
-        });
-        
-    })();
-    </script>
-    <script src="/src/scripts/modules/header-auth.js"></script>
+    <script type="module" src="/src/scripts/modules/header-auth.js"></script>
+    <script type="module" src="/src/scripts/modules/dashboard-page.js"></script>
   </body>
 </html>
