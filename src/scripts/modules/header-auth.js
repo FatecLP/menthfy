@@ -10,9 +10,6 @@ window.debugLog = function (msg) {
     document.addEventListener("DOMContentLoaded", function () {
         // verificar se é página que deve ser processada
         if (
-            window.location.pathname.includes("index.html") ||
-            window.location.pathname === "/" ||
-            window.location.pathname.endsWith("/") ||
             window.location.pathname.includes("/auth/") ||
             window.location.pathname.includes("/login") ||
             window.location.pathname.includes("/cadastro") ||
