@@ -2,7 +2,7 @@ import { showAlreadyLogged } from '../utils/showAlreadyLogged.js';
 
 // aguarda o carregamento do DOM para inicializar formulário de recuperação
 document.addEventListener('DOMContentLoaded', function () {
-    if (window.location.pathname.includes('recuperar.html')) {
+    if (window.location.pathname.includes('/recuperar') || window.location.pathname.includes('recuperar.html')) {
         // verifica se o usuário já está logado
         // se estiver, exibe mensagem e não exibe o formulário de recuperação
         if (showAlreadyLogged()) return;
@@ -48,7 +48,7 @@ async function recuperarSenha(e) {
         const user = users.find(u => u.email === email);
         if (user) {
             alert('Um e-mail de recuperação foi enviado para ' + email);
-            window.location.href = 'login.html';
+            window.location.href = '/login';
         } else {
             alert('E-mail não cadastrado.');
         }

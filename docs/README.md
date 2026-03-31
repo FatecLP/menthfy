@@ -30,6 +30,8 @@ A plataforma aplica conceitos abordados nas matérias de **Design Digital**, **D
 
 ## 💻 Tecnologias Utilizadas
 
+[![Node.js](https://img.shields.io/badge/Node.js-339933?logo=nodedotjs&logoColor=white)]()
+[![Express.js](https://img.shields.io/badge/Express.js-000000?logo=express&logoColor=white)]()
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)]()
 [![CSS3](https://img.shields.io/badge/-CSS3-1572B6?style=flat&logo=css3&logoColor=white)]()
 [![JavaScript](https://shields.io/badge/JavaScript-F7DF1E?logo=JavaScript&logoColor=000&style=flat-square)]()
@@ -37,6 +39,7 @@ A plataforma aplica conceitos abordados nas matérias de **Design Digital**, **D
 [![Font Awesome](https://img.shields.io/badge/Font_Awesome-528DD7?logo=font-awesome&logoColor=white)]()
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwind-css&logoColor=white)]()
 
+- **Node.js + Express** - Servidor web e roteamento no backend
 - **HTML5** - Estruturação semântica e acessível do conteúdo
 - **CSS3** - Estilização avançada com layouts responsivos e animações
 - **JavaScript** - Interatividade dinâmica e manipulação de dados locais
@@ -84,27 +87,25 @@ A plataforma aplica conceitos abordados nas matérias de **Design Digital**, **D
 
 Clone o repositório:
 ```bash
-git clone https://github.com/FatecLP/Menthfy.git
+git clone https://github.com/FatecLP/menthfy.git
 ```
 
 Navegue até o diretório:
 ```bash
-cd Menthfy
+cd menthfy
 ```
 
-Abra o arquivo `index.html` no navegador ou use um servidor local:
+Instale as dependências do Node.js:
 ```bash
-# Com Python
-python -m http.server 8000
-
-# Com Node.js (live-server)
-npx live-server
-
-# Com PHP
-php -S localhost:8000
+npm install
 ```
 
-Acesse: `http://localhost:8000`
+Inicie o servidor Express:
+```bash
+node server.js
+```
+
+Acesse a aplicação no seu navegador: `http://localhost:3000`
 
 ## 📚 Dependências
 
@@ -166,5 +167,5 @@ Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICE
 
 <div align="center">
   <strong>Desenvolvido com 💙 pela equipe Menthfy</strong><br>
-  FATEC Luigi Papaiz - Diadema/SP - 2025
+  FATEC Luigi Papaiz - Diadema/SP - 2026
 </div>
