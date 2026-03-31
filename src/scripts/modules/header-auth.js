@@ -1,6 +1,4 @@
-window.debugLog = function (msg) {
-    console.log("[DEBUG]", msg);
-};
+import { showAuthRequiredPopup } from '../utils/authRequiredPopup.js';
 
 // script para gerenciar autenticação dinâmica no header
 (function () {
@@ -18,12 +16,10 @@ window.debugLog = function (msg) {
             window.location.pathname.includes("/cadastro") ||
             window.location.pathname.includes("/recuperar")
         ) {
-            debugLog("Página não elegível para alteração do header");
             return;
         }
 
-        // aguardar para garantir que o DOM está carregado
-        setTimeout(processarHeader, 100);
+        processarHeader();
     });
 
     // função para processar e modificar o header
@@ -63,8 +59,18 @@ window.debugLog = function (msg) {
         // obter dados do usuário da sessão
         const usuario = sessionStorage.getItem("usuario");
         const tipoUsuario = sessionStorage.getItem("tipoUsuario");
-        const userEmail = sessionStorage.getItem("userEmail");
-        const userCpf = sessionStorage.getItem("userCpf");
+
+        function getDashboardPath() {
+            const tipo = (tipoUsuario || "").toLowerCase();
+            return tipo === "professor" ? "/dashboard-professor" : "/dashboard";
+        }
+
+        function abrirPopupAutenticacao() {
+            showAuthRequiredPopup({
+                title: "Acesso ao Dashboard",
+                message: "Para entrar no dashboard, faça login ou crie sua conta."
+            });
+        }
 
         // determinar caminhos baseado na localização atual
         let basePath = "";
@@ -83,10 +89,9 @@ window.debugLog = function (msg) {
 
         // verificar se usuário está logado
         if (usuario && usuario !== "null" && usuario !== "") {
-            debugLog("Usuário logado - atualizando header com perfil");
-
             headerUserDiv.innerHTML = `
                 <div class="user-profile" style="display: flex; align-items: center; gap: 12px;">
+                    <a href="${getDashboardPath()}" class="dashboard-link-btn header-action-btn header-action-btn-primary">Dashboard</a>
                     <h2 style="margin: 0; color: #fff; font-size: 18px; font-weight: 500;">${usuario}</h2>
                     <div class="user-avatar" style="cursor: pointer;" title="Clique para fazer logout">
                         <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -113,20 +118,24 @@ window.debugLog = function (msg) {
                         window.location.href = "/";
                     }
                 });
-                debugLog("Event listener de logout adicionado");
             }
         } else {
-            debugLog("Usuário não logado - atualizando header com botões");
-
             // usuário não logado - mostrar botões de login e cadastro
             headerUserDiv.innerHTML = `
                 <div style="display: flex; gap: 8px; align-items: center;">
-                    <a href="/login" class="login-btn" style="border-radius: 20px; background-color: #3E8EFF; border: none; padding: 8px 16px; text-decoration: none; color: white; font-size: 14px; font-weight: 500;">Login</a>
-                    <a href="/cadastro" class="signup-btn" style="border-radius: 20px; background-color: #3E8EFF; border: none; padding: 8px 16px; text-decoration: none; color: white; font-size: 14px; font-weight: 500;">Cadastro</a>
+                    <a href="#" id="dashboard-guest-btn" class="dashboard-btn header-action-btn header-action-btn-dark">Dashboard</a>
+                    <a href="/login" class="login-btn header-action-btn header-action-btn-primary">Login</a>
+                    <a href="/cadastro" class="signup-btn header-action-btn header-action-btn-primary">Cadastro</a>
                 </div>
             `;
-        }
 
-        debugLog("Header atualizado com sucesso!");
+            const dashboardGuestBtn = document.getElementById("dashboard-guest-btn");
+            if (dashboardGuestBtn) {
+                dashboardGuestBtn.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    abrirPopupAutenticacao();
+                });
+            }
+        }
     }
 })();

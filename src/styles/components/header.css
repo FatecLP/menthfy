@@ -83,3 +83,27 @@ header ul li{
     font-size: 18px;
     padding-bottom: 2px;
 }
+
+.header-action-btn {
+    border-radius: 20px;
+    border: none;
+    padding: 9px 18px;
+    line-height: 1.2;
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #fff !important;
+    font-family: Inter, Arial, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600;
+}
+
+.header-action-btn-primary {
+    background-color: #3E8EFF;
+}
+
+.header-action-btn-dark {
+    background-color: #1F2937;
+}

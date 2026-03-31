@@ -5,7 +5,7 @@ let card = document.querySelectorAll('.card-professor')
 
 // adicionar evento de click no primeiro card para ir ao perfil
 card[0].addEventListener('click', function perfil(){
-    window.location.href = 'Alberto.html'
+    window.location.href = '/alberto'
 })
 
 // animação ao tirar o mouse dos cards de professores
