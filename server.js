@@ -35,6 +35,11 @@ app.get('/alberto', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages', 'catalog', 'Alberto.html'));
 });
 
+// contato
+app.get('/contato', (req, res) => {
+    res.sendFile(path.join(__dirname, 'pages', 'contato.html'));
+});
+
 // dashboard
 app.get('/dashboard', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages', 'dashboard', 'dashboard-aluno.html'));
