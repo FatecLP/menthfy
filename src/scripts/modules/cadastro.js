@@ -93,11 +93,21 @@ async function cadastrarUsuario(e) {
     const tipo = document.getElementById("tipo").value;
 
     // Validações
-    if (!username || username.length < 3) {
+    const usernameRegex = /^(?!.*\s)[a-zA-Z0-9_\-]{3,32}$/; // sem espaços, 3-32, alfanum + _ -
+    if (!username) {
         await Swal.fire({
             icon: "error",
             title: "Erro",
-            text: "Nome de usuário deve ter pelo menos 3 caracteres."
+            text: "Nome de usuário não pode ficar vazio."
+        });
+        return;
+    }
+
+    if (!usernameRegex.test(username)) {
+        await Swal.fire({
+            icon: "error",
+            title: "Erro",
+            text: "Nome de usuário deve ter 3-32 caracteres e conter apenas letras, números, sublinhado ou hífen sem espaços."
         });
         return;
     }
