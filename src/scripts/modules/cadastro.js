@@ -4,18 +4,36 @@ document.addEventListener("DOMContentLoaded", function () {
     if (window.location.pathname.includes("/cadastro") || window.location.pathname.includes("cadastro.html")) {
         if (showAlreadyLogged()) return;
         const form = document.getElementById("cadastroForm");
+        const cpfInput = document.getElementById("cpf");
+
+        if (cpfInput) {
+            cpfInput.addEventListener("input", formatCpfInput);
+        }
+
         if (form) {
             form.addEventListener("submit", cadastrarUsuario);
         }
     }
 });
 
+function formatCpfInput(event) {
+    let value = event.target.value.replace(/\D/g, "");
+    value = value.slice(0, 11);
+    value = value
+        .replace(/(\d{3})(\d)/, "$1.$2")
+        .replace(/(\d{3})(\d)/, "$1.$2")
+        .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+    event.target.value = value;
+}
+
+
 async function cadastrarUsuario(e) {
     e.preventDefault();
 
     // dados do formulário
     const username = document.getElementById("username").value.trim();
-    const cpf = document.getElementById("cpf").value.trim();
+    const rawCpf = document.getElementById("cpf").value.trim();
+    const cpf = rawCpf.replace(/\D/g, "");
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
     const tipo = document.getElementById("tipo").value;
@@ -48,7 +66,7 @@ async function cadastrarUsuario(e) {
 
     const novoUsuario = {
         nome: username,
-        cpf: Number(cpf),
+        cpf,
         email,
         senha: password,
         tipoUsuario: tipo.charAt(0).toUpperCase() + tipo.slice(1),
