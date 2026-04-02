@@ -28,7 +28,7 @@
             <h2 class="text-center mb-3">Criar conta</h2>
             <div class="mb-3">
                 <label for="username" class="form-label">Nome de usuário</label>
-                <input type="text" class="form-control" id="username" name="username" required minlength="3" maxlength="32">
+                <input type="text" class="form-control" id="username" name="username" required minlength="3" maxlength="32" placeholder="Seu nome de usuário">
             </div>
             <div class="mb-3">
                 <label for="cpf" class="form-label">CPF</label>
@@ -36,19 +36,19 @@
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">E-mail</label>
-                <input type="email" class="form-control" id="email" name="email" required autocomplete="username">
+                <input type="email" class="form-control" id="email" name="email" required autocomplete="username" placeholder="seu@email.com">
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Senha</label>
                 <div class="password-input-wrap">
-                    <input type="password" class="form-control" id="password" name="password" required minlength="6" autocomplete="new-password">
+                    <input type="password" class="form-control" id="password" name="password" required minlength="6" autocomplete="new-password" placeholder="Sua senha">
                     <img class="password-toggle-icon" data-target="password" src="https://www.svgrepo.com/show/380007/eye-password-hide.svg" alt="Mostrar senha" title="Mostrar senha" />
                 </div>
             </div>
             <div class="mb-3">
                 <label for="confirmPassword" class="form-label">Confirmar Senha</label>
                 <div class="password-input-wrap">
-                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required minlength="6" autocomplete="new-password">
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required minlength="6" autocomplete="new-password" placeholder="Repetir senha">
                     <img class="password-toggle-icon" data-target="confirmPassword" src="https://www.svgrepo.com/show/380007/eye-password-hide.svg" alt="Mostrar senha" title="Mostrar senha" />
                 </div>
                 <small id="passwordMatchMessage" class="text-danger" style="display:none;">As senhas não coincidem.</small>
