@@ -5,9 +5,16 @@ document.addEventListener("DOMContentLoaded", function () {
         if (showAlreadyLogged()) return;
         const form = document.getElementById("cadastroForm");
         const cpfInput = document.getElementById("cpf");
+        const passwordInput = document.getElementById("password");
+        const confirmPasswordInput = document.getElementById("confirmPassword");
 
         if (cpfInput) {
             cpfInput.addEventListener("input", formatCpfInput);
+        }
+
+        if (passwordInput && confirmPasswordInput) {
+            passwordInput.addEventListener("input", checkPasswordMatch);
+            confirmPasswordInput.addEventListener("input", checkPasswordMatch);
         }
 
         if (form) {
@@ -15,6 +22,27 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 });
+
+function checkPasswordMatch() {
+    const passwordValue = document.getElementById("password").value;
+    const confirmPasswordValue = document.getElementById("confirmPassword").value;
+    const messageEl = document.getElementById("passwordMatchMessage");
+
+    if (!messageEl) return;
+
+    if (confirmPasswordValue === "") {
+        messageEl.style.display = "none";
+        return;
+    }
+
+    if (passwordValue !== confirmPasswordValue) {
+        messageEl.style.display = "block";
+        messageEl.textContent = "As senhas não coincidem.";
+    } else {
+        messageEl.style.display = "none";
+        messageEl.textContent = "";
+    }
+}
 
 function formatCpfInput(event) {
     let value = event.target.value.replace(/\D/g, "");
@@ -36,6 +64,7 @@ async function cadastrarUsuario(e) {
     const cpf = rawCpf.replace(/\D/g, "");
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
     const tipo = document.getElementById("tipo").value;
 
     // Validações
@@ -56,6 +85,11 @@ async function cadastrarUsuario(e) {
 
     if (!password || password.length < 6) {
         alert("A senha deve ter pelo menos 6 caracteres.");
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        alert("As senhas não coincidem.");
         return;
     }
 
