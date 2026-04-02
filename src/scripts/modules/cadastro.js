@@ -69,32 +69,56 @@ async function cadastrarUsuario(e) {
 
     // Validações
     if (!username || username.length < 3) {
-        alert("Nome de usuário deve ter pelo menos 3 caracteres.");
+        await Swal.fire({
+            icon: "error",
+            title: "Erro",
+            text: "Nome de usuário deve ter pelo menos 3 caracteres."
+        });
         return;
     }
 
     if (!cpf || !/^\d{11}$/.test(cpf)) {
-        alert("CPF deve conter exatamente 11 números.");
+        await Swal.fire({
+            icon: "error",
+            title: "Erro",
+            text: "CPF deve conter exatamente 11 números."
+        });
         return;
     }
 
     if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-        alert("Informe um e-mail válido.");
+        await Swal.fire({
+            icon: "error",
+            title: "Erro",
+            text: "Informe um e-mail válido."
+        });
         return;
     }
 
     if (!password || password.length < 6) {
-        alert("A senha deve ter pelo menos 6 caracteres.");
+        await Swal.fire({
+            icon: "error",
+            title: "Erro",
+            text: "A senha deve ter pelo menos 6 caracteres."
+        });
         return;
     }
 
     if (password !== confirmPassword) {
-        alert("As senhas não coincidem.");
+        await Swal.fire({
+            icon: "error",
+            title: "Erro",
+            text: "As senhas não coincidem."
+        });
         return;
     }
 
     if (!tipo || (tipo !== "aluno" && tipo !== "professor")) {
-        alert("Selecione o tipo de usuário.");
+        await Swal.fire({
+            icon: "error",
+            title: "Erro",
+            text: "Selecione o tipo de usuário."
+        });
         return;
     }
 
@@ -116,14 +140,27 @@ async function cadastrarUsuario(e) {
         const data = await res.json();
 
         if (!res.ok) {
-            alert(`Erro ao cadastrar: ${data.message}`);
+            await Swal.fire({
+                icon: "error",
+                title: "Erro ao cadastrar",
+                text: data.message || "Ocorreu um erro ao cadastrar."
+            });
             return;
         }
 
-        alert("Cadastro realizado com sucesso! Faça login para continuar.");
+        await Swal.fire({
+            icon: "success",
+            title: "Cadastro realizado",
+            text: "Cadastro realizado com sucesso! Faça login para continuar."
+        });
+
         window.location.href = "/login";
     } catch (err) {
         console.error("Erro ao cadastrar usuário:", err);
-        alert("Erro interno ao cadastrar. Tente novamente.");
+        await Swal.fire({
+            icon: "error",
+            title: "Erro interno",
+            text: "Erro interno ao cadastrar. Tente novamente."
+        });
     }
 }
