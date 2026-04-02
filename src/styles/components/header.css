@@ -107,3 +107,123 @@ header ul li{
 .header-action-btn-dark {
     background-color: #1F2937;
 }
+
+.user-profile {
+    position: relative;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+}
+
+#user-menu-name {
+    cursor: pointer;
+    transition: transform 150ms ease, color 150ms ease;
+}
+
+#user-menu-name:hover {
+    color: #dcdcf8;
+    transform: scale(1.03);
+}
+
+.user-avatar {
+    transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.user-avatar:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.user-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.user-menu {
+    position: absolute;
+    right: 0;
+    top: 56px;
+    background: #fff;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
+    padding: 8px;
+    width: 110px;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 180ms ease, transform 180ms ease;
+    pointer-events: none;
+}
+
+.user-menu-hidden {
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+}
+
+.user-menu-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.user-menu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.user-menu li {
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: center;
+    width: 100%; 
+}
+
+.user-menu li:last-child {
+    margin-bottom: 0;
+}
+
+.menu-action-btn {
+    width: 100%;
+    border: none;
+    background: #5F688F;
+    color: white;
+    border-radius: 8px;
+    padding: 10px 0;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+    font-family: Inter, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.menu-action-btn:hover {
+    background: #485477;
+}
