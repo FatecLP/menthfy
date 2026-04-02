@@ -87,33 +87,66 @@ import { showAuthRequiredPopup } from '../utils/authRequiredPopup.js';
         // verificar se usuário está logado
         if (usuario && usuario !== "null" && usuario !== "") {
             headerUserDiv.innerHTML = `
-                <div class="user-profile" style="display: flex; align-items: center; gap: 12px;">
+                <div class="user-profile" style="display: flex; align-items: center; justify-content: flex-end; gap: 12px; position: relative;">
                     <a href="${getDashboardPath()}" class="dashboard-link-btn header-action-btn header-action-btn-primary">Dashboard</a>
-                    <h2 style="margin: 0; color: #fff; font-size: 18px; font-weight: 500;">${usuario}</h2>
-                    <div class="user-avatar" style="cursor: pointer;" title="Clique para fazer logout">
-                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="20" cy="20" r="20" fill="#E5E7EB"/>
-                            <path d="M20 20C23.3137 20 26 17.3137 26 14C26 10.6863 23.3137 8 20 8C16.6863 8 14 10.6863 14 14C14 17.3137 16.6863 20 20 20Z" fill="#9CA3AF"/>
-                            <path d="M20 22C14.4771 22 10 26.4771 10 32V34C10 35.1046 10.8954 36 12 36H28C29.1046 36 30 35.1046 30 34V32C30 26.4771 25.5229 22 20 22Z" fill="#9CA3AF"/>
-                        </svg>
+                    <div class="user-right" style="display: flex; align-items: center; gap: 8px;">
+                        <div id="user-menu-trigger" class="user-avatar" title="Abrir menu de usuário">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="20" cy="20" r="20" fill="#E5E7EB"/>
+                                <path d="M20 20C23.3137 20 26 17.3137 26 14C26 10.6863 23.3137 8 20 8C16.6863 8 14 10.6863 14 14C14 17.3137 16.6863 20 20 20Z" fill="#9CA3AF"/>
+                                <path d="M20 22C14.4771 22 10 26.4771 10 32V34C10 35.1046 10.8954 36 12 36H28C29.1046 36 30 35.1046 30 34V32C30 26.4771 25.5229 22 20 22Z" fill="#9CA3AF"/>
+                            </svg>
+                        </div>
+                        <h2 id="user-menu-name" style="margin: 0; color: #fff; font-size: 18px; font-weight: 500; cursor: pointer;">${usuario}</h2>
+                    </div>
+                    <div class="user-menu user-menu-hidden" id="user-menu">
+                        <ul>
+                            <li><button id="logout-btn" class="menu-action-btn" type="button">Logout</button></li>
+                        </ul>
                     </div>
                 </div>
             `;
 
-            // logout ao clicar no avatar
-            const avatar = headerUserDiv.querySelector(".user-avatar");
-            if (avatar) {
-                avatar.addEventListener("click", function () {
-                    if (confirm("Tem certeza que deseja fazer logout?")) {
-                        // limpar dados da sessão
-                        sessionStorage.removeItem("usuario");
-                        sessionStorage.removeItem("tipoUsuario");
-                        sessionStorage.removeItem("userEmail");
-                        sessionStorage.removeItem("userCpf");
+            // menu de logout
+            const menuTrigger = headerUserDiv.querySelector('#user-menu-trigger');
+            const menuName = headerUserDiv.querySelector('#user-menu-name');
+            const userMenu = headerUserDiv.querySelector('#user-menu');
+            const logoutBtn = headerUserDiv.querySelector('#logout-btn');
 
-                        alert("Logout realizado com sucesso!");
-                        window.location.href = "/";
-                    }
+            const toggleMenu = function (event) {
+                event.stopPropagation();
+                if (!userMenu) return;
+                if (userMenu.classList.contains('user-menu-visible')) {
+                    userMenu.classList.remove('user-menu-visible');
+                    userMenu.classList.add('user-menu-hidden');
+                } else {
+                    userMenu.classList.remove('user-menu-hidden');
+                    userMenu.classList.add('user-menu-visible');
+                }
+            };
+
+            if (menuTrigger) {
+                menuTrigger.addEventListener('click', toggleMenu);
+            }
+            if (menuName) {
+                menuName.addEventListener('click', toggleMenu);
+            }
+
+            document.addEventListener('click', function (event) {
+                if (userMenu && !headerUserDiv.contains(event.target)) {
+                    userMenu.classList.remove('user-menu-visible');
+                    userMenu.classList.add('user-menu-hidden');
+                }
+            });
+
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function () {
+                    sessionStorage.removeItem('usuario');
+                    sessionStorage.removeItem('tipoUsuario');
+                    sessionStorage.removeItem('userEmail');
+                    sessionStorage.removeItem('userCpf');
+
+                    window.location.href = '/';
                 });
             }
         } else {
