@@ -40,11 +40,17 @@
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Senha</label>
-                <input type="password" class="form-control" id="password" name="password" required minlength="6" autocomplete="new-password">
+                <div class="password-input-wrap">
+                    <input type="password" class="form-control" id="password" name="password" required minlength="6" autocomplete="new-password">
+                    <img class="password-toggle-icon" data-target="password" src="https://www.svgrepo.com/show/380007/eye-password-hide.svg" alt="Mostrar senha" title="Mostrar senha" />
+                </div>
             </div>
             <div class="mb-3">
                 <label for="confirmPassword" class="form-label">Confirmar Senha</label>
-                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required minlength="6" autocomplete="new-password">
+                <div class="password-input-wrap">
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required minlength="6" autocomplete="new-password">
+                    <img class="password-toggle-icon" data-target="confirmPassword" src="https://www.svgrepo.com/show/380007/eye-password-hide.svg" alt="Mostrar senha" title="Mostrar senha" />
+                </div>
                 <small id="passwordMatchMessage" class="text-danger" style="display:none;">As senhas não coincidem.</small>
             </div>
             <div class="mb-3">

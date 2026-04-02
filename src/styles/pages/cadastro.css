@@ -33,6 +33,30 @@
     background: #f9fafb;
 }
 
+.password-input-wrap {
+    position: relative;
+}
+
+.password-input-wrap .form-control {
+    padding-right: 42px;
+}
+
+.password-toggle-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.password-toggle-icon:hover {
+    transform: translateY(-50%) scale(1.05);
+    opacity: 0.88;
+}
+
 .cadastro-container button {
     background: #5F688F;
     color: #fff;

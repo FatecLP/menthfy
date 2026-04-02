@@ -17,6 +17,11 @@ document.addEventListener("DOMContentLoaded", function () {
             confirmPasswordInput.addEventListener("input", checkPasswordMatch);
         }
 
+        const toggleIcons = document.querySelectorAll(".password-toggle-icon");
+        toggleIcons.forEach((icon) => {
+            icon.addEventListener("click", togglePasswordVisibility);
+        });
+
         if (form) {
             form.addEventListener("submit", cadastrarUsuario);
         }
@@ -41,6 +46,26 @@ function checkPasswordMatch() {
     } else {
         messageEl.style.display = "none";
         messageEl.textContent = "";
+    }
+}
+
+function togglePasswordVisibility(event) {
+    const icon = event.currentTarget;
+    const targetId = icon.dataset.target;
+    const input = document.getElementById(targetId);
+
+    if (!input) return;
+
+    if (input.type === "password") {
+        input.type = "text";
+        icon.src = "https://www.svgrepo.com/show/380010/eye-password-show.svg";
+        icon.alt = "Ocultar senha";
+        icon.setAttribute("title", "Ocultar senha");
+    } else {
+        input.type = "password";
+        icon.src = "https://www.svgrepo.com/show/380007/eye-password-hide.svg";
+        icon.alt = "Mostrar senha";
+        icon.setAttribute("title", "Mostrar senha");
     }
 }
 
