@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -48,6 +49,10 @@ app.get('/dashboard', (req, res) => {
 app.get('/dashboard-professor', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages', 'dashboard', 'dashboard-professor.html'));
 });
+
+// rotas de API
+const professorRoutes = require('./src/routes/professorRoutes');
+app.use('/api/professores', professorRoutes);
 
 // API mock
 const usuarios = [
