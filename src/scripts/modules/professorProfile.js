@@ -1,13 +1,42 @@
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch('/api/professores/nome/Alberto');
-        if (!response.ok) {
-            throw new Error('Erro ao buscar dados do professor');
+        const urlParams = new URLSearchParams(window.location.search);
+        const professorId = urlParams.get('id');
+
+        if (!professorId) {
+            await Swal.fire({
+                icon: 'error',
+                title: 'Professor não encontrado',
+                text: 'ID do professor não foi passado na URL.',
+                confirmButtonText: 'Ir para catálogo'
+            });
+            window.location.href = '/catalogo';
+            return;
         }
+
+        const response = await fetch(`/api/professores/${professorId}`);
+        if (!response.ok) {
+            await Swal.fire({
+                icon: 'error',
+                title: 'Professor não encontrado',
+                text: 'Não foi possível localizar esse professor.',
+                confirmButtonText: 'Ir para catálogo'
+            });
+            window.location.href = '/catalogo';
+            return;
+        }
+        
         const professor = await response.json();
 
+        document.querySelector('title').textContent = `Perfil de ${professor.nome}`;
         document.querySelector('.teacher-name').textContent = professor.nome;
         document.querySelector('.bio-text').textContent = professor.descricao;
+
+        const teacherImg = document.querySelector('.bio-teacher-img');
+        if (teacherImg && professor.foto_url) {
+            teacherImg.src = professor.foto_url;
+            teacherImg.alt = `${professor.nome} - foto do professor`;
+        }
         
         // contar do array enquanto não temos o total de avaliações no banco
         const totalAvaliacoes = professor.avaliacoes.length;

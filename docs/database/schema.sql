@@ -8,7 +8,9 @@ CREATE TABLE IF NOT EXISTS professores (
     descricao TEXT,
     media_avaliacao DECIMAL(3, 2) DEFAULT 0.00,
     quantidade_alunos INT DEFAULT 0,
-    tempo_resposta_minutos INT DEFAULT 60
+    tempo_resposta_minutos INT DEFAULT 60,
+    preco_hora DECIMAL(10,2) DEFAULT 50.00,
+    foto_url VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS alunos (
