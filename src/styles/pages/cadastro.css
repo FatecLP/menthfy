@@ -2,15 +2,36 @@
 
 /* Estilos para a página de cadastro */
 .cadastro-container {
-    max-width: 400px;
+    width: min(90%, 660px);
     margin: 80px auto;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-    padding: 40px 32px 32px 32px;
+    background: #5F688F;
+    color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(255,255,255,0.08);
+    padding: 44px 36px 36px 36px;
     display: flex;
     flex-direction: column;
     gap: 24px;
+}
+
+.cadastro-container {
+    border-radius: 20px;
+}
+
+.cadastro-container h2,
+.cadastro-container label,
+.cadastro-container small,
+.cadastro-container a {
+    color: #fff !important;
+}
+
+.cadastro-container input {
+    background: rgba(255,255,255,0.95);
+    color: #000;
+}
+
+.cadastro-container .form-control::placeholder {
+    color: #6b7280; /* cinza claro */
 }
 .cadastro-container h2 {
     text-align: center;
@@ -58,7 +79,7 @@
 }
 
 .cadastro-container button {
-    background: #5F688F;
+    background: #3E8EFF;
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -66,10 +87,11 @@
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.2s, box-shadow 0.2s;
 }
 .cadastro-container button:hover {
-    background: #49507a;
+    background: #2e6fd6;
+    box-shadow: 0 8px 18px rgba(62, 142, 255, 0.3);
 }
 .cadastro-container a {
     color: #5F688F !important;
