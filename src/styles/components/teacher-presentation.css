@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    padding-top: 40px;
+    padding-top: 10px;
 }
 .teacher-name{
     font-size: 40px;

@@ -32,8 +32,8 @@ app.get('/catalogo', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages', 'catalog', 'catalogo.html'));
 });
 
-app.get('/alberto', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages', 'catalog', 'Alberto.html'));
+app.get('/perfil', (req, res) => {
+    res.sendFile(path.join(__dirname, 'pages', 'catalog', 'perfil.html'));
 });
 
 // contato
