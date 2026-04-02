@@ -6,16 +6,6 @@ import { showAuthRequiredPopup } from '../utils/authRequiredPopup.js';
 
     // aguardar DOM carregar antes de processar
     document.addEventListener("DOMContentLoaded", function () {
-        // verificar se é página que deve ser processada
-        if (
-            window.location.pathname.includes("/auth/") ||
-            window.location.pathname.includes("/login") ||
-            window.location.pathname.includes("/cadastro") ||
-            window.location.pathname.includes("/recuperar")
-        ) {
-            return;
-        }
-
         processarHeader();
     });
 
@@ -150,22 +140,34 @@ import { showAuthRequiredPopup } from '../utils/authRequiredPopup.js';
                 });
             }
         } else {
-            // usuário não logado - mostrar botões de login e cadastro
-            headerUserDiv.innerHTML = `
-                <div style="display: flex; gap: 8px; align-items: center;">
-                    <a href="#" id="dashboard-guest-btn" class="dashboard-btn header-action-btn header-action-btn-dark">Dashboard</a>
+            // usuário não logado
+            const isLoginPage = pathname.includes("/login");
+            const isCadastroPage = pathname.includes("/cadastro");
+            const isRecuperarPage = pathname.includes("/recuperar");
+
+            let authLinksHtml = "";
+
+            if (isLoginPage) {
+                authLinksHtml = `<a href="/cadastro" class="signup-btn header-action-btn header-action-btn-primary">Cadastro</a>`;
+            } else if (isCadastroPage) {
+                authLinksHtml = `<a href="/login" class="login-btn header-action-btn header-action-btn-primary">Login</a>`;
+            } else if (isRecuperarPage) {
+                authLinksHtml = `
                     <a href="/login" class="login-btn header-action-btn header-action-btn-primary">Login</a>
                     <a href="/cadastro" class="signup-btn header-action-btn header-action-btn-primary">Cadastro</a>
+                `;
+            } else {
+                authLinksHtml = `
+                    <a href="/login" class="login-btn header-action-btn header-action-btn-primary">Login</a>
+                    <a href="/cadastro" class="signup-btn header-action-btn header-action-btn-primary">Cadastro</a>
+                `;
+            }
+
+            headerUserDiv.innerHTML = `
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    ${authLinksHtml}
                 </div>
             `;
-
-            const dashboardGuestBtn = document.getElementById("dashboard-guest-btn");
-            if (dashboardGuestBtn) {
-                dashboardGuestBtn.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    abrirPopupAutenticacao();
-                });
-            }
         }
     }
 })();
