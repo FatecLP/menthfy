@@ -23,35 +23,42 @@
             <div></div>
         </div>
     </header>
-    <main style="flex: 1;">
-        <form class="cadastro-container" id="cadastroForm" style="max-width: 400px; margin: 32px auto 60px auto; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 24px; display: flex; flex-direction: column; gap: 20px;">
+    <main class="split-screen">
+        <section class="split-left"></section>
+        <section class="split-right">
+            <form class="cadastro-container" id="cadastroForm">
+
             <h2 class="text-center mb-3">Criar conta</h2>
-            <div class="mb-3">
-                <label for="username" class="form-label">Nome de usuário</label>
-                <input type="text" class="form-control" id="username" name="username" required minlength="3" maxlength="32" placeholder="Seu nome de usuário">
-            </div>
-            <div class="mb-3">
-                <label for="cpf" class="form-label">CPF</label>
-                <input type="text" class="form-control" id="cpf" name="cpf" required inputmode="numeric" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" maxlength="14" placeholder="000.000.000-00">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="username" class="form-label">Nome de usuário</label>
+                    <input type="text" class="form-control" id="username" name="username" required minlength="3" maxlength="32" placeholder="Seu nome de usuário">
+                </div>
+                <div class="form-group">
+                    <label for="cpf" class="form-label">CPF</label>
+                    <input type="text" class="form-control" id="cpf" name="cpf" required inputmode="numeric" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" maxlength="14" placeholder="000.000.000-00">
+                </div>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">E-mail</label>
                 <input type="email" class="form-control" id="email" name="email" required autocomplete="username" placeholder="seu@email.com">
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Senha</label>
-                <div class="password-input-wrap">
-                    <input type="password" class="form-control" id="password" name="password" required minlength="6" autocomplete="new-password" placeholder="Sua senha">
-                    <img class="password-toggle-icon" data-target="password" src="https://www.svgrepo.com/show/380007/eye-password-hide.svg" alt="Mostrar senha" title="Mostrar senha" />
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="password" class="form-label">Senha</label>
+                    <div class="password-input-wrap">
+                        <input type="password" class="form-control" id="password" name="password" required minlength="6" autocomplete="new-password" placeholder="Sua senha">
+                        <img class="password-toggle-icon" data-target="password" src="https://www.svgrepo.com/show/380007/eye-password-hide.svg" alt="Mostrar senha" title="Mostrar senha" />
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3">
-                <label for="confirmPassword" class="form-label">Confirmar Senha</label>
-                <div class="password-input-wrap">
-                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required minlength="6" autocomplete="new-password" placeholder="Repetir senha">
-                    <img class="password-toggle-icon" data-target="confirmPassword" src="https://www.svgrepo.com/show/380007/eye-password-hide.svg" alt="Mostrar senha" title="Mostrar senha" />
+                <div class="form-group">
+                    <label for="confirmPassword" class="form-label">Confirmar Senha</label>
+                    <div class="password-input-wrap">
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required minlength="6" autocomplete="new-password" placeholder="Repetir senha">
+                        <img class="password-toggle-icon" data-target="confirmPassword" src="https://www.svgrepo.com/show/380007/eye-password-hide.svg" alt="Mostrar senha" title="Mostrar senha" />
+                    </div>
+                    <small id="passwordMatchMessage" class="text-danger" style="display:none;">As senhas não coincidem.</small>
                 </div>
-                <small id="passwordMatchMessage" class="text-danger" style="display:none;">As senhas não coincidem.</small>
             </div>
             <div class="mb-3">
                 <label for="tipo" class="form-label">Tipo de usuário</label>
@@ -61,11 +68,12 @@
                 </select>
             </div>
             <button type="submit" class="btn btn-primary w-100">Cadastrar</button>
-            <div class="d-flex justify-content-between align-items-center mt-2">
+            <div class="form-actions">
                 <a href="/login">Já tenho conta</a>
                 <a href="/recuperar">Esqueci a senha</a>
             </div>
         </form>
+        </section>
     </main>
     <div class="footer-1">
         <div class="footer-left">

@@ -1,21 +1,44 @@
 @import url('../components/already-logged.css');
 
-/* Estilos para a página de cadastro */
-.cadastro-container {
-    width: min(90%, 660px);
-    margin: 80px auto;
-    background: #5F688F;
-    color: #fff;
-    border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(255,255,255,0.08);
-    padding: 44px 36px 36px 36px;
+/* --------------------------------------------------
+   split screen
+   --------------------------------------------------*/
+
+.split-screen {
     display: flex;
-    flex-direction: column;
-    gap: 24px;
+    min-height: calc(100vh - 140px);
 }
 
+.split-left {
+    width: 50%;
+    background: #ffffff url('/public/assets/images/illustrations/cadastro.svg') no-repeat center center;
+    background-size: 80%;
+}
+
+.split-right {
+    width: 50%;
+    background: #f4f6fb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+/* --------------------------------------------------
+   container do formulário
+   --------------------------------------------------*/
+
 .cadastro-container {
+    width: min(90%, 660px);
+    margin: 0 auto;
+    background: #5F688F;
+    color: #fff;
     border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(255,255,255,0.08);
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .cadastro-container h2,
@@ -25,33 +48,54 @@
     color: #fff !important;
 }
 
-.cadastro-container input {
-    background: rgba(255,255,255,0.95);
-    color: #000;
-}
-
-.cadastro-container .form-control::placeholder {
-    color: #6b7280; /* cinza claro */
-}
 .cadastro-container h2 {
     text-align: center;
     color: #5F688F;
     font-size: 28px;
     margin-bottom: 12px;
 }
+
+/* --------------------------------------------------
+   layout dos campos
+   --------------------------------------------------*/
+
+.form-row {
+    display: flex;
+    width: 100%;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.form-row .form-group {
+    flex: 1;
+    min-width: 0;
+}
+
 .cadastro-container label {
     font-size: 16px;
     color: #333;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
+
 .cadastro-container input {
     width: 100%;
     padding: 10px 12px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     font-size: 16px;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     background: #f9fafb;
+    color: #000;
+}
+
+.cadastro-container .form-control::placeholder,
+.cadastro-container input::placeholder,
+.cadastro-container input:-ms-input-placeholder,
+.cadastro-container input::-ms-input-placeholder,
+.cadastro-container input::-webkit-input-placeholder {
+    color: #a0aec0;
+    font-size: 0.9rem;
+    opacity: 0.8;
 }
 
 .password-input-wrap {
@@ -78,6 +122,10 @@
     opacity: 0.88;
 }
 
+/* --------------------------------------------------
+   ações do formulário
+   --------------------------------------------------*/
+
 .cadastro-container button {
     background: #3E8EFF;
     color: #fff;
@@ -89,19 +137,62 @@
     cursor: pointer;
     transition: background 0.2s, box-shadow 0.2s;
 }
+
 .cadastro-container button:hover {
     background: #2e6fd6;
     box-shadow: 0 8px 18px rgba(62, 142, 255, 0.3);
 }
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 8px;
+    padding-top: 0.25rem;
+}
+
+.form-actions a {
+    color: #fff !important;
+    font-size: 0.9rem;
+    text-decoration: underline;
+}
+
 .cadastro-container a {
-    color: #5F688F !important;
+    color: #fff !important;
     text-decoration: underline !important;
     font-size: 0.98rem;
 }
+
 .cadastro-container a:hover {
-    color: #49507a !important;
+    color: #d7e5ff !important;
     text-decoration: underline !important;
 }
+
+/* --------------------------------------------------
+   responsividade
+   --------------------------------------------------*/
+
+@media (max-width: 768px) {
+    .split-left {
+        display: none;
+    }
+
+    .split-right {
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .cadastro-container {
+        width: min(100%, 100%);
+        margin: 20px auto;
+        border-radius: 12px;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+}
+
 .footer-1 {
     margin-top: auto;
 }
