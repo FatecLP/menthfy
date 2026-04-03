@@ -19,7 +19,11 @@ async function recuperarSenha(e) {
 
     // validar formato do e-mail
     if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-        alert('Informe um e-mail válido.');
+        await Swal.fire({
+            icon: 'error',
+            title: 'E-mail inválido',
+            text: 'Informe um e-mail válido.'
+        });
         return;
     }
     
@@ -47,12 +51,24 @@ async function recuperarSenha(e) {
         // procurar usuário pelo e-mail
         const user = users.find(u => u.email === email);
         if (user) {
-            alert('Um e-mail de recuperação foi enviado para ' + email);
+            await Swal.fire({
+                icon: 'success',
+                title: 'E-mail enviado',
+                text: 'Um e-mail de recuperação foi enviado para ' + email
+            });
             window.location.href = '/login';
         } else {
-            alert('E-mail não cadastrado.');
+            await Swal.fire({
+                icon: 'error',
+                title: 'E-mail não cadastrado',
+                text: 'O e-mail informado não está registrado.'
+            });
         }
     } catch (err) {
-        alert('Erro.');
+        await Swal.fire({
+            icon: 'error',
+            title: 'Erro',
+            text: 'Ocorreu um erro, tente novamente mais tarde.'
+        });
     }
 }
