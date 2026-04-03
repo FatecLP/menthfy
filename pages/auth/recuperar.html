@@ -24,19 +24,22 @@
             <div></div>
         </div>
     </header>
-    <main style="flex: 1;">
-        <form class="login-container" id="recuperarForm">
-            <h2 class="text-center mb-3">Recuperar Senha</h2>
-            <div class="mb-3">
-                <label for="email" class="form-label">E-mail cadastrado</label>
-                <input type="email" class="form-control" id="email" name="email" required autocomplete="username">
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Enviar recuperação</button>
-            <div class="d-flex justify-content-between align-items-center mt-2">
-                <a href="/login">Já tenho conta</a>
-                <a href="/cadastro">Cadastrar</a>
-            </div>
-        </form>
+    <main class="split-screen">
+        <section class="split-left"></section>
+        <section class="split-right">
+            <form class="login-container" id="recuperarForm">
+                <h2 class="text-center mb-3">Recuperar Senha</h2>
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-mail cadastrado</label>
+                    <input type="email" class="form-control" id="email" name="email" required autocomplete="username" placeholder="seu@email.com">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Enviar recuperação</button>
+                <div class="form-actions">
+                    <a href="/login">Já tenho conta</a>
+                    <a href="/cadastro">Cadastrar</a>
+                </div>
+            </form>
+        </section>
     </main>
     <div class="footer-1">
         <div class="footer-left">
