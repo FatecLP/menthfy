@@ -112,6 +112,15 @@ async function cadastrarUsuario(e) {
         return;
     }
 
+    if (/^\d+$/.test(username)) {
+        await Swal.fire({
+            icon: "error",
+            title: "Erro",
+            text: "Nome de usuário não pode conter somente números."
+        });
+        return;
+    }
+
     if (!cpf || !/^\d{11}$/.test(cpf)) {
         await Swal.fire({
             icon: "error",
