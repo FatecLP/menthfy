@@ -1,39 +1,150 @@
 @import url('../components/already-logged.css');
 
-/* Estilos para a página de cadastro */
+/* --------------------------------------------------
+   split screen
+   --------------------------------------------------*/
+
+.split-screen {
+    display: flex;
+    min-height: calc(100vh - 140px);
+}
+
+.split-left {
+    width: 50%;
+    background: #ffffff url('/public/assets/images/illustrations/cadastro.svg') no-repeat center center;
+    background-size: 95%;
+}
+
+.split-right {
+    width: 50%;
+    background: #f4f6fb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+/* --------------------------------------------------
+   container do formulário
+   --------------------------------------------------*/
+
 .cadastro-container {
-    max-width: 400px;
-    margin: 80px auto;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-    padding: 40px 32px 32px 32px;
+    width: min(90%, 660px);
+    margin: 0 auto;
+    background: #5F688F;
+    color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 14px 48px rgba(0,0,0,0.28), 0 4px 16px rgba(0,0,0,0.16), inset 0 0 0 1px rgba(255,255,255,0.1);
+    padding: 24px 28px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 12px;
 }
+
+.cadastro-container h2,
+.cadastro-container label,
+.cadastro-container small,
+.cadastro-container a {
+    color: #fff !important;
+}
+
 .cadastro-container h2 {
     text-align: center;
     color: #5F688F;
     font-size: 28px;
     margin-bottom: 12px;
 }
+
+/* --------------------------------------------------
+   layout dos campos
+   --------------------------------------------------*/
+
+.form-row {
+    display: flex;
+    width: 100%;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.form-row .form-group {
+    flex: 1;
+    min-width: 0;
+}
+
 .cadastro-container label {
     font-size: 16px;
     color: #333;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
-.cadastro-container input {
+
+.cadastro-container input,
+.cadastro-container select {
     width: 100%;
     padding: 10px 12px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     font-size: 16px;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     background: #f9fafb;
+    color: #000;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
+
+.cadastro-container select:hover,
+.cadastro-container select:focus,
+.cadastro-container select:active {
+    transform: scale(1.01);
+    opacity: 0.95;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.2);
+}
+
+.cadastro-container input:focus,
+.cadastro-container select:focus {
+    outline: 1px solid #000;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.2);
+    border-color: #000;    transform: scale(1.01);
+}
+
+.cadastro-container .form-control::placeholder,
+.cadastro-container input::placeholder,
+.cadastro-container input:-ms-input-placeholder,
+.cadastro-container input::-ms-input-placeholder,
+.cadastro-container input::-webkit-input-placeholder {
+    color: #a0aec0;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.password-input-wrap {
+    position: relative;
+}
+
+.password-input-wrap .form-control {
+    padding-right: 42px;
+}
+
+.password-toggle-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.password-toggle-icon:hover {
+    transform: translateY(-50%) scale(1.05);
+    opacity: 0.88;
+}
+
+/* --------------------------------------------------
+   ações do formulário
+   --------------------------------------------------*/
+
 .cadastro-container button {
-    background: #5F688F;
+    background: #3E8EFF;
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -41,20 +152,66 @@
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
+
 .cadastro-container button:hover {
-    background: #49507a;
+    background: #3E8EFF;
+    transform: scale(1.04);
+    box-shadow: 0 7px 16px rgba(0, 0, 0, 0.3);
 }
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 8px;
+    padding-top: 0.25rem;
+}
+
+.form-actions a {
+    color: #fff !important;
+    font-size: 0.9rem;
+    text-decoration: underline;
+}
+
 .cadastro-container a {
-    color: #5F688F !important;
+    color: #fff !important;
     text-decoration: underline !important;
     font-size: 0.98rem;
 }
+
 .cadastro-container a:hover {
-    color: #49507a !important;
+    color: #d7e5ff !important;
     text-decoration: underline !important;
 }
+
+/* --------------------------------------------------
+   responsividade
+   --------------------------------------------------*/
+
+@media (max-width: 768px) {
+    .split-left {
+        display: none;
+    }
+
+    .split-right {
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .cadastro-container {
+        width: min(100%, 100%);
+        margin: 20px auto;
+        border-radius: 12px;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+}
+
 .footer-1 {
     margin-top: auto;
 }
