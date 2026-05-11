@@ -5,5 +5,6 @@ const professorController = require('../controllers/professorController');
 router.get('/', professorController.getAllProfessores);
 router.get('/:id', professorController.getProfessorById);
 router.get('/nome/:nome', professorController.getProfessorByName);
+router.post("/", professorController.createProfessor);
 
 module.exports = router;

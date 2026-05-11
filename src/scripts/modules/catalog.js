@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const cardHTML = `
                     <section class="card-professor" data-id="${prof.id}">
                         <div class="teacher-img">
-                            <img src="${prof.foto_url}" alt="${prof.nome}" class="img-person" onerror="this.src='/public/assets/images/img1.jpg'" />
+                            <img src="${prof.foto_url || "/public/assets/images/default.webp"}" alt="${prof.nome}" class="img-person" onerror="this.src='/public/assets/images/default.webp'" />
                         </div>
                         <div class="prof">
                             <h2>${prof.nome}</h2>
