@@ -1,6 +1,5 @@
 CREATE DATABASE IF NOT EXISTS menthfy_db;
 USE menthfy_db;
-DROP DATABASE menthfy_db;
 CREATE TABLE IF NOT EXISTS professores (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
