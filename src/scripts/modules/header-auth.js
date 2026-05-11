@@ -134,7 +134,7 @@ import { showAuthRequiredPopup } from '../utils/authRequiredPopup.js';
                     sessionStorage.removeItem('usuario');
                     sessionStorage.removeItem('tipoUsuario');
                     sessionStorage.removeItem('userEmail');
-                    sessionStorage.removeItem('userCpf');
+                    sessionStorage.removeItem('userId');
 
                     window.location.href = '/';
                 });

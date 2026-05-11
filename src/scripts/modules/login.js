@@ -56,7 +56,7 @@ async function logar(event) {
         sessionStorage.setItem("usuario", data.usuario.nome);
         sessionStorage.setItem("tipoUsuario", data.usuario.tipoUsuario);
         sessionStorage.setItem("userEmail", data.usuario.email);
-        sessionStorage.setItem("userCpf", data.usuario.cpf);
+        sessionStorage.setItem("userId", data.usuario.id);
 
         await Swal.fire({
             title: "Login realizado com sucesso!",
