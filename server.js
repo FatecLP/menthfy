@@ -54,6 +54,10 @@ app.get('/dashboard-professor', (req, res) => {
 const professorRoutes = require('./src/routes/professorRoutes');
 app.use('/api/professores', professorRoutes);
 
+const alunoRoutes = require("./src/routes/alunosRoutes");
+
+app.use("/api/alunos", alunoRoutes);
+
 // API mock
 const usuarios = [
     { id: 1, nome: "Professor Teste", cpf: 12345678901, email: "prof@teste.com", senha: "123", tipoUsuario: "Professor" },
@@ -77,22 +81,67 @@ app.post('/usuarios', (req, res) => {
     res.status(201).json(novoUsuario);
 });
 
-app.post('/usuarios/login', (req, res) => {
-    const { email, senha } = req.body; 
+const db = require("./src/config/db");
 
-    const usuario = usuarios.find(u => u.email === email && u.senha === senha);
-    if (!usuario) {
-        return res.status(401).json({ error: true, message: "Credenciais inválidas" });
-    }
+app.post("/usuarios/login", async (req, res) => {
+    const { email, senha } = req.body;
 
-    res.status(200).json({ 
-        success: true, 
-        usuario: {
-            nome: usuario.nome,
-            email: usuario.email,
-            tipoUsuario: usuario.tipoUsuario
+    try {
+        const db = require("./src/config/db");
+
+        // procura aluno
+        const [alunos] = await db.query(
+            "SELECT * FROM alunos WHERE email = ?",
+            [email],
+        );
+
+        if (alunos.length > 0) {
+            const aluno = alunos[0];
+
+            if (aluno.senha !== senha) {
+                return res.status(401).json({ message: "Senha incorreta" });
+            }
+
+            return res.json({
+                usuario: {
+                    id: aluno.id,
+                    nome: aluno.nome,
+                    email: aluno.email,
+                    tipoUsuario: "Aluno",
+                },
+            });
         }
-    });
+
+        // procura professor
+        const [professores] = await db.query(
+            "SELECT * FROM professores WHERE email = ?",
+            [email],
+        );
+
+        if (professores.length > 0) {
+            const professor = professores[0];
+
+            if (professor.senha !== senha) {
+                return res.status(401).json({ message: "Senha incorreta" });
+            }
+
+            return res.json({
+                usuario: {
+                    id: professor.id,
+                    nome: professor.nome,
+                    email: professor.email,
+                    tipoUsuario: "Professor",
+                },
+            });
+        }
+
+        return res.status(401).json({
+            message: "Usuário não encontrado",
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Erro interno" });
+    }
 });
 
 app.listen(port, () => {

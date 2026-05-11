@@ -61,3 +61,41 @@ exports.getProfessorByName = async (req, res) => {
         res.status(500).json({ message: 'Erro interno do servidor' });
     }
 };
+
+exports.createProfessor = async (req, res) => {
+    const { nome, email, senha } = req.body;
+
+    const fotoPadrao = "/public/assets/images/default.webp";
+
+    try {
+        const [result] = await db.query(
+            `
+            INSERT INTO professores
+            (
+                nome,
+                email,
+                senha,
+                disciplina_principal,
+                descricao,
+                preco_hora,
+                foto_url
+            )
+            VALUES (?, ?, ?, 'Geral', '', 50.00, ?)
+            `,
+            [nome, email, senha, fotoPadrao],
+        );
+
+        res.status(201).json({
+            id: result.insertId,
+            nome,
+            email,
+            foto_url: fotoPadrao,
+        });
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            message: "Erro ao cadastrar professor",
+        });
+    }
+};

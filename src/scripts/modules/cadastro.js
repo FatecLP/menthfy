@@ -175,10 +175,17 @@ async function cadastrarUsuario(e) {
     };
 
     try {
-        const res = await fetch("/usuarios", {
+        
+        const endpoint = tipo === "aluno" ? "/api/alunos" : "/api/professores";
+
+        const res = await fetch(endpoint, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(novoUsuario),
+            body: JSON.stringify({
+                nome: username,
+                email: email,
+                senha: password
+            }),
         });
 
         const data = await res.json();
