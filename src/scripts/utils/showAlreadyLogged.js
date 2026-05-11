@@ -18,7 +18,7 @@ export function showAlreadyLogged(mainSelector = 'main') {
                 sessionStorage.removeItem("usuario");
                 sessionStorage.removeItem("tipoUsuario");
                 sessionStorage.removeItem("userEmail");
-                sessionStorage.removeItem("userCpf");
+                sessionStorage.removeItem("userId");
                 window.location.reload();
             }
             return true;

@@ -1,0 +1,134 @@
+@import url('../components/header.css');
+@import url('../components/footer.css');
+@import url('../global/fonts.css');
+
+:root{
+    --vc-bg: #f4f6fb;
+    --vc-panel: #ffffff;
+    --vc-accent: #5F688F;
+    --vc-primary: #3E8EFF;
+    --vc-text: #111418;
+    --vc-muted: #a0aec0;
+}
+
+/* Videochamada */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Lexend, "Noto Sans", sans-serif;
+    background: var(--vc-bg);
+    color: var(--vc-text);
+}
+
+.vc-main {
+    display: flex;
+    gap: 20px;
+    padding: 24px 40px;
+    min-height: 70vh;
+}
+
+.vc-left {
+    flex: 1;
+}
+
+.vc-chat {
+    width: 340px;
+    background: var(--vc-panel);
+    border-radius: 10px;
+    border: 1px solid var(--vc-accent);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 8px 8px 0 var(--vc-accent), 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.vc-video-area {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.vc-main-tile {
+    background: linear-gradient(180deg, rgba(0,0,0,0.02), transparent);
+    border-radius: 12px;
+    padding: 12px;
+    border: 1px solid rgba(0,0,0,0.04);
+}
+
+.video-placeholder {
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+    max-height: 640px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(16,24,40,0.06), rgba(255,255,255,0.02));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border: 2px dashed var(--vc-accent);
+}
+
+.video-placeholder::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0 8px, transparent 8px 16px);
+    opacity: 0.35;
+}
+
+.pulse {
+    animation: pulse 2.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(186,33,39,0); }
+    50% { box-shadow: 0 0 0 14px rgba(186,33,39,0.06); }
+    100% { box-shadow: 0 0 0 0 rgba(186,33,39,0); }
+}
+
+.connection-status {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    background: rgba(0,0,0,0.45);
+    color: #fff;
+    padding: 6px 8px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.controls { display: flex; gap: 8px; margin-top: 12px; }
+.btn { padding: 8px 12px; border-radius: 8px; border: 0; background: var(--vc-primary); color: #fff; cursor: pointer; }
+.btn.primary { background: var(--vc-primary); color: #fff; border: 0; }
+
+.vc-thumbnails { display: flex; gap: 10px; margin-top: 6px; }
+.thumb { width: 110px; height: 70px; border-radius: 8px; background: linear-gradient(180deg, rgba(0,0,0,0.02), transparent); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(0,0,0,0.04); }
+.thumb .name { font-weight: 600; font-size: 13px; }
+
+/* Estilos do chat */
+.chat-header { padding: 12px 16px; border-bottom: 1px solid rgba(0,0,0,0.04); display: flex; justify-content: space-between; align-items: center; }
+.chat-header h3 { margin: 0; }
+.role-badge { font-size: 13px; padding: 6px 8px; border-radius: 8px; background: var(--vc-accent); color: #fff; }
+.messages { flex: 1; overflow: auto; padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; background: linear-gradient(180deg, transparent, rgba(0,0,0,0.01)); }
+.message { max-width: 80%; padding: 10px 12px; border-radius: 10px; background: #f3f4f6; color: #111; border: 1px solid rgba(0,0,0,0.03); animation: msgIn 220ms ease; }
+.message.me { align-self: flex-end; background: var(--vc-primary); color: #fff; }
+
+@keyframes msgIn { from { transform: translateY(6px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+.chat-form { display: flex; padding: 12px; border-top: 1px solid rgba(0,0,0,0.04); gap: 8px; }
+.chat-form input { flex: 1; padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); }
+
+.vc-footer { padding: 12px 40px; color: rgba(0,0,0,0.5); }
+
+/* Responsividade */
+@media (max-width: 980px) {
+    .vc-chat { display: none; }
+    .vc-main { padding: 16px; }
+    .video-placeholder { max-height: 320px; }
+}

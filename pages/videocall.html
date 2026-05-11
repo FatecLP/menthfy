@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Lexend%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Baumans&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles/pages/video-call.css" />
+    <title>Videochamada — Menthfy</title>
+  </head>
+  <body>
+    <div class="vc-root">
+      <header>
+        <h1>menthfy</h1>
+        <div class="header-1">
+          <ul>
+            <li id="li1"><a href="/">Home</a></li>
+            <li id="li2"><a href="/catalogo">Catálogo</a></li>
+            <li id="li3"><a href="/contato">Contato</a></li>
+          </ul>
+          <div>
+            <h2 id="username"></h2>
+            <img src="/public/assets/images/maria-silva.png" alt="" />
+          </div>
+        </div>
+      </header>
+
+      <main class="vc-main">
+        <div class="vc-left">
+          <div class="vc-video-area">
+            <div class="vc-main-tile">
+              <div class="video-placeholder pulse" id="mainVideo">
+                <div class="connection-status">
+                  <span id="connectingDots">Conectando</span>
+                </div>
+              </div>
+              <div class="controls">
+                <button id="btnMute" class="btn">Silenciar</button>
+                <button id="btnCam" class="btn">Câmera</button>
+                <button id="btnScreen" class="btn" id="shareBtn">Compartilhar tela</button>
+              </div>
+            </div>
+
+            <div class="vc-thumbnails" id="thumbnails">
+            </div>
+          </div>
+        </div>
+
+        <aside class="vc-chat" id="chatPanel">
+          <div class="chat-header">
+            <h3 id="vcTitle">Videochamada</h3>
+            <div id="participantRole" class="role-badge"></div>
+          </div>
+
+          <div class="messages" id="messages"></div>
+
+          <form id="chatForm" class="chat-form">
+            <input
+              type="text"
+              id="chatInput"
+              placeholder="Escreva uma mensagem..."
+              autocomplete="off"
+            />
+            <button type="submit" class="btn primary">Enviar</button>
+          </form>
+        </aside>
+      </main>
+
+    <div class="footer-1">
+      <div class="footer-left">
+        <h1>menthfy</h1>
+      </div>
+      <div class="footer-center">
+        <div class="icones">
+          <a href=""><img src="/public/assets/icons/facebook.png" alt="Facebook"></a>
+          <a href=""><img src="/public/assets/icons/instagram.png" alt="Instagram"></a>
+          <a href=""><img src="/public/assets/icons/x.png" alt="X (Twitter)"></a>
+          <a href=""><img src="/public/assets/icons/in.png" alt="LinkedIn"></a>
+          <a href=""><img src="/public/assets/icons/youtube-app-white-icon 1.png" alt="YouTube"></a>
+        </div>
+        <span class="footer-copy">Copyright &copy; 2025 | Menthfy - Todos os direitos reservados.</span>
+      </div>
+      <div class="footer-right">
+        <a href="#" class="topo-btn">Topo</a>
+      </div>
+    </div>
+    </div>
+
+    <script type="module" src="/src/scripts/modules/video-call.js"></script>
+    <script type="module" src="/src/scripts/modules/header-auth.js"></script>
+  </body>
+</html>

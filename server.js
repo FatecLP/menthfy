@@ -50,6 +50,11 @@ app.get('/dashboard-professor', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages', 'dashboard', 'dashboard-professor.html'));
 });
 
+// videochamada
+app.get('/videocall', (req, res) => {
+    res.sendFile(path.join(__dirname, 'pages', 'videocall.html'));
+});
+
 // rotas de API
 const professorRoutes = require('./src/routes/professorRoutes');
 app.use('/api/professores', professorRoutes);
