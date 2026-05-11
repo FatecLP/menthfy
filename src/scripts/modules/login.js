@@ -3,7 +3,10 @@ import { showAlreadyLogged } from "../utils/showAlreadyLogged.js";
 const API_URL = "";
 
 document.addEventListener("DOMContentLoaded", function () {
-    if (window.location.pathname.includes("/login") || window.location.pathname.includes("login.html")) {
+    if (
+        window.location.pathname.includes("/login") ||
+        window.location.pathname.includes("login.html")
+    ) {
         if (showAlreadyLogged()) return;
         const form = document.getElementById("loginForm");
         if (form) {
@@ -52,7 +55,7 @@ async function logar(event) {
         }
 
         const data = await response.json();
-
+        sessionStorage.setItem("userId", data.usuario.id);
         sessionStorage.setItem("usuario", data.usuario.nome);
         sessionStorage.setItem("tipoUsuario", data.usuario.tipoUsuario);
         sessionStorage.setItem("userEmail", data.usuario.email);
