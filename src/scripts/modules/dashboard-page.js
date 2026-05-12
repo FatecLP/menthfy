@@ -2,6 +2,7 @@ import {
     verifyDashboardAuthentication,
     initializeDashboardLayout,
 } from "../utils/dashboardAuth.js";
+import { MENTORSHIP_API_BASE_URL } from "../config/api.js";
 
 document.addEventListener("DOMContentLoaded", async function () {
     if (verifyDashboardAuthentication()) {
@@ -28,7 +29,7 @@ async function carregarSolicitacoes() {
         if (!professorId) return;
 
         const response = await fetch(
-            `http://localhost:8080/api/mentorships/teacher/${professorId}`,
+            `${MENTORSHIP_API_BASE_URL}/teacher/${professorId}`,
         );
 
         if (!response.ok) {
@@ -89,7 +90,7 @@ async function carregarSolicitacoes() {
 async function aceitarMentoria(id) {
     try {
         const response = await fetch(
-            `http://localhost:8080/api/mentorships/${id}/accept`,
+            `${MENTORSHIP_API_BASE_URL}/${id}/accept`,
             {
                 method: "PUT",
             },
@@ -113,7 +114,7 @@ async function carregarMentoriasAluno() {
         const studentId = sessionStorage.getItem("userId");
 
         const response = await fetch(
-            `http://localhost:8080/api/mentorships/student/${studentId}`,
+            `${MENTORSHIP_API_BASE_URL}/student/${studentId}`,
         );
 
         if (!response.ok) {
