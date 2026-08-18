@@ -121,22 +121,34 @@ npm start  # ou node server.js
 
 Acesse a aplicação no seu navegador: `http://localhost:3000`
 
+### Comandos úteis
+
+```bash
+npm run start:api   # sobe a API Java em services/mentorship-service
+npm run start:all   # sobe frontend Node e API Java juntos
+npm test            # executa os testes do Node
+npm run build       # valida os arquivos principais do Node
+```
+
+O frontend consome a mentoria por contrato REST em `/api/mentorships`, e o Node faz o proxy para o microserviço Java. Isso evita acoplamento direto da interface com a URL do serviço.
+
 ### Executar com Microserviço Java
 
 **Pré-requisitos:**
 
 - JDK 21 instalado
 - MySQL 9.6+ rodando com banco `menthfy_db`
+- Variáveis de ambiente definidas para banco, porta e CORS (`DB_URL`, `DB_USER`, `DB_PASS`, `MENTORSHIP_PORT`, `CORS_ALLOWED_ORIGIN`)
 
 ## Passo 1: Iniciar a API Java
 
 ```bash
-cd ./mentorship-service
+cd ./services/mentorship-service
 $env:JAVA_HOME="C:\Program Files\Java\jdk-21.0.10"  # Windows
 # Substitua pela sua versão exata do JDK 21
 
 ./mvnw spring-boot:run
-# A API estará disponível em: http://localhost:8080
+# A API estará disponível na porta definida por MENTORSHIP_PORT (padrão: http://localhost:8080)
 ```
 
 ## Passo 2: Iniciar o servidor Node.js
@@ -145,6 +157,12 @@ $env:JAVA_HOME="C:\Program Files\Java\jdk-21.0.10"  # Windows
 npm start  # ou node server.js
 # Frontend em: http://localhost:3000
 ```
+
+## Integração e CI
+
+O projeto mantém portas distintas por padrão: `3000` para o Node e `8080` para a API Java. A API Java aceita o frontend somente pelo CORS configurado em `CORS_ALLOWED_ORIGIN`, e o Node centraliza o consumo REST da mentoria por meio de proxy.
+
+O CI executa os dois lados separadamente: `npm test` e `npm run build` no frontend, e `./mvnw test package` no microserviço.
 
 **Endpoints disponíveis (Spring Boot):**
 

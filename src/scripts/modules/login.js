@@ -1,6 +1,5 @@
 import { showAlreadyLogged } from "../utils/showAlreadyLogged.js";
-
-const API_URL = "";
+import { API_BASE_URL } from "../config/api.js";
 
 document.addEventListener("DOMContentLoaded", function () {
     if (
@@ -27,7 +26,7 @@ async function logar(event) {
     }
 
     try {
-        const response = await fetch(`${API_URL}/usuarios/login`, {
+        const response = await fetch(`${API_BASE_URL}/usuarios/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

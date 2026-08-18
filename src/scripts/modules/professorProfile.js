@@ -1,3 +1,5 @@
+import { MENTORSHIP_API_BASE_URL } from "../config/api.js";
+
 document.addEventListener("DOMContentLoaded", async () => {
     try {
         const urlParams = new URLSearchParams(window.location.search);
@@ -119,7 +121,7 @@ btnContact.addEventListener("click", async () => {
     }
 
     try {
-        const response = await fetch("http://localhost:8080/api/mentorships", {
+        const response = await fetch(`${MENTORSHIP_API_BASE_URL}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
