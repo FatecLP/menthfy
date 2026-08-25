@@ -1,6 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 
+process.env.NODE_ENV = 'test';
 process.env.MENTORSHIP_API_URL = 'http://127.0.0.1:65535';
 
 const app = require('../app');
@@ -36,7 +37,7 @@ test('bad gateway se o serviço de mentoria não estiver disponível', async () 
 
         assert.equal(response.status, 502);
         const body = await response.json();
-        assert.equal(body.message, 'Microserviço indisponível.');
+        assert.equal(body.message, 'Serviço de mentoria indisponível.');
     } finally {
         server.close();
     }

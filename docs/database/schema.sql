@@ -1,5 +1,6 @@
 CREATE DATABASE IF NOT EXISTS menthfy_db;
 USE menthfy_db;
+
 CREATE TABLE IF NOT EXISTS professores (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
@@ -32,7 +33,7 @@ CREATE TABLE IF NOT EXISTS avaliacoes (
     FOREIGN KEY (aluno_id) REFERENCES alunos(id) ON DELETE CASCADE
 );
 
-CREATE TABLE mentorias (
+CREATE TABLE IF NOT EXISTS mentorias (
     id INT AUTO_INCREMENT PRIMARY KEY,
     aluno_id INT NOT NULL,
     professor_id INT NOT NULL,
@@ -40,15 +41,9 @@ CREATE TABLE mentorias (
     data_solicitacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE mentorships (
-   id BIGINT AUTO_INCREMENT PRIMARY KEY,
-   student_id BIGINT,
-   teacher_id BIGINT,
-   status VARCHAR(30)
+CREATE TABLE IF NOT EXISTS mentorships (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    student_id BIGINT,
+    teacher_id BIGINT,
+    status VARCHAR(30)
 );
-
-
-select * from alunos;
-
-ALTER TABLE alunos ADD senha VARCHAR(255);
-ALTER TABLE professores ADD senha VARCHAR(255);

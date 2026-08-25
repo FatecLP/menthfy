@@ -4,7 +4,6 @@
 @import url(../components/home-header.css);
 @import url(../components/header.css);
 @import url(../components/footer.css);
-@import url(../components/cart.css);
 
 /* Reset e Box Model */
 * {
@@ -48,11 +47,15 @@ header ul li {
     padding-bottom: 2px;
 }
 
-#li1, #li2, #li3 {
+#li1,
+#li2,
+#li3 {
     position: relative;
 }
 
-#li1::after, #li2::after, #li3::after {
+#li1::after,
+#li2::after,
+#li3::after {
     content: "";
     position: absolute;
     bottom: 0;
@@ -62,7 +65,9 @@ header ul li {
     transition: width 0.3s ease;
 }
 
-#li1:hover::after, #li2:hover::after, #li3:hover::after {
+#li1:hover::after,
+#li2:hover::after,
+#li3:hover::after {
     width: 100%;
 }
 
@@ -151,15 +156,19 @@ h1 {
         align-items: center;
         gap: 16px;
     }
+
     .marca-logo {
         height: 264px;
     }
+
     .marca-texto {
         margin-top: 29px;
     }
+
     .marca-texto h3 {
         font-size: 26px;
     }
+
     .marca-texto p {
         font-size: 18px;
     }
@@ -193,7 +202,7 @@ h1 {
     background: #23232b;
     border: none;
     border-radius: 14px;
-    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.12);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.12);
     transition: transform 0.18s;
 }
 
@@ -222,7 +231,8 @@ h1 {
 }
 
 /* Modais */
-.mod, .mod2 {
+.mod,
+.mod2 {
     height: 100%;
     width: 100%;
     position: absolute;
@@ -327,6 +337,7 @@ h1 {
     from {
         transform: scale(1);
     }
+
     to {
         transform: scale(1.07);
     }
@@ -339,12 +350,15 @@ h1 {
         flex-direction: column;
         height: 100px;
     }
+
     h1 {
         display: none;
     }
+
     .card-img-top {
         height: 120px;
     }
+
     .btn-success,
     .btn-danger {
         min-width: 120px;
