@@ -42,7 +42,7 @@ main.container {
 
 .contact-section h2 {
     font-size: 28px;
-    color: #333;
+    color: #3E8EFF !important;
     margin-bottom: 8px;
     font-weight: 600;
 }
