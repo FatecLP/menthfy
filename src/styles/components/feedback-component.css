@@ -1,39 +1,78 @@
-.feedbacks{
-    margin-left: 200px;
+.feedbacks {
+    max-width: 1200px;
+    margin: 20px auto 40px auto;
+    padding: 0 20px;
 }
-.comments{
-    margin-top: 24px;
-}
-.comment{
-    border: 2px solid #6a68687f;
-    border-radius: 15px;
-    width: 500px;
-    padding: 20px;
+
+.feedback {
+    font-size: 26px;
+    font-weight: 700;
+    color: #111827;
     margin-bottom: 20px;
 }
-.comment .student {
-    margin-bottom: 12px;
+
+.comments {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
-.student{
+
+.comment {
+    border: 1px solid #e5e7eb;
+    background-color: #fff;
+    border-radius: 14px;
+    width: 100%;
+    max-width: 650px;
+    padding: 18px 22px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.student {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 10px;
 }
-.user-id{
+
+.user-id {
     display: flex;
     align-items: center;
-    width: auto;
     gap: 12px;
-    font-weight: bold;
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 1rem;
 }
-.round-representation{
-    width: 40px;
-    height: 40px;
+
+.round-representation {
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     object-fit: cover;
+    flex-shrink: 0;
 }
-.stars{
-    display: flex;
+
+.stars {
+    display: inline-flex;
     align-items: center;
-    background-color: #f3f396f0;
+    gap: 6px;
+    background-color: #fef08a;
+    color: #854d0e;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 14px;
+    font-size: 0.9rem;
+}
+
+.stars .star {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.comment p {
+    color: #4b5563;
+    line-height: 1.5;
+    margin: 0;
+    font-size: 0.98rem;
 }

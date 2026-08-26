@@ -2,7 +2,23 @@ const db = require('../config/db');
 
 exports.getAllProfessores = async (req, res) => {
     try {
-        const [professores] = await db.query('SELECT * FROM professores');
+        const [professores] = await db.query(`
+            SELECT 
+                p.id,
+                p.nome,
+                p.disciplina_principal,
+                p.descricao,
+                p.quantidade_alunos,
+                p.tempo_resposta_minutos,
+                p.preco_hora,
+                p.foto_url,
+                p.email,
+                COALESCE(ROUND(AVG(a.nota), 1), p.media_avaliacao) as media_avaliacao,
+                COUNT(a.id) as total_avaliacoes
+            FROM professores p
+            LEFT JOIN avaliacoes a ON p.id = a.professor_id
+            GROUP BY p.id, p.nome, p.disciplina_principal, p.descricao, p.quantidade_alunos, p.tempo_resposta_minutos, p.preco_hora, p.foto_url, p.email, p.media_avaliacao
+        `);
         res.json(professores);
     } catch (error) {
         console.error('Erro ao buscar professores:', error);
@@ -28,6 +44,10 @@ exports.getProfessorById = async (req, res) => {
         `, [id]);
 
         professor.avaliacoes = avaliacoes;
+        if (avaliacoes.length > 0) {
+            const soma = avaliacoes.reduce((acc, curr) => acc + Number(curr.nota), 0);
+            professor.media_avaliacao = Number((soma / avaliacoes.length).toFixed(1));
+        }
         
         res.json(professor);
     } catch (error) {
@@ -54,6 +74,10 @@ exports.getProfessorByName = async (req, res) => {
         `, [professor.id]);
 
         professor.avaliacoes = avaliacoes;
+        if (avaliacoes.length > 0) {
+            const soma = avaliacoes.reduce((acc, curr) => acc + Number(curr.nota), 0);
+            professor.media_avaliacao = Number((soma / avaliacoes.length).toFixed(1));
+        }
         
         res.json(professor);
     } catch (error) {

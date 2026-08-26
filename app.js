@@ -1,84 +1,31 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
 const mentorshipApiBaseUrl =
     process.env.MENTORSHIP_API_URL ||
     `http://localhost:${process.env.MENTORSHIP_PORT || 8080}`;
 
+const distPath = path.join(__dirname, 'dist');
+const distIndexPath = path.join(distPath, 'index.html');
+const devIndexPath = path.join(__dirname, 'index.html');
+
 app.use(express.json());
+app.use('/assets', express.static(path.join(__dirname, 'public', 'assets')));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/src', express.static(path.join(__dirname, 'src')));
-app.use('/assets', express.static(path.join(__dirname, 'public', 'assets')));
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages', 'auth', 'login.html'));
-});
-
-app.get('/cadastro', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages', 'auth', 'cadastro.html'));
-});
-
-app.get('/recuperar', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages', 'auth', 'recuperar.html'));
-});
-
-app.get('/catalogo', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages', 'catalog', 'catalogo.html'));
-});
-
-app.get('/perfil', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages', 'catalog', 'perfil.html'));
-});
-
-app.get('/contato', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages', 'contato.html'));
-});
-
-app.get('/dashboard', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages', 'dashboard', 'dashboard-aluno.html'));
-});
-
-app.get('/dashboard-professor', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages', 'dashboard', 'dashboard-professor.html'));
-});
-
-app.get('/videocall', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages', 'videocall.html'));
-});
+if (fs.existsSync(distPath)) {
+    app.use(express.static(distPath));
+}
 
 const professorRoutes = require('./src/routes/professorRoutes');
 app.use('/api/professores', professorRoutes);
 
 const alunoRoutes = require('./src/routes/alunosRoutes');
 app.use('/api/alunos', alunoRoutes);
-
-const usuarios = [
-    { id: 1, nome: 'Professor Teste', cpf: 12345678901, email: 'prof@teste.com', senha: '123', tipoUsuario: 'Professor' },
-    { id: 2, nome: 'Aluno Teste', cpf: 10987654321, email: 'aluno@teste.com', senha: '123', tipoUsuario: 'Aluno' },
-];
-
-app.post('/usuarios', (req, res) => {
-    const { nome, cpf, email, senha, tipoUsuario } = req.body;
-
-    if (usuarios.some((u) => u.email === email)) {
-        return res.status(400).json({ error: true, message: 'E-mail já cadastrado' });
-    }
-
-    if (usuarios.some((u) => u.cpf === cpf)) {
-        return res.status(400).json({ error: true, message: 'CPF já cadastrado' });
-    }
-
-    const novoUsuario = { id: Date.now(), nome, cpf, email, senha, tipoUsuario };
-    usuarios.push(novoUsuario);
-
-    res.status(201).json(novoUsuario);
-});
 
 const db = require('./src/config/db');
 
@@ -138,7 +85,7 @@ async function proxyMentorshipRequest(req, res) {
     Object.entries(req.headers).forEach(([key, value]) => {
         const normalizedKey = key.toLowerCase();
 
-        if (['host', 'connection', 'content-length'].includes(normalizedKey)) {
+        if (['host', 'connection', 'content-length', 'origin', 'referer'].includes(normalizedKey)) {
             return;
         }
 
@@ -179,5 +126,26 @@ async function proxyMentorshipRequest(req, res) {
 }
 
 app.all(/^\/api\/mentorships(?:\/.*)?$/, proxyMentorshipRequest);
+
+function sendSpa(req, res) {
+    if (fs.existsSync(distIndexPath)) {
+        res.sendFile(distIndexPath);
+    } else {
+        res.sendFile(devIndexPath);
+    }
+}
+
+app.get([
+    '/',
+    '/login',
+    '/cadastro',
+    '/recuperar',
+    '/catalogo',
+    '/perfil',
+    '/contato',
+    '/dashboard',
+    '/dashboard-professor',
+    '/videocall'
+], sendSpa);
 
 module.exports = app;
