@@ -81,3 +81,10 @@ export async function acceptMentorship(id) {
   });
   return parseResponse(response, 'Erro ao aceitar mentoria.');
 }
+
+export async function cancelMentorship(id) {
+  const response = await fetch(`${MENTORSHIP_API_BASE_URL}/${id}/cancel`, {
+    method: 'PUT',
+  });
+  return parseResponse(response, 'Erro ao cancelar mentoria.');
+}

@@ -1,30 +1,70 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import AuthGuard from '../components/AuthGuard';
 import { getStoredUser } from '../utils/auth';
-import { fetchStudentMentorships } from '../services/api';
+import { fetchStudentMentorships, cancelMentorship } from '../services/api';
 
 export default function DashboardAlunoPage() {
   const user = getStoredUser();
   const [mentorias, setMentorias] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [cancellingId, setCancellingId] = useState(null);
+
+  const loadMentorias = useCallback(async () => {
+    if (!user?.id) return;
+    try {
+      const data = await fetchStudentMentorships(user.id);
+      setMentorias(data || []);
+    } catch (err) {
+      console.error('Erro ao carregar mentorias do aluno:', err);
+    } finally {
+      setLoading(false);
+    }
+  }, [user?.id]);
 
   useEffect(() => {
-    async function loadMentorias() {
-      if (!user?.id) return;
-      try {
-        const data = await fetchStudentMentorships(user.id);
-        setMentorias(data || []);
-      } catch (err) {
-        console.error('Erro ao carregar mentorias do aluno:', err);
-      } finally {
-        setLoading(false);
-      }
-    }
     loadMentorias();
-  }, [user?.id]);
+  }, [loadMentorias]);
+
+  async function handleCancelarMentoria(id) {
+    const result = await Swal.fire({
+      title: 'Cancelar mentoria?',
+      text: 'Tem certeza que deseja cancelar esta mentoria?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sim, cancelar',
+      cancelButtonText: 'Voltar',
+    });
+
+    if (!result.isConfirmed) return;
+
+    setCancellingId(id);
+    try {
+      await cancelMentorship(id);
+      await Swal.fire({
+        icon: 'success',
+        title: 'Mentoria cancelada!',
+        text: 'A mentoria foi cancelada com sucesso.',
+        timer: 1500,
+        showConfirmButton: false,
+      });
+      await loadMentorias();
+    } catch (err) {
+      console.error('Erro ao cancelar mentoria:', err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro',
+        text: err.message || 'Erro ao cancelar a mentoria.',
+      });
+    } finally {
+      setCancellingId(null);
+    }
+  }
 
   const sessoesAgendadas = mentorias.filter((m) => m.status === 'ACCEPTED').length;
   const totalProfessores = new Set(mentorias.map((m) => m.teacherId)).size;
@@ -120,6 +160,8 @@ export default function DashboardAlunoPage() {
                         ? 'Aceita'
                         : m.status === 'PENDING'
                         ? 'Pendente'
+                        : m.status === 'CANCELLED'
+                        ? 'Cancelada'
                         : 'Recusada';
 
                     return (
@@ -142,6 +184,16 @@ export default function DashboardAlunoPage() {
                             <small className={`${statusColor} font-medium`}>{statusText}</small>
                           </div>
                         </div>
+
+                        {m.status !== 'CANCELLED' && (
+                          <button
+                            onClick={() => handleCancelarMentoria(m.id)}
+                            disabled={cancellingId === m.id}
+                            className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3 py-1.5 rounded-lg text-sm font-medium transition cursor-pointer disabled:opacity-50"
+                          >
+                            {cancellingId === m.id ? 'Cancelando...' : 'Cancelar Mentoria'}
+                          </button>
+                        )}
                       </div>
                     );
                   })

@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import AuthGuard from '../components/AuthGuard';
 import { getStoredUser } from '../utils/auth';
-import { fetchTeacherMentorships, acceptMentorship } from '../services/api';
+import { fetchTeacherMentorships, acceptMentorship, cancelMentorship } from '../services/api';
 
 export default function DashboardProfessorPage() {
   const user = getStoredUser();
   const [mentorias, setMentorias] = useState([]);
   const [loading, setLoading] = useState(true);
   const [acceptingId, setAcceptingId] = useState(null);
+  const [cancellingId, setCancellingId] = useState(null);
 
-  async function loadSolicitacoes() {
+  const loadSolicitacoes = useCallback(async () => {
     if (!user?.id) return;
     try {
       const data = await fetchTeacherMentorships(user.id);
@@ -23,11 +24,11 @@ export default function DashboardProfessorPage() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [user?.id]);
 
   useEffect(() => {
     loadSolicitacoes();
-  }, [user?.id]);
+  }, [loadSolicitacoes]);
 
   async function handleAceitarMentoria(id) {
     setAcceptingId(id);
@@ -46,15 +47,53 @@ export default function DashboardProfessorPage() {
       Swal.fire({
         icon: 'error',
         title: 'Erro',
-        text: 'Erro ao aceitar a mentoria.',
+        text: err.message || 'Erro ao aceitar a mentoria.',
       });
     } finally {
       setAcceptingId(null);
     }
   }
 
+  async function handleCancelarMentoria(id) {
+    const result = await Swal.fire({
+      title: 'Cancelar mentoria?',
+      text: 'Tem certeza que deseja cancelar/recusar esta mentoria?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sim, cancelar',
+      cancelButtonText: 'Voltar',
+    });
+
+    if (!result.isConfirmed) return;
+
+    setCancellingId(id);
+    try {
+      await cancelMentorship(id);
+      await Swal.fire({
+        icon: 'success',
+        title: 'Mentoria cancelada!',
+        text: 'A mentoria foi cancelada com sucesso.',
+        timer: 1500,
+        showConfirmButton: false,
+      });
+      await loadSolicitacoes();
+    } catch (err) {
+      console.error('Erro ao cancelar mentoria:', err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro',
+        text: err.message || 'Erro ao cancelar a mentoria.',
+      });
+    } finally {
+      setCancellingId(null);
+    }
+  }
+
   const pendentes = mentorias.filter((m) => m.status === 'PENDING');
-  const sessoesAgendadas = mentorias.filter((m) => m.status === 'ACCEPTED').length;
+  const aceitas = mentorias.filter((m) => m.status === 'ACCEPTED');
+  const sessoesAgendadas = aceitas.length;
   const totalAlunos = new Set(mentorias.map((m) => m.studentId)).size;
 
   return (
@@ -143,17 +182,52 @@ export default function DashboardProfessorPage() {
                         <br />
                         <span className="text-sm text-gray-600">Solicitou mentoria</span>
                       </div>
-                      <button
-                        onClick={() => handleAceitarMentoria(m.id)}
-                        disabled={acceptingId === m.id}
-                        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition cursor-pointer font-medium"
-                      >
-                        {acceptingId === m.id ? 'Aceitando...' : 'Aceitar'}
-                      </button>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => handleCancelarMentoria(m.id)}
+                          disabled={cancellingId === m.id || acceptingId === m.id}
+                          className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3 py-1.5 rounded-lg text-sm font-medium transition cursor-pointer disabled:opacity-50"
+                        >
+                          {cancellingId === m.id ? 'Cancelando...' : 'Recusar'}
+                        </button>
+                        <button
+                          onClick={() => handleAceitarMentoria(m.id)}
+                          disabled={acceptingId === m.id || cancellingId === m.id}
+                          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition cursor-pointer font-medium text-sm disabled:opacity-50"
+                        >
+                          {acceptingId === m.id ? 'Aceitando...' : 'Aceitar'}
+                        </button>
+                      </div>
                     </div>
                   ))
                 )}
               </div>
+
+              {aceitas.length > 0 && (
+                <>
+                  <h2 className="text-[#111418] text-[22px] font-bold px-4 pb-3 pt-5">Mentorias Confirmadas</h2>
+                  <div className="px-4 py-3">
+                    {aceitas.map((m) => (
+                      <div
+                        key={m.id}
+                        className="border rounded-xl p-4 mb-3 shadow-sm bg-white flex items-center justify-between hover:shadow-md transition"
+                      >
+                        <div>
+                          <h3 className="font-semibold text-lg text-gray-800">{m.studentName || 'Aluno'}</h3>
+                          <span className="text-green-600 text-sm font-medium">Aceita / Confirmada</span>
+                        </div>
+                        <button
+                          onClick={() => handleCancelarMentoria(m.id)}
+                          disabled={cancellingId === m.id}
+                          className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3 py-1.5 rounded-lg text-sm font-medium transition cursor-pointer disabled:opacity-50"
+                        >
+                          {cancellingId === m.id ? 'Cancelando...' : 'Cancelar Mentoria'}
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
 
               <h2 className="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
                 Comunicação
