@@ -57,11 +57,6 @@ export async function requestMentorship(studentId, teacherId) {
   return parseResponse(response, 'Erro ao solicitar mentoria');
 }
 
-export async function fetchStudentMentorships(studentId) {
-  const response = await fetch(`${MENTORSHIP_API_BASE_URL}/student/${studentId}`);
-  return parseResponse(response, 'Erro ao carregar mentorias.');
-}
-
 export async function fetchTeacherMentorships(teacherId) {
   const response = await fetch(`${MENTORSHIP_API_BASE_URL}/teacher/${teacherId}`);
   return parseResponse(response, 'Erro ao buscar mentorias do professor.');

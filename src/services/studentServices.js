@@ -9,3 +9,9 @@ export async function registerAluno(dados) {
   });
   return parseResponse(response, 'Erro ao cadastrar aluno');
 }
+
+
+export async function fetchStudentMentorships(studentId) {
+  const response = await fetch(`${MENTORSHIP_API_BASE_URL}/student/${studentId}`);
+  return parseResponse(response, 'Erro ao carregar mentorias.');
+}
