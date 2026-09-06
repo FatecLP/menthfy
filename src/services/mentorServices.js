@@ -5,3 +5,8 @@ export async function fetchProfessores() {
   const response = await fetch('/api/professores');
   return parseResponse(response, 'Erro ao buscar a lista de professores');
 }
+
+export async function fetchProfessorById(id) {
+  const response = await fetch(`/api/professores/${id}`);
+  return parseResponse(response, 'Professor não encontrado');
+}

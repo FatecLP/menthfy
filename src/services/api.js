@@ -17,12 +17,6 @@ async function parseResponse(response, defaultErrorMessage) {
 }
 
 
-
-export async function fetchProfessorById(id) {
-  const response = await fetch(`/api/professores/${id}`);
-  return parseResponse(response, 'Professor não encontrado');
-}
-
 export async function loginUser(email, senha) {
   const response = await fetch('/usuarios/login', {
     method: 'POST',
