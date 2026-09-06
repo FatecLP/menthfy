@@ -10,3 +10,8 @@ export async function fetchProfessorById(id) {
   const response = await fetch(`/api/professores/${id}`);
   return parseResponse(response, 'Professor não encontrado');
 }
+
+export async function fetchTeacherMentorships(teacherId) {
+  const response = await fetch(`${MENTORSHIP_API_BASE_URL}/teacher/${teacherId}`);
+  return parseResponse(response, 'Erro ao buscar mentorias do professor.');
+}
