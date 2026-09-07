@@ -36,6 +36,17 @@ export async function registerProfessor(dados) {
   return parseResponse(response, 'Erro ao cadastrar professor');
 }
 
+
+export async function registerAluno(dados) {
+  const response = await fetch('/api/alunos', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(dados),
+  });
+  return parseResponse(response, 'Erro ao cadastrar aluno');
+}
+
+
 export async function requestMentorship(studentId, teacherId) {
   const response = await fetch(MENTORSHIP_API_BASE_URL, {
     method: 'POST',

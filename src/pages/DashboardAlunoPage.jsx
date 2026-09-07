@@ -5,7 +5,8 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import AuthGuard from '../components/AuthGuard';
 import { getStoredUser } from '../utils/auth';
-import { fetchStudentMentorships, cancelMentorship } from '../services/api';
+import { cancelMentorship } from '../services/api';
+import { fetchStudentMentorships } from '../services/studentServices'
 
 export default function DashboardAlunoPage() {
   const user = getStoredUser();
