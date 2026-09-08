@@ -27,14 +27,6 @@ export async function loginUser(email, senha) {
 }
 
 
-export async function registerProfessor(dados) {
-  const response = await fetch('/api/professores', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(dados),
-  });
-  return parseResponse(response, 'Erro ao cadastrar professor');
-}
 
 
 export async function registerAluno(dados) {
