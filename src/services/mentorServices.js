@@ -20,13 +20,6 @@ export async function registerProfessor(dados) {
   return parseResponse(response, 'Erro ao cadastrar professor');
 }
 
-export async function acceptMentorship(id) {
-  const response = await fetch(`${MENTORSHIP_API_BASE_URL}/${id}/accept`, {
-    method: 'PUT',
-  });
-  return parseResponse(response, 'Erro ao aceitar mentoria.');
-}
-
 
 export async function fetchTeacherMentorships(teacherId) {
   const response = await fetch(`${MENTORSHIP_API_BASE_URL}/teacher/${teacherId}`);
