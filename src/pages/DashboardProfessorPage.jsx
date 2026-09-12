@@ -5,8 +5,8 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import AuthGuard from '../components/AuthGuard';
 import { getStoredUser } from '../utils/auth';
-import { cancelMentorship } from '../services/api';
-import { acceptMentorship, fetchTeacherMentorships} from '../services/mentorServices'
+import { cancelMentorship, acceptMentorship } from '../services/mentorshipServices';
+import { fetchTeacherMentorships} from '../services/mentorServices'
 
 export default function DashboardProfessorPage() {
   const user = getStoredUser();

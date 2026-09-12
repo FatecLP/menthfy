@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { requestMentorship } from '../services/api';
+import { requestMentorship } from '../services/mentorshipServices';
 import { fetchProfessorById } from '../services/mentorServices';
 import { getStoredUser } from '../utils/auth';
 
