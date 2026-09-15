@@ -1,7 +1,7 @@
 export const API_BASE_URL = '';
 export const MENTORSHIP_API_BASE_URL = '/api/mentorships';
 
-async function parseResponse(response, defaultErrorMessage) {
+export async function parseResponse(response, defaultErrorMessage) {
   const text = await response.text();
   let data;
   try {
@@ -16,7 +16,6 @@ async function parseResponse(response, defaultErrorMessage) {
   return data;
 }
 
-
 export async function loginUser(email, senha) {
   const response = await fetch('/usuarios/login', {
     method: 'POST',
@@ -26,4 +25,6 @@ export async function loginUser(email, senha) {
   return parseResponse(response, 'Erro ao realizar login');
 }
 
-
+export * from './studentServices';
+export * from './mentorServices';
+export * from './mentorshipServices';
