@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://menthfy-backend.onrender.com/api/$1"
+    },
+    {
+      "source": "/usuarios/(.*)",
+      "destination": "https://menthfy-backend.onrender.com/usuarios/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
