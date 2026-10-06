@@ -18,11 +18,5 @@
 body {
     background-image: linear-gradient(to bottom, #d4e1f3, #fff);
     background-repeat: no-repeat;
-    height: 100vh;
-}
-
-.search input {
-    background: url(../../../public/assets/icons/search.png) no-repeat 10px center;
-    background-size: 16px; 
-    padding-left: 36px;
+    min-height: 100vh;
 }

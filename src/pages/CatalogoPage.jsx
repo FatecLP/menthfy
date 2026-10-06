@@ -77,22 +77,83 @@ export default function CatalogoPage() {
       <Header />
       <main style={{ flex: 1, padding: '20px 0' }}>
         {/* Search Bar */}
-        <form onSubmit={handleSearchSubmit} className="search" style={{ maxWidth: '900px', margin: '20px auto', display: 'flex', gap: '10px', padding: '0 20px' }}>
-          <input
-            id="search-input"
-            type="text"
-            placeholder="Pesquisar por nome ou disciplina..."
-            value={busca}
-            onChange={(e) => setBusca(e.target.value)}
-            style={{ flex: 1, borderRadius: '8px', padding: '12px 16px', border: '1px solid #d1d5db' }}
-          />
-          <button type="submit" className="search-btn" style={{ padding: '0 24px', cursor: 'pointer' }}>
+        <form
+          onSubmit={handleSearchSubmit}
+          style={{
+            maxWidth: '900px',
+            margin: '20px auto 16px auto',
+            display: 'flex',
+            gap: '12px',
+            padding: '0 20px',
+          }}
+        >
+          <div style={{ position: 'relative', flex: 1, display: 'flex', alignItems: 'center' }}>
+            <svg
+              style={{
+                position: 'absolute',
+                left: '14px',
+                width: '18px',
+                height: '18px',
+                color: '#6b7280',
+                pointerEvents: 'none',
+              }}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input
+              id="search-input"
+              type="text"
+              placeholder="Pesquisar por nome ou disciplina..."
+              value={busca}
+              onChange={(e) => setBusca(e.target.value)}
+              style={{
+                width: '100%',
+                borderRadius: '8px',
+                padding: '12px 16px 12px 42px',
+                border: '1px solid #d1d5db',
+                backgroundColor: '#ffffff',
+                fontSize: '15px',
+                color: '#111827',
+                outline: 'none',
+                boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+              }}
+            />
+          </div>
+          <button
+            type="submit"
+            className="search-btn"
+            style={{
+              padding: '0 28px',
+              borderRadius: '8px',
+              backgroundColor: '#3b82f6',
+              color: '#ffffff',
+              border: 'none',
+              fontWeight: 600,
+              fontSize: '15px',
+              cursor: 'pointer',
+              transition: 'background-color 0.2s',
+            }}
+          >
             Buscar
           </button>
         </form>
 
         {/* Filters and Sorting Bar */}
-        <div style={{ maxWidth: '1000px', margin: '0 auto 24px auto', padding: '0 20px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '16px' }}>
+        <div
+          style={{
+            maxWidth: '1000px',
+            margin: '0 auto 28px auto',
+            padding: '0 20px',
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            gap: '16px',
+          }}
+        >
           {/* Discipline Pills */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
             {DISCIPLINAS.map((disc) => (
@@ -110,6 +171,7 @@ export default function CatalogoPage() {
                   cursor: 'pointer',
                   fontSize: '13px',
                   fontWeight: disciplinaSelecionada === disc ? '600' : '400',
+                  boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.03)',
                   transition: 'all 0.2s',
                 }}
               >
@@ -132,12 +194,16 @@ export default function CatalogoPage() {
                 setOrdem(newOrdem);
               }}
               style={{
-                padding: '6px 12px',
+                padding: '8px 36px 8px 14px',
                 borderRadius: '8px',
                 border: '1px solid #d1d5db',
                 backgroundColor: '#ffffff',
                 fontSize: '14px',
+                fontWeight: 500,
+                color: '#374151',
                 cursor: 'pointer',
+                outline: 'none',
+                boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
               }}
             >
               <option value="avaliacao-desc">Melhor avaliados</option>
