@@ -182,7 +182,7 @@ export default function ScheduleLessonModal({
     >
       <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden flex flex-col max-h-[92vh] my-auto">
         <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
-          {/* Cabeçalho com a cor oficial do Menthfy (#5F688F) */}
+          {/* Cabeçalho */}
           <div className="shrink-0 bg-[#5F688F] px-6 py-4 text-white flex items-center justify-between shadow-sm">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/25">
@@ -197,7 +197,7 @@ export default function ScheduleLessonModal({
                 </p>
               </div>
             </div>
-            {/* Botão de fechar com alto contraste e visibilidade */}
+            {/* Botão de fechar */}
             <button
               type="button"
               onClick={onClose}
@@ -298,11 +298,10 @@ export default function ScheduleLessonModal({
                 <button
                   type="button"
                   onClick={() => setFormato('Online')}
-                  className={`flex flex-col items-center justify-center p-3 rounded-xl border text-center transition cursor-pointer ${
-                    formato === 'Online'
+                  className={`flex flex-col items-center justify-center p-3 rounded-xl border text-center transition cursor-pointer ${formato === 'Online'
                       ? 'border-[#5F688F] bg-[#5F688F]/10 text-[#5F688F] shadow-sm ring-2 ring-[#5F688F]/20'
                       : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300 hover:bg-gray-50'
-                  }`}
+                    }`}
                 >
                   <i className={`fa-solid fa-video text-lg mb-1 ${formato === 'Online' ? 'text-[#5F688F]' : 'text-gray-400'}`}></i>
                   <span className="text-sm font-bold">Online</span>
@@ -312,11 +311,10 @@ export default function ScheduleLessonModal({
                 <button
                   type="button"
                   onClick={() => setFormato('InPerson')}
-                  className={`flex flex-col items-center justify-center p-3 rounded-xl border text-center transition cursor-pointer ${
-                    formato === 'InPerson'
+                  className={`flex flex-col items-center justify-center p-3 rounded-xl border text-center transition cursor-pointer ${formato === 'InPerson'
                       ? 'border-[#5F688F] bg-[#5F688F]/10 text-[#5F688F] shadow-sm ring-2 ring-[#5F688F]/20'
                       : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300 hover:bg-gray-50'
-                  }`}
+                    }`}
                 >
                   <i className={`fa-solid fa-location-dot text-lg mb-1 ${formato === 'InPerson' ? 'text-[#5F688F]' : 'text-gray-400'}`}></i>
                   <span className="text-sm font-bold">Presencial</span>
@@ -333,7 +331,7 @@ export default function ScheduleLessonModal({
             </div>
           </div>
 
-          {/* Rodapé fixo na base com botão no padrão Menthfy */}
+          {/* Rodapé fixo na base */}
           <div className="shrink-0 bg-gray-50 px-6 py-3.5 border-t border-gray-100 flex items-center justify-end gap-3">
             <button
               type="button"
