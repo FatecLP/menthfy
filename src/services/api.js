@@ -2,8 +2,21 @@ import Swal from 'sweetalert2';
 
 export const API_BASE_URL = '';
 export const MENTORSHIP_API_BASE_URL = '/api/mentorships';
+export const SCHEDULING_API_BASE_URL =
+  import.meta.env.VITE_SCHEDULING_API_URL
+    ? `${import.meta.env.VITE_SCHEDULING_API_URL.replace(/\/$/, '')}/api/lesson-schedules`
+    : '/api/lesson-schedules';
 
+/**
+ * Parses an HTTP fetch response into JSON, supporting 204 No Content and standard ProblemDetails.
+ * @param {Response} response - Fetch API Response object.
+ * @param {string} defaultErrorMessage - Fallback message if no error details are provided.
+ * @returns {Promise<any>} Parsed response data or null on status 204.
+ */
 export async function parseResponse(response, defaultErrorMessage) {
+  if (response.status === 204) {
+    return null;
+  }
   const text = await response.text();
   let data;
   try {
@@ -13,7 +26,12 @@ export async function parseResponse(response, defaultErrorMessage) {
   }
 
   if (!response.ok) {
-    throw new Error(data.message || defaultErrorMessage);
+    const errorMsg =
+      data.message ||
+      data.title ||
+      (data.errors && Object.values(data.errors).flat().join(', ')) ||
+      defaultErrorMessage;
+    throw new Error(errorMsg);
   }
   return data;
 }
@@ -24,10 +42,19 @@ function sleep(ms) {
 
 let activeColdStartModal = false;
 
+/**
+ * Performs an HTTP request with retry attempts to tolerate container cold starts.
+ * @param {string} url - Target URL.
+ * @param {RequestInit} [options={}] - Fetch configuration options.
+ * @param {object} [config={}] - Custom retry configuration.
+ * @returns {Promise<Response>} Resolved response from fetch.
+ */
 export async function customFetch(url, options = {}, config = {}) {
-  const maxRetries = config.maxRetries ?? 3;
+  // Em desenvolvimento local, não exibe modal de cold start nem bloqueia a interface
+  const isDev = Boolean(import.meta.env?.DEV);
+  const maxRetries = config.maxRetries ?? (isDev ? 0 : 3);
   const retryIntervalSec = config.retryIntervalSec ?? 8;
-  const showFeedback = config.showFeedback ?? true;
+  const showFeedback = isDev ? false : (config.showFeedback ?? true);
 
   let lastError = null;
   let lastResponse = null;
@@ -36,7 +63,7 @@ export async function customFetch(url, options = {}, config = {}) {
     try {
       const response = await fetch(url, options);
 
-      // Status 429 (Rate Limit / Cold start) or transient cold-start 502/503/504
+      // Status 429 (Rate Limit / Cold start) ou falhas transitórias 502/503/504
       const isColdStart = [429, 502, 503, 504].includes(response.status);
 
       if (!isColdStart || attempt > maxRetries) {
@@ -88,6 +115,12 @@ export async function customFetch(url, options = {}, config = {}) {
   throw lastError || new Error('Serviço temporariamente indisponível.');
 }
 
+/**
+ * Authenticates user credentials.
+ * @param {string} email - User email address.
+ * @param {string} senha - User password.
+ * @returns {Promise<object>} Authenticated session payload.
+ */
 export async function loginUser(email, senha) {
   const response = await customFetch('/usuarios/login', {
     method: 'POST',
@@ -100,3 +133,4 @@ export async function loginUser(email, senha) {
 export * from './studentServices';
 export * from './mentorServices';
 export * from './mentorshipServices';
+export * from './schedulingServices';

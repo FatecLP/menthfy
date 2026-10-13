@@ -6,14 +6,37 @@ import Footer from '../components/Footer';
 import AuthGuard from '../components/AuthGuard';
 import { getStoredUser } from '../utils/auth';
 import { cancelMentorship, acceptMentorship } from '../services/mentorshipServices';
-import { fetchTeacherMentorships} from '../services/mentorServices'
+import { fetchTeacherMentorships } from '../services/mentorServices';
+import {
+  fetchTeacherSchedules,
+  approveLessonSchedule,
+  rejectLessonSchedule,
+  cancelLessonSchedule,
+} from '../services/schedulingServices';
+import {
+  formatFullDate,
+  formatTimeRange,
+  calculateDurationMinutes,
+  formatDuration,
+  getStatusConfig,
+  getFormatConfig,
+} from '../utils/schedulingUtils';
 
+/**
+ * Teacher dashboard page for managing mentorship requests, lesson approvals, and confirmed sessions.
+ * @returns {JSX.Element} DashboardProfessorPage component.
+ */
 export default function DashboardProfessorPage() {
   const user = getStoredUser();
   const [mentorias, setMentorias] = useState([]);
+  const [schedules, setSchedules] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingSchedules, setLoadingSchedules] = useState(true);
+
+  // Estados de carregamento das ações
   const [acceptingId, setAcceptingId] = useState(null);
   const [cancellingId, setCancellingId] = useState(null);
+  const [processingScheduleId, setProcessingScheduleId] = useState(null);
 
   const loadSolicitacoes = useCallback(async () => {
     if (!user?.id) return;
@@ -27,9 +50,23 @@ export default function DashboardProfessorPage() {
     }
   }, [user?.id]);
 
+  const loadSchedules = useCallback(async () => {
+    if (!user?.id) return;
+    setLoadingSchedules(true);
+    try {
+      const data = await fetchTeacherSchedules(user.id);
+      setSchedules(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error('Erro ao buscar agendamentos do professor:', err);
+    } finally {
+      setLoadingSchedules(false);
+    }
+  }, [user?.id]);
+
   useEffect(() => {
     loadSolicitacoes();
-  }, [loadSolicitacoes]);
+    loadSchedules();
+  }, [loadSolicitacoes, loadSchedules]);
 
   async function handleAceitarMentoria(id) {
     setAcceptingId(id);
@@ -80,6 +117,7 @@ export default function DashboardProfessorPage() {
         showConfirmButton: false,
       });
       await loadSolicitacoes();
+      await loadSchedules();
     } catch (err) {
       console.error('Erro ao cancelar mentoria:', err);
       Swal.fire({
@@ -92,9 +130,111 @@ export default function DashboardProfessorPage() {
     }
   }
 
-  const pendentes = mentorias.filter((m) => m.status === 'PENDING');
-  const aceitas = mentorias.filter((m) => m.status === 'ACCEPTED');
-  const sessoesAgendadas = aceitas.length;
+  // Ações de agendamento de aula do professor
+  async function handleAprovarAula(scheduleId) {
+    setProcessingScheduleId(scheduleId);
+    try {
+      await approveLessonSchedule(scheduleId, user.id);
+      await Swal.fire({
+        icon: 'success',
+        title: 'Aula confirmada!',
+        text: 'O horário da aula foi aprovado com sucesso.',
+        timer: 2000,
+        showConfirmButton: false,
+      });
+      await loadSchedules();
+    } catch (err) {
+      console.error('Erro ao aprovar aula:', err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro ao aprovar aula',
+        text: err.message || 'Não foi possível aprovar o agendamento.',
+      });
+    } finally {
+      setProcessingScheduleId(null);
+    }
+  }
+
+  async function handleRejeitarAula(scheduleId) {
+    const result = await Swal.fire({
+      title: 'Rejeitar solicitação?',
+      text: 'Deseja realmente recusar este horário de aula solicitado pelo aluno?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sim, recusar horário',
+      cancelButtonText: 'Voltar',
+    });
+
+    if (!result.isConfirmed) return;
+
+    setProcessingScheduleId(scheduleId);
+    try {
+      await rejectLessonSchedule(scheduleId, user.id);
+      await Swal.fire({
+        icon: 'success',
+        title: 'Solicitação recusada',
+        text: 'A proposta de horário foi rejeitada.',
+        timer: 1500,
+        showConfirmButton: false,
+      });
+      await loadSchedules();
+    } catch (err) {
+      console.error('Erro ao rejeitar aula:', err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro ao recusar',
+        text: err.message || 'Não foi possível recusar o agendamento.',
+      });
+    } finally {
+      setProcessingScheduleId(null);
+    }
+  }
+
+  async function handleCancelarAula(scheduleId) {
+    const result = await Swal.fire({
+      title: 'Cancelar aula agendada?',
+      text: 'Tem certeza que deseja cancelar esta aula confirmada?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sim, cancelar aula',
+      cancelButtonText: 'Manter',
+    });
+
+    if (!result.isConfirmed) return;
+
+    setProcessingScheduleId(scheduleId);
+    try {
+      await cancelLessonSchedule(scheduleId, { teacherId: user.id });
+      await Swal.fire({
+        icon: 'success',
+        title: 'Aula cancelada',
+        text: 'O agendamento da aula foi cancelado.',
+        timer: 1500,
+        showConfirmButton: false,
+      });
+      await loadSchedules();
+    } catch (err) {
+      console.error('Erro ao cancelar aula:', err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro ao cancelar',
+        text: err.message || 'Não foi possível cancelar a aula.',
+      });
+    } finally {
+      setProcessingScheduleId(null);
+    }
+  }
+
+  const pendentesMentoria = mentorias.filter((m) => m.status === 'PENDING');
+  const aceitasMentoria = mentorias.filter((m) => m.status === 'ACCEPTED');
+
+  const pendingSchedules = schedules.filter((s) => s.status === 'PendingApproval');
+  const approvedSchedules = schedules.filter((s) => s.status === 'Approved');
+
   const totalAlunos = new Set(mentorias.map((m) => m.studentId)).size;
 
   return (
@@ -111,11 +251,18 @@ export default function DashboardProfessorPage() {
                 </p>
               </div>
 
+              {/* Cards de estatísticas */}
               <div className="flex flex-wrap gap-3 px-4 py-3">
                 <div className="flex min-w-[111px] flex-1 basis-[fit-content] flex-col gap-2 rounded-lg border border-[#dce0e5] p-3 items-start">
-                  <p className="text-[#111418] tracking-light text-2xl font-bold leading-tight">{sessoesAgendadas}</p>
+                  <p className="text-[#111418] tracking-light text-2xl font-bold leading-tight">{approvedSchedules.length}</p>
                   <div className="flex items-center gap-2">
-                    <p className="text-[#637588] text-sm font-normal leading-normal">Sessões agendadas</p>
+                    <p className="text-[#637588] text-sm font-normal leading-normal">Aulas Confirmadas</p>
+                  </div>
+                </div>
+                <div className="flex min-w-[111px] flex-1 basis-[fit-content] flex-col gap-2 rounded-lg border border-[#dce0e5] p-3 items-start">
+                  <p className="text-[#111418] tracking-light text-2xl font-bold leading-tight">{pendingSchedules.length}</p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-[#637588] text-sm font-normal leading-normal">Solicitações de Aulas</p>
                   </div>
                 </div>
                 <div className="flex min-w-[111px] flex-1 basis-[fit-content] flex-col gap-2 rounded-lg border border-[#dce0e5] p-3 items-start">
@@ -124,79 +271,236 @@ export default function DashboardProfessorPage() {
                     <p className="text-[#637588] text-sm font-normal leading-normal">Alunos</p>
                   </div>
                 </div>
-                <div className="flex min-w-[111px] flex-1 basis-[fit-content] flex-col gap-2 rounded-lg border border-[#dce0e5] p-3 items-start">
-                  <p className="text-[#111418] tracking-light text-2xl font-bold leading-tight">{sessoesAgendadas}</p>
-                  <div className="flex items-center gap-2">
-                    <p className="text-[#637588] text-sm font-normal leading-normal">Próximas Sessões</p>
+              </div>
+
+              {/* Solicitações de agendamento de aulas aguardando aprovação */}
+              {pendingSchedules.length > 0 && (
+                <div className="px-4 pt-4">
+                  <div className="border-2 border-amber-300 bg-amber-50/40 rounded-2xl p-5 shadow-sm">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center text-sm shadow-sm">
+                          <i className="fa-solid fa-bell"></i>
+                        </div>
+                        <div>
+                          <h2 className="text-lg font-bold text-gray-900 leading-tight">
+                            Solicitações de Aula Aguardando Sua Aprovação
+                          </h2>
+                          <p className="text-xs text-gray-600">
+                            Alunos solicitaram horários para mentoria. Aprove ou recuse cada proposta abaixo.
+                          </p>
+                        </div>
+                      </div>
+                      <span className="text-xs font-bold px-3 py-1 rounded-full bg-amber-200/80 text-amber-900">
+                        {pendingSchedules.length} pendente{pendingSchedules.length > 1 ? 's' : ''}
+                      </span>
+                    </div>
+
+                    <div className="flex flex-col gap-3">
+                      {pendingSchedules.map((schedule) => {
+                        const matchedMentorship = mentorias.find((m) => m.id === schedule.mentorshipId);
+                        const studentName = matchedMentorship?.studentName || `Aluno (Mentoria #${schedule.mentorshipId})`;
+                        const disciplina = matchedMentorship?.disciplina || 'Mentoria Geral';
+                        const formatCfg = getFormatConfig(schedule.format);
+                        const durationMinutes = calculateDurationMinutes(schedule.startAt, schedule.endAt);
+                        const isProcessing = processingScheduleId === schedule.id;
+
+                        return (
+                          <div
+                            key={schedule.id}
+                            className="bg-white border border-amber-200/80 rounded-xl p-4 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                          >
+                            <div>
+                              <div className="flex items-center gap-2 mb-1.5">
+                                <span className="font-bold text-base text-gray-900">{studentName}</span>
+                                <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium border ${formatCfg.badgeClass}`}>
+                                  <i className={`${formatCfg.icon} text-[10px]`}></i>
+                                  {formatCfg.label}
+                                </span>
+                              </div>
+                              <p className="text-xs text-gray-500 mb-2">{disciplina}</p>
+                              <div className="flex flex-wrap items-center gap-3 text-xs text-gray-700 font-medium">
+                                <span className="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded border border-gray-200">
+                                  <i className="fa-regular fa-calendar text-amber-600"></i>
+                                  {formatFullDate(schedule.startAt)}
+                                </span>
+                                <span className="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded border border-gray-200">
+                                  <i className="fa-regular fa-clock text-amber-600"></i>
+                                  {formatTimeRange(schedule.startAt, schedule.endAt)}
+                                </span>
+                                <span className="text-gray-500 font-normal">({formatDuration(durationMinutes)})</span>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
+                              <button
+                                type="button"
+                                onClick={() => handleRejeitarAula(schedule.id)}
+                                disabled={isProcessing}
+                                className="inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3.5 py-2 rounded-lg text-xs font-semibold transition cursor-pointer disabled:opacity-50"
+                              >
+                                <i className="fa-solid fa-xmark"></i>
+                                Recusar
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleAprovarAula(schedule.id)}
+                                disabled={isProcessing}
+                                className="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow-sm transition cursor-pointer disabled:opacity-50"
+                              >
+                                {isProcessing ? (
+                                  <>
+                                    <i className="fa-solid fa-spinner fa-spin"></i>
+                                    Processando...
+                                  </>
+                                ) : (
+                                  <>
+                                    <i className="fa-solid fa-check"></i>
+                                    Aprovar Horário
+                                  </>
+                                )}
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
+              )}
+
+              {/* Próximas sessões confirmadas */}
+              <div className="flex items-center justify-between px-4 pb-2 pt-6">
+                <h2 className="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em]">
+                  Próximas sessões confirmadas
+                </h2>
+                {approvedSchedules.length > 0 && (
+                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    {approvedSchedules.length} {approvedSchedules.length === 1 ? 'aula confirmada' : 'aulas confirmadas'}
+                  </span>
+                )}
               </div>
 
-              <h2 className="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
-                Próximas sessões
+              <div className="px-4 py-2">
+                {loadingSchedules ? (
+                  <div className="border border-[#dce0e5] rounded-xl p-8 text-center bg-gray-50/50">
+                    <i className="fa-solid fa-spinner fa-spin text-2xl text-blue-600 mb-2"></i>
+                    <p className="text-gray-500 text-sm">Carregando sessões...</p>
+                  </div>
+                ) : approvedSchedules.length === 0 ? (
+                  <div className="border border-dashed border-gray-300 rounded-xl p-8 text-center bg-gray-50/50 flex flex-col items-center justify-center gap-2">
+                    <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 text-xl mb-1">
+                      <i className="fa-regular fa-calendar"></i>
+                    </div>
+                    <h3 className="font-semibold text-gray-800 text-base">Nenhuma aula agendada confirmada</h3>
+                    <p className="text-gray-500 text-sm max-w-md">
+                      Quando seus alunos solicitarem agendamentos e você os aprovar, as próximas sessões aparecerão aqui.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="flex flex-col gap-3">
+                    {approvedSchedules.map((schedule) => {
+                      const matchedMentorship = mentorias.find((m) => m.id === schedule.mentorshipId);
+                      const studentName = matchedMentorship?.studentName || `Aluno (Mentoria #${schedule.mentorshipId})`;
+                      const disciplina = matchedMentorship?.disciplina || 'Mentoria Geral';
+                      const statusCfg = getStatusConfig(schedule.status);
+                      const formatCfg = getFormatConfig(schedule.format);
+                      const durationMinutes = calculateDurationMinutes(schedule.startAt, schedule.endAt);
+                      const isProcessing = processingScheduleId === schedule.id;
+
+                      return (
+                        <div
+                          key={schedule.id}
+                          className="border border-[#dce0e5] rounded-xl p-4 bg-white shadow-sm hover:shadow-md transition flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                        >
+                          <div>
+                            <div className="flex items-center gap-2 mb-1.5">
+                              <span className="font-semibold text-base text-gray-900">{studentName}</span>
+                              <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium border ${formatCfg.badgeClass}`}>
+                                <i className={`${formatCfg.icon} text-[10px]`}></i>
+                                {formatCfg.label}
+                              </span>
+                              <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border ${statusCfg.badgeClass}`}>
+                                <span className={`w-1.5 h-1.5 rounded-full ${statusCfg.dotClass}`}></span>
+                                {statusCfg.label}
+                              </span>
+                            </div>
+
+                            <p className="text-xs text-gray-500 mb-2">{disciplina}</p>
+
+                            <div className="flex flex-wrap items-center gap-3 text-xs text-gray-600 font-medium">
+                              <span className="flex items-center gap-1">
+                                <i className="fa-regular fa-calendar text-blue-600"></i>
+                                {formatFullDate(schedule.startAt)}
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <i className="fa-regular fa-clock text-blue-600"></i>
+                                {formatTimeRange(schedule.startAt, schedule.endAt)}
+                              </span>
+                              <span className="text-gray-400">({formatDuration(durationMinutes)})</span>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
+                            {schedule.format === 'Online' && (
+                              <Link
+                                to="/videocall"
+                                className="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-1.5 rounded-lg text-xs font-semibold shadow-sm transition no-underline"
+                              >
+                                <i className="fa-solid fa-video"></i>
+                                Videochamada
+                              </Link>
+                            )}
+                            <button
+                              type="button"
+                              onClick={() => handleCancelarAula(schedule.id)}
+                              disabled={isProcessing}
+                              className="inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3 py-1.5 rounded-lg text-xs font-medium transition cursor-pointer disabled:opacity-50"
+                            >
+                              <i className="fa-solid fa-ban"></i>
+                              {isProcessing ? 'Cancelando...' : 'Cancelar'}
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              {/* Solicitações de mentoria geral pendentes */}
+              <h2 className="text-[#111418] text-[22px] font-bold px-4 pb-3 pt-6">
+                Solicitações de Mentoria
               </h2>
-              <div className="px-4 py-3">
-                <div className="flex overflow-hidden rounded-xl border border-[#dce0e5] bg-white">
-                  <table className="flex-1 w-full border-collapse">
-                    <thead>
-                      <tr className="bg-white">
-                        <th className="px-4 py-3 text-left text-[#111418] text-sm font-medium leading-normal">Data</th>
-                        <th className="px-4 py-3 text-left text-[#111418] text-sm font-medium leading-normal">Tempo</th>
-                        <th className="px-4 py-3 text-left text-[#111418] text-sm font-medium leading-normal">Matéria</th>
-                        <th className="px-4 py-3 text-left text-[#111418] text-sm font-medium leading-normal">Alunos</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="border-t border-t-[#dce0e5]">
-                        <td className="h-[72px] px-4 py-2 text-[#637588] text-sm font-normal leading-normal">
-                          Nenhuma data definida
-                        </td>
-                        <td className="h-[72px] px-4 py-2 text-[#637588] text-sm font-normal leading-normal">
-                          Nenhum horário definido
-                        </td>
-                        <td className="h-[72px] px-4 py-2 text-[#637588] text-sm font-normal leading-normal">
-                          Nenhuma matéria definida
-                        </td>
-                        <td className="h-[72px] px-4 py-2 text-[#637588] text-sm font-normal leading-normal">
-                          Nenhum aluno definido
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <h2 className="text-[#111418] text-[22px] font-bold px-4 pb-3 pt-5">Solicitações Pendentes</h2>
-              <div id="solicitacoesMentoria" className="px-4 py-3">
+              <div id="solicitacoesMentoria" className="px-4 py-2">
                 {loading ? (
                   <p className="text-gray-500">Carregando solicitações...</p>
-                ) : pendentes.length === 0 ? (
-                  <p className="text-gray-500">Nenhuma solicitação pendente.</p>
+                ) : pendentesMentoria.length === 0 ? (
+                  <p className="text-gray-500 text-sm">Nenhuma solicitação de mentoria pendente no momento.</p>
                 ) : (
-                  pendentes.map((m) => (
+                  pendentesMentoria.map((m) => (
                     <div
                       key={m.id}
-                      className="border rounded-lg p-3 mb-3 flex justify-between items-center bg-white shadow-sm"
+                      className="border rounded-xl p-4 mb-3 flex flex-col sm:flex-row justify-between sm:items-center bg-white shadow-sm gap-3 hover:shadow-md transition"
                     >
                       <div>
-                        <strong>{m.studentName || 'Aluno'}</strong>
-                        <br />
-                        <span className="text-sm text-gray-600">Solicitou mentoria</span>
+                        <strong className="text-base text-gray-900">{m.studentName || 'Aluno'}</strong>
+                        <p className="text-xs text-gray-500 mt-0.5">Solicitou início de mentoria com você</p>
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 self-end sm:self-center">
                         <button
                           onClick={() => handleCancelarMentoria(m.id)}
                           disabled={cancellingId === m.id || acceptingId === m.id}
-                          className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3 py-1.5 rounded-lg text-sm font-medium transition cursor-pointer disabled:opacity-50"
+                          className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer disabled:opacity-50"
                         >
                           {cancellingId === m.id ? 'Cancelando...' : 'Recusar'}
                         </button>
                         <button
                           onClick={() => handleAceitarMentoria(m.id)}
                           disabled={acceptingId === m.id || cancellingId === m.id}
-                          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition cursor-pointer font-medium text-sm disabled:opacity-50"
+                          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg transition cursor-pointer font-semibold text-xs shadow-sm disabled:opacity-50"
                         >
-                          {acceptingId === m.id ? 'Aceitando...' : 'Aceitar'}
+                          {acceptingId === m.id ? 'Aceitando...' : 'Aceitar Mentoria'}
                         </button>
                       </div>
                     </div>
@@ -204,25 +508,28 @@ export default function DashboardProfessorPage() {
                 )}
               </div>
 
-              {aceitas.length > 0 && (
+              {/* Mentorias em andamento */}
+              {aceitasMentoria.length > 0 && (
                 <>
-                  <h2 className="text-[#111418] text-[22px] font-bold px-4 pb-3 pt-5">Mentorias Confirmadas</h2>
-                  <div className="px-4 py-3">
-                    {aceitas.map((m) => (
+                  <h2 className="text-[#111418] text-[22px] font-bold px-4 pb-3 pt-5">Mentorias em Andamento</h2>
+                  <div className="px-4 py-2">
+                    {aceitasMentoria.map((m) => (
                       <div
                         key={m.id}
                         className="border rounded-xl p-4 mb-3 shadow-sm bg-white flex items-center justify-between hover:shadow-md transition"
                       >
                         <div>
-                          <h3 className="font-semibold text-lg text-gray-800">{m.studentName || 'Aluno'}</h3>
-                          <span className="text-green-600 text-sm font-medium">Aceita / Confirmada</span>
+                          <h3 className="font-semibold text-base text-gray-900">{m.studentName || 'Aluno'}</h3>
+                          <span className="text-emerald-600 text-xs font-semibold flex items-center gap-1 mt-0.5">
+                            <i className="fa-solid fa-circle-check text-[10px]"></i> Mentoria Ativa
+                          </span>
                         </div>
                         <button
                           onClick={() => handleCancelarMentoria(m.id)}
                           disabled={cancellingId === m.id}
-                          className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3 py-1.5 rounded-lg text-sm font-medium transition cursor-pointer disabled:opacity-50"
+                          className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3 py-1.5 rounded-lg text-xs font-medium transition cursor-pointer disabled:opacity-50"
                         >
-                          {cancellingId === m.id ? 'Cancelando...' : 'Cancelar Mentoria'}
+                          {cancellingId === m.id ? 'Cancelando...' : 'Encerrar Mentoria'}
                         </button>
                       </div>
                     ))}
@@ -230,6 +537,7 @@ export default function DashboardProfessorPage() {
                 </>
               )}
 
+              {/* Comunicação */}
               <h2 className="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
                 Comunicação
               </h2>
