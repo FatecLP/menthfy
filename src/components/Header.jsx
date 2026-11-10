@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Users, LogOut, ChevronDown } from 'lucide-react';
+import { Menu, X, LayoutDashboard, LogOut, ChevronDown } from 'lucide-react';
 import { getStoredUser, clearStoredUser, getDashboardRoute } from '../utils/auth';
 
 /**
@@ -82,24 +82,27 @@ export default function Header() {
         {/* Auth / Profile Actions */}
         <div className="hidden md:flex md:flex-1 items-center justify-end gap-3">
           {user ? (
-            <div ref={menuRef} className="relative flex items-center gap-3">
+            <div ref={menuRef} className="relative flex items-center gap-2">
               <Link
                 to={getDashboardRoute(user.tipoUsuario)}
-                className="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white font-semibold px-4 py-2 rounded-xl text-sm transition border border-white/20 text-decoration-none"
+                className="inline-flex items-center gap-1.5 text-white/90 hover:text-white hover:bg-white/10 font-medium px-3 py-1.5 rounded-xl text-sm transition text-decoration-none"
               >
-                <Users className="size-4" />
+                <LayoutDashboard className="size-4" />
                 <span>Dashboard</span>
               </Link>
+
               <button
                 type="button"
                 onClick={() => setMenuOpen(!menuOpen)}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-white/25 hover:border-white/40 bg-white/10 text-white text-sm font-medium transition cursor-pointer"
+                className={`flex items-center gap-2 pl-1.5 pr-2.5 py-1 rounded-full text-white text-sm font-medium transition cursor-pointer border-0 ${
+                  menuOpen ? 'bg-white/15' : 'bg-transparent hover:bg-white/10'
+                }`}
               >
-                <div className="size-7 rounded-lg bg-white text-[#5F688F] flex items-center justify-center font-bold text-xs uppercase">
+                <div className="size-7 rounded-full bg-white text-[#5F688F] flex items-center justify-center font-bold text-xs uppercase shadow-2xs">
                   {user.nome?.charAt(0) || 'U'}
                 </div>
                 <span className="max-w-[120px] truncate text-white">{user.nome?.split(' ')[0]}</span>
-                <ChevronDown className="size-4 text-white/70" />
+                <ChevronDown className="size-3.5 text-white/75" />
               </button>
 
               {menuOpen && (
