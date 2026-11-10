@@ -172,19 +172,6 @@ export default function HomePage() {
     setActiveFaq(activeFaq === index ? null : index);
   };
 
-  const marqueeItems = [
-    { icon: '⚡', text: 'Aulas 1:1 Personalizadas' },
-    { icon: '💻', text: 'Programação Web & Tech' },
-    { icon: '📊', text: 'Power BI & Dashboards' },
-    { icon: '🎯', text: 'Redação ENEM Nota 1000' },
-    { icon: '📆', text: 'Agendamento Descomplicado' },
-    { icon: '🛡️', text: 'Mentores Verificados' },
-    { icon: '⭐', text: 'Avaliação Média 4.9' },
-    { icon: '🎓', text: 'Alunos Fatec, USP & Todo o Brasil' },
-    { icon: '🎸', text: 'Música & Instrumentos' },
-    { icon: '🚀', text: 'Foco no Seu Ritmo' },
-  ];
-
   const categories = [
     {
       name: 'Programação & Tech',
@@ -337,47 +324,37 @@ export default function HomePage() {
     <div className="min-h-screen w-full overflow-x-hidden bg-white text-[#111418] font-['Inter',sans-serif] selection:bg-[#5F688F]/20 selection:text-[#5F688F]">
       {/* Header / Navbar */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`menthfy-home-header fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-xs border-b border-gray-100 py-3.5'
-            : 'bg-white/80 backdrop-blur-sm py-4'
+            ? 'is-scrolled bg-white/95 backdrop-blur-md shadow-xs border-b border-gray-100 py-3.5'
+            : 'bg-white/85 backdrop-blur-sm py-4 border-b border-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 group text-decoration-none">
-            <span className="font-['Baumans'] text-3xl font-bold tracking-tight text-[#5F688F] group-hover:text-[#4a5272] transition-colors">
-              menthfy
-            </span>
-            <span className="size-2 rounded-full bg-emerald-500 animate-pulse-ring" title="Plataforma Online" />
-          </Link>
+        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+          <div className="md:flex-1 flex items-center justify-start">
+            <Link to="/" className="home-brand-link flex items-center gap-2 group text-decoration-none shrink-0">
+              <span className="font-['Baumans'] text-3xl font-bold tracking-tight text-[#5F688F] group-hover:text-[#4a5272] transition-colors">
+                menthfy
+              </span>
+              <span className="size-2 rounded-full bg-emerald-500 animate-pulse-ring" title="Plataforma Online" />
+            </Link>
+          </div>
 
-          <nav className="hidden md:flex items-center gap-8 text-[15px] font-medium text-gray-600">
-            <Link to="/" className="text-[#5F688F] font-semibold transition-colors hover:text-[#5F688F]">
-              Início
+          <nav className="hidden md:flex items-center justify-center gap-8 text-[15px] font-medium text-gray-600 shrink-0">
+            <Link to="/catalogo" className="home-nav-link whitespace-nowrap hover:text-[#5F688F] transition-colors">
+              Catálogo
             </Link>
-            <Link to="/catalogo" className="hover:text-[#5F688F] transition-colors">
-              Catálogo de Mentores
-            </Link>
-            <a href="#como-funciona" className="hover:text-[#5F688F] transition-colors">
-              Como Funciona
-            </a>
-            <a href="#diferenciais" className="hover:text-[#5F688F] transition-colors">
-              Diferenciais
-            </a>
-            <a href="#depoimentos" className="hover:text-[#5F688F] transition-colors">
-              Depoimentos
-            </a>
-            <Link to="/contato" className="hover:text-[#5F688F] transition-colors">
+            <Link to="/contato" className="home-nav-link whitespace-nowrap hover:text-[#5F688F] transition-colors">
               Contato
             </Link>
           </nav>
 
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex md:flex-1 items-center justify-end gap-3">
             {user ? (
               <div className="flex items-center gap-3">
                 <Link
                   to={getDashboardRoute(user.tipoUsuario)}
-                  className="inline-flex items-center gap-2 bg-[#5F688F]/10 hover:bg-[#5F688F]/15 text-[#5F688F] font-semibold px-4 py-2 rounded-xl text-sm transition border border-[#5F688F]/20 text-decoration-none"
+                  className="home-btn-dashboard whitespace-nowrap inline-flex items-center gap-2 bg-[#5F688F]/10 hover:bg-[#5F688F]/15 text-[#5F688F] font-semibold px-4 py-2 rounded-xl text-sm transition border border-[#5F688F]/20 text-decoration-none"
                 >
                   <Users className="size-4" />
                   <span>Dashboard ({user.nome?.split(' ')[0]})</span>
@@ -394,13 +371,13 @@ export default function HomePage() {
               <>
                 <Link
                   to="/login"
-                  className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-[#5F688F] transition text-decoration-none"
+                  className="home-btn-login whitespace-nowrap px-4 py-2 text-sm font-medium text-gray-700 hover:text-[#5F688F] transition text-decoration-none"
                 >
                   Entrar
                 </Link>
                 <Link
                   to="/cadastro"
-                  className="inline-flex items-center gap-1.5 bg-[#5F688F] hover:bg-[#4d5577] text-white px-4 py-2 rounded-xl text-sm font-semibold transition text-decoration-none cursor-pointer"
+                  className="home-btn-register whitespace-nowrap inline-flex items-center gap-1.5 bg-[#5F688F] hover:bg-[#4d5577] text-white px-4 py-2 rounded-xl text-sm font-semibold transition text-decoration-none cursor-pointer"
                 >
                   <span>Cadastrar Grátis</span>
                   <ArrowRight className="size-4" />
@@ -419,39 +396,18 @@ export default function HomePage() {
         </div>
 
         {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-b border-gray-200 px-4 pt-3 pb-6 space-y-3 shadow-xl">
-            <Link
-              to="/"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-md font-semibold text-[#5F688F] bg-[#5F688F]/10 text-decoration-none"
-            >
-              Início
-            </Link>
+          <div className="md:hidden home-mobile-drawer bg-white border-b border-gray-200 px-4 pt-3 pb-6 space-y-3 shadow-xl">
             <Link
               to="/catalogo"
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-md text-gray-700 hover:bg-gray-50 text-decoration-none font-medium"
+              className="home-mobile-link block px-3 py-2 rounded-md text-gray-700 hover:bg-gray-50 text-decoration-none font-medium"
             >
-              Catálogo de Mentores
+              Catálogo
             </Link>
-            <a
-              href="#como-funciona"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-md text-gray-700 hover:bg-gray-50 text-decoration-none font-medium"
-            >
-              Como Funciona
-            </a>
-            <a
-              href="#diferenciais"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-md text-gray-700 hover:bg-gray-50 text-decoration-none font-medium"
-            >
-              Diferenciais
-            </a>
             <Link
               to="/contato"
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-md text-gray-700 hover:bg-gray-50 text-decoration-none font-medium"
+              className="home-mobile-link block px-3 py-2 rounded-md text-gray-700 hover:bg-gray-50 text-decoration-none font-medium"
             >
               Contato
             </Link>
@@ -462,7 +418,7 @@ export default function HomePage() {
                   <Link
                     to={getDashboardRoute(user.tipoUsuario)}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="w-full text-center bg-[#5F688F] text-white py-2.5 rounded-xl font-semibold text-decoration-none"
+                    className="home-mobile-dashboard w-full text-center bg-[#5F688F] text-white py-2.5 rounded-xl font-semibold text-decoration-none"
                   >
                     Acessar Dashboard
                   </Link>
@@ -478,14 +434,14 @@ export default function HomePage() {
                   <Link
                     to="/login"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="w-full text-center border border-gray-300 text-gray-700 py-2.5 rounded-xl font-semibold text-decoration-none"
+                    className="home-mobile-login w-full text-center border border-gray-300 text-gray-700 py-2.5 rounded-xl font-semibold text-decoration-none"
                   >
                     Entrar na Conta
                   </Link>
                   <Link
                     to="/cadastro"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="w-full text-center bg-[#5F688F] text-white py-2.5 rounded-xl font-semibold text-decoration-none"
+                    className="home-mobile-register w-full text-center bg-[#5F688F] text-white py-2.5 rounded-xl font-semibold text-decoration-none"
                   >
                     Cadastre-se Gratuitamente
                   </Link>
@@ -661,11 +617,8 @@ export default function HomePage() {
                     <Calendar className="size-5" />
                   </div>
                   <div className="text-xs">
-                    <div className="flex items-center gap-1.5">
-                      <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-                      <p className="font-bold text-gray-900 leading-tight">Mentoria Confirmada</p>
-                    </div>
-                    <p className="text-gray-500 font-medium">Terça-feira às 14:00</p>
+                    <p className="font-bold text-gray-900 leading-tight mb-0.5">Mentoria Confirmada</p>
+                    <p className="text-gray-500 font-medium mb-0">Terça-feira às 14:00</p>
                   </div>
                 </div>
 
@@ -674,8 +627,8 @@ export default function HomePage() {
                     <CheckCircle2 className="size-5" />
                   </div>
                   <div className="text-xs">
-                    <p className="font-bold text-gray-900 leading-tight">Agendamento Fácil</p>
-                    <p className="text-gray-500 font-medium">Confirmado em 1 clique</p>
+                    <p className="font-bold text-gray-900 leading-tight mb-0.5">Agendamento Fácil</p>
+                    <p className="text-gray-500 font-medium mb-0">Confirmado em 1 clique</p>
                   </div>
                 </div>
               </div>
@@ -684,57 +637,32 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Marquee Ticker */}
-      <div className="bg-slate-900 py-3.5 border-y border-slate-800 relative z-10 overflow-hidden">
-        <div className="marquee-container">
-          <div className="marquee-content">
-            {marqueeItems.concat(marqueeItems).map((item, idx) => (
-              <div
-                key={`${item.text}-${idx}`}
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-800 text-slate-300 text-xs font-semibold whitespace-nowrap border border-slate-700 shadow-xs hover:border-[#5F688F] transition"
-              >
-                <span>{item.icon}</span>
-                <span>{item.text}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* Stats Counter Strip */}
-      <section className="bg-slate-950 text-white py-12 border-b border-slate-800 reveal-init">
+      <section className="bg-slate-950 text-white py-12 border-y border-slate-800 reveal-init">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center max-w-5xl mx-auto">
             <div className="space-y-1">
-              <p className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              <p className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-0">
                 <AnimatedCounter target={500} suffix="+" />
               </p>
-              <p className="text-xs sm:text-sm text-slate-400 font-medium uppercase tracking-wider">
+              <p className="text-xs sm:text-sm text-slate-400 font-medium uppercase tracking-wider mb-0">
                 Mentores Certificados
               </p>
             </div>
             <div className="space-y-1">
-              <p className="text-3xl sm:text-4xl font-extrabold text-[#8792be] tracking-tight">
+              <p className="text-3xl sm:text-4xl font-extrabold text-[#8792be] tracking-tight mb-0">
                 <AnimatedCounter target={15000} suffix="+" />
               </p>
-              <p className="text-xs sm:text-sm text-slate-400 font-medium uppercase tracking-wider">
+              <p className="text-xs sm:text-sm text-slate-400 font-medium uppercase tracking-wider mb-0">
                 Aulas Realizadas
               </p>
             </div>
             <div className="space-y-1">
-              <p className="text-3xl sm:text-4xl font-extrabold text-emerald-400 tracking-tight">
+              <p className="text-3xl sm:text-4xl font-extrabold text-emerald-400 tracking-tight mb-0">
                 <AnimatedCounter target={98.9} suffix="%" decimals={1} />
               </p>
-              <p className="text-xs sm:text-sm text-slate-400 font-medium uppercase tracking-wider">
+              <p className="text-xs sm:text-sm text-slate-400 font-medium uppercase tracking-wider mb-0">
                 Aprovação dos Alunos
-              </p>
-            </div>
-            <div className="space-y-1">
-              <p className="text-3xl sm:text-4xl font-extrabold text-amber-400 tracking-tight">
-                <AnimatedCounter target={100} suffix="%" />
-              </p>
-              <p className="text-xs sm:text-sm text-slate-400 font-medium uppercase tracking-wider">
-                Atenção Personalizada
               </p>
             </div>
           </div>
@@ -1184,7 +1112,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-950 text-slate-400 py-16 border-t border-slate-900">
+      <footer className="menthfy-home-footer bg-slate-950 text-slate-400 py-16 border-t border-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-10 pb-12 border-b border-slate-800/80">
             <div className="md:col-span-2 space-y-4">
