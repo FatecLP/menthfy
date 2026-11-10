@@ -20,7 +20,7 @@ body {
 }
 
 /* Ajustes específicos para o header da dashboard */
-header {
+header:not(.menthfy-header):not(.menthfy-home-header) {
     position: sticky;
     top: 0;
     z-index: 100;
@@ -46,18 +46,18 @@ header {
         align-items: center;
     }
     
-    header {
+    header:not(.menthfy-header):not(.menthfy-home-header) {
         padding: 15px 20px;
         flex-direction: column;
         height: auto;
     }
     
-    header h1 {
+    header:not(.menthfy-header):not(.menthfy-home-header) h1 {
         font-size: 28px;
         margin-bottom: 10px;
     }
     
-    header ul {
+    header:not(.menthfy-header):not(.menthfy-home-header) ul {
         gap: 15px;
         flex-wrap: wrap;
     }
@@ -73,7 +73,7 @@ header {
         max-width: 100%;
     }
     
-    .flex-wrap {
+    .layout-container .flex-wrap {
         flex-direction: column;
     }
 }

@@ -1,5 +1,20 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  ArrowRight,
+  Ban,
+  BookOpen,
+  Calendar,
+  CalendarCheck,
+  CalendarPlus,
+  Clock,
+  GraduationCap,
+  MapPin,
+  MessageSquare,
+  Pencil,
+  Search,
+  Video,
+} from 'lucide-react';
 import Swal from 'sweetalert2';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -31,7 +46,6 @@ export default function DashboardAlunoPage() {
   const [cancellingId, setCancellingId] = useState(null);
   const [cancellingScheduleId, setCancellingScheduleId] = useState(null);
 
-  // Estado do modal de agendamento de aula
   const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
   const [selectedMentorshipForSchedule, setSelectedMentorshipForSchedule] = useState(null);
   const [selectedScheduleForEdit, setSelectedScheduleForEdit] = useState(null);
@@ -73,7 +87,7 @@ export default function DashboardAlunoPage() {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
+      cancelButtonColor: '#5F688F',
       confirmButtonText: 'Sim, cancelar',
       cancelButtonText: 'Voltar',
     });
@@ -98,6 +112,7 @@ export default function DashboardAlunoPage() {
         icon: 'error',
         title: 'Erro',
         text: err.message || 'Erro ao cancelar a mentoria.',
+        confirmButtonColor: '#5F688F',
       });
     } finally {
       setCancellingId(null);
@@ -124,7 +139,7 @@ export default function DashboardAlunoPage() {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
+      cancelButtonColor: '#5F688F',
       confirmButtonText: 'Sim, cancelar aula',
       cancelButtonText: 'Manter',
     });
@@ -148,6 +163,7 @@ export default function DashboardAlunoPage() {
         icon: 'error',
         title: 'Erro',
         text: err.message || 'Não foi possível cancelar o agendamento.',
+        confirmButtonColor: '#5F688F',
       });
     } finally {
       setCancellingScheduleId(null);
@@ -160,278 +176,386 @@ export default function DashboardAlunoPage() {
 
   return (
     <AuthGuard requiredRole="Aluno">
-      <div className="relative flex size-full min-h-screen flex-col bg-white overflow-x-hidden" style={{ fontFamily: 'Lexend, "Noto Sans", sans-serif' }}>
-        <div className="layout-container flex h-full grow flex-col">
-          <Header />
+      <div className="min-h-screen flex flex-col bg-slate-50/50 text-[#111418] font-['Inter',sans-serif]">
+        <Header />
 
-          <div className="px-40 flex flex-1 justify-center py-5">
-            <div className="layout-content-container flex flex-col max-w-[960px] flex-1">
-              <div className="flex flex-wrap justify-between gap-3 p-4">
-                <p className="text-[#111418] tracking-light text-[32px] font-bold leading-tight min-w-72">
-                  Bem-vindo(a), {user?.nome || 'Aluno'}!
+        {/* Welcome Header Banner */}
+        <section className="bg-gradient-to-b from-[#F4F6FB] via-white to-slate-50/50 py-8 md:py-10 border-b border-gray-100">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-1.5">
+              <span className="text-xs font-bold text-[#5F688F] uppercase tracking-wider bg-[#5F688F]/10 px-3 py-1 rounded-full border border-[#5F688F]/20 inline-block">
+                Painel do Aluno
+              </span>
+              <h1 className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight mb-0">
+                Bem-vindo(a), {user?.nome || 'Aluno'}!
+              </h1>
+              <p className="text-sm text-gray-600 mb-0">
+                Acompanhe suas aulas agendadas, organize horários e gerencie suas mentorias.
+              </p>
+            </div>
+
+            <Link
+              to="/catalogo"
+              className="inline-flex items-center justify-center gap-2 bg-[#5F688F] hover:bg-[#4d5577] text-white font-semibold text-sm px-5 py-2.5 rounded-xl transition shadow-xs text-decoration-none shrink-0 self-start sm:self-center"
+            >
+              <Search className="size-4" />
+              <span>Explorar Mentores</span>
+            </Link>
+          </div>
+        </section>
+
+        {/* Main Content */}
+        <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+          {/* Stats Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-xs flex items-center justify-between">
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
+                  Aulas Confirmadas
+                </p>
+                <p className="text-3xl font-black text-gray-900 tracking-tight mb-0">
+                  {sessoesAprovadas}
                 </p>
               </div>
-
-              {/* Cards de estatísticas */}
-              <div className="flex flex-wrap gap-3 px-4 py-3">
-                <div className="flex min-w-[111px] flex-1 basis-[fit-content] flex-col gap-2 rounded-lg border border-[#dce0e5] p-3 items-start">
-                  <p className="text-[#111418] tracking-light text-2xl font-bold leading-tight">{sessoesAprovadas}</p>
-                  <div className="flex items-center gap-2">
-                    <p className="text-[#637588] text-sm font-normal leading-normal">Aulas Confirmadas</p>
-                  </div>
-                </div>
-                <div className="flex min-w-[111px] flex-1 basis-[fit-content] flex-col gap-2 rounded-lg border border-[#dce0e5] p-3 items-start">
-                  <p className="text-[#111418] tracking-light text-2xl font-bold leading-tight">{sessoesPendentes}</p>
-                  <div className="flex items-center gap-2">
-                    <p className="text-[#637588] text-sm font-normal leading-normal">Aguardando Confirmação</p>
-                  </div>
-                </div>
-                <div className="flex min-w-[111px] flex-1 basis-[fit-content] flex-col gap-2 rounded-lg border border-[#dce0e5] p-3 items-start">
-                  <p className="text-[#111418] tracking-light text-2xl font-bold leading-tight">{totalProfessores}</p>
-                  <div className="flex items-center gap-2">
-                    <p className="text-[#637588] text-sm font-normal leading-normal">Professores</p>
-                  </div>
-                </div>
+              <div className="size-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                <CalendarCheck className="size-6" />
               </div>
+            </div>
 
-              {/* Próximas sessões de aula */}
-              <div className="flex items-center justify-between px-4 pb-2 pt-5">
-                <h2 className="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em]">
-                  Próximas sessões de aula
-                </h2>
-                {schedules.length > 0 && (
-                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
-                    {schedules.length} {schedules.length === 1 ? 'agendamento' : 'agendamentos'}
-                  </span>
-                )}
+            <div className="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-xs flex items-center justify-between">
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
+                  Aguardando Confirmação
+                </p>
+                <p className="text-3xl font-black text-gray-900 tracking-tight mb-0">
+                  {sessoesPendentes}
+                </p>
               </div>
-
-              <div className="px-4 py-2">
-                {loadingSchedules ? (
-                  <div className="border border-[#dce0e5] rounded-xl p-8 text-center bg-gray-50/50">
-                    <i className="fa-solid fa-spinner fa-spin text-2xl text-blue-600 mb-2"></i>
-                    <p className="text-gray-500 text-sm">Carregando seus agendamentos...</p>
-                  </div>
-                ) : schedules.length === 0 ? (
-                  <div className="border border-dashed border-gray-300 rounded-xl p-8 text-center bg-gray-50/50 flex flex-col items-center justify-center gap-2">
-                    <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 text-xl mb-1">
-                      <i className="fa-regular fa-calendar-plus"></i>
-                    </div>
-                    <h3 className="font-semibold text-gray-800 text-base">Nenhuma aula agendada ainda</h3>
-                    <p className="text-gray-500 text-sm max-w-md">
-                      Você pode solicitar um horário de aula clicando em <strong className="text-blue-600 font-medium">"Agendar Aula"</strong> em qualquer mentoria aceita abaixo!
-                    </p>
-                  </div>
-                ) : (
-                  <div className="flex flex-col gap-3">
-                    {schedules.map((schedule) => {
-                      const matchedMentorship = mentorias.find((m) => m.id === schedule.mentorshipId);
-                      const teacherName = matchedMentorship?.teacherName || `Professor (Mentoria #${schedule.mentorshipId})`;
-                      const teacherPhoto = matchedMentorship?.teacherPhoto || '/assets/images/default.webp';
-                      const disciplina = matchedMentorship?.disciplina || 'Mentoria';
-
-                      const statusCfg = getStatusConfig(schedule.status);
-                      const formatCfg = getFormatConfig(schedule.format);
-                      const durationMinutes = calculateDurationMinutes(schedule.startAt, schedule.endAt);
-
-                      return (
-                        <div
-                          key={schedule.id}
-                          className="border border-[#dce0e5] rounded-xl p-4 bg-white shadow-sm hover:shadow-md transition flex flex-col sm:flex-row sm:items-center justify-between gap-4"
-                        >
-                          <div className="flex items-start sm:items-center gap-4">
-                            <img
-                              src={teacherPhoto}
-                              alt={teacherName}
-                              className="w-14 h-14 rounded-full object-cover border shrink-0"
-                              onError={(e) => {
-                                e.currentTarget.src = '/assets/images/default.webp';
-                              }}
-                            />
-                            <div>
-                              <div className="flex flex-wrap items-center gap-2 mb-1">
-                                <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold border ${statusCfg.badgeClass}`}>
-                                  <span className={`w-1.5 h-1.5 rounded-full ${statusCfg.dotClass}`}></span>
-                                  {statusCfg.label}
-                                </span>
-                                <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium border ${formatCfg.badgeClass}`}>
-                                  <i className={`${formatCfg.icon} text-[10px]`}></i>
-                                  {formatCfg.label}
-                                </span>
-                              </div>
-
-                              <h3 className="font-semibold text-gray-900 text-base">{teacherName}</h3>
-                              <p className="text-xs text-gray-500 mb-1">{disciplina}</p>
-
-                              <div className="flex flex-wrap items-center gap-3 text-xs text-gray-600 font-medium">
-                                <span className="flex items-center gap-1">
-                                  <i className="fa-regular fa-calendar text-blue-600"></i>
-                                  {formatFullDate(schedule.startAt)}
-                                </span>
-                                <span className="flex items-center gap-1">
-                                  <i className="fa-regular fa-clock text-blue-600"></i>
-                                  {formatTimeRange(schedule.startAt, schedule.endAt)}
-                                </span>
-                                <span className="text-gray-400">({formatDuration(durationMinutes)})</span>
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Ações do agendamento */}
-                          <div className="flex items-center gap-2 self-end sm:self-center">
-                            {schedule.status === 'Approved' && schedule.format === 'Online' && (
-                              <Link
-                                to="/videocall"
-                                className="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-1.5 rounded-lg text-xs font-semibold shadow-sm transition no-underline"
-                              >
-                                <i className="fa-solid fa-video"></i>
-                                Entrar na Aula
-                              </Link>
-                            )}
-
-                            {schedule.status === 'PendingApproval' && (
-                              <button
-                                type="button"
-                                onClick={() => handleOpenEditSchedule(schedule)}
-                                className="inline-flex items-center gap-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 px-3 py-1.5 rounded-lg text-xs font-medium transition cursor-pointer"
-                              >
-                                <i className="fa-solid fa-pencil"></i>
-                                Alterar Horário
-                              </button>
-                            )}
-
-                            {(schedule.status === 'PendingApproval' || schedule.status === 'Approved') && (
-                              <button
-                                type="button"
-                                onClick={() => handleCancelarAgendamento(schedule.id)}
-                                disabled={cancellingScheduleId === schedule.id}
-                                className="inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3 py-1.5 rounded-lg text-xs font-medium transition cursor-pointer disabled:opacity-50"
-                              >
-                                <i className="fa-solid fa-ban"></i>
-                                {cancellingScheduleId === schedule.id ? 'Cancelando...' : 'Cancelar'}
-                              </button>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
+              <div className="size-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+                <Clock className="size-6" />
               </div>
+            </div>
 
-              {/* Minhas Mentorias */}
-              <h2 className="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-6">
-                Minhas Mentorias
-              </h2>
-              <div id="minhasMentorias" className="px-4 py-2">
-                {loading ? (
-                  <p className="text-gray-500">Carregando mentorias...</p>
-                ) : mentorias.length === 0 ? (
-                  <p className="text-gray-500">Você ainda não possui mentorias solicitadas.</p>
-                ) : (
-                  mentorias.map((m) => {
-                    const statusColor =
-                      m.status === 'ACCEPTED'
-                        ? 'text-green-600'
-                        : m.status === 'PENDING'
-                        ? 'text-yellow-600'
-                        : 'text-red-600';
-
-                    const statusText =
-                      m.status === 'ACCEPTED'
-                        ? 'Aceita'
-                        : m.status === 'PENDING'
-                        ? 'Pendente'
-                        : m.status === 'CANCELLED'
-                        ? 'Cancelada'
-                        : 'Recusada';
-
-                    return (
-                      <div
-                        key={m.id}
-                        className="border rounded-xl p-4 mb-4 shadow-sm bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:shadow-md transition"
-                      >
-                        <div className="flex items-center gap-4">
-                          <img
-                            src={m.teacherPhoto || '/assets/images/default.webp'}
-                            alt={m.teacherName}
-                            className="w-16 h-16 rounded-full object-cover border"
-                            onError={(e) => {
-                              e.currentTarget.src = '/assets/images/default.webp';
-                            }}
-                          />
-                          <div>
-                            <h3 className="font-semibold text-lg text-gray-800">{m.teacherName}</h3>
-                            <p className="text-sm text-gray-500">{m.disciplina || 'Mentoria Geral'}</p>
-                            <small className={`${statusColor} font-medium`}>{statusText}</small>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center gap-2.5 self-end sm:self-center">
-                          {m.status === 'ACCEPTED' && (
-                            <button
-                              type="button"
-                              onClick={() => handleOpenCreateSchedule(m)}
-                              className="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-1.5 rounded-lg text-sm font-medium transition cursor-pointer shadow-sm shadow-blue-500/20"
-                            >
-                              <i className="fa-regular fa-calendar-plus"></i>
-                              Agendar Aula
-                            </button>
-                          )}
-
-                          {m.status !== 'CANCELLED' && (
-                            <button
-                              onClick={() => handleCancelarMentoria(m.id)}
-                              disabled={cancellingId === m.id}
-                              className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3 py-1.5 rounded-lg text-sm font-medium transition cursor-pointer disabled:opacity-50"
-                            >
-                              {cancellingId === m.id ? 'Cancelando...' : 'Cancelar Mentoria'}
-                            </button>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })
-                )}
+            <div className="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-xs flex items-center justify-between">
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
+                  Professores
+                </p>
+                <p className="text-3xl font-black text-gray-900 tracking-tight mb-0">
+                  {totalProfessores}
+                </p>
               </div>
-
-              {/* Comunicação */}
-              <h2 className="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
-                Comunicação
-              </h2>
-              <div className="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2">
-                <div
-                  className="text-[#111418] flex items-center justify-center rounded-lg bg-[#f0f2f4] shrink-0 size-12"
-                  data-icon="ChatCircleDots"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                    <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z"></path>
-                  </svg>
-                </div>
-                <div className="flex flex-col justify-center">
-                  <p className="text-[#111418] text-base font-medium leading-normal line-clamp-1">Mensagens</p>
-                  <p className="text-[#637588] text-sm font-normal leading-normal line-clamp-2">Envie uma mensagem ao Professor</p>
-                </div>
+              <div className="size-12 rounded-xl bg-[#5F688F]/10 text-[#5F688F] flex items-center justify-center shrink-0">
+                <GraduationCap className="size-6" />
               </div>
-
-              <Link to="/videocall" className="no-underline text-inherit" style={{ textDecoration: 'none', color: 'inherit' }}>
-                <div className="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 cursor-pointer hover:bg-[#f9fafb] rounded-lg transition">
-                  <div className="text-[#111418] flex items-center justify-center rounded-lg bg-[#f0f2f4] shrink-0 size-12" data-icon="Video">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                      <path d="M164.44,105.34l-48-32A8,8,0,0,0,104,80v64a8,8,0,0,0,12.44,6.66l48-32a8,8,0,0,0,0-13.32ZM120,129.05V95l25.58,17ZM216,40H40A16,16,0,0,0,24,56V168a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,128H40V56H216V168Zm16,40a8,8,0,0,1-8,8H32a8,8,0,0,1,0-16H224A8,8,0,0,1,232,208Z"></path>
-                    </svg>
-                  </div>
-                  <div className="flex flex-col justify-center">
-                    <p className="text-[#111418] text-base font-medium leading-normal line-clamp-1">Videochamada</p>
-                    <p className="text-[#637588] text-sm font-normal leading-normal line-clamp-2">Inicie uma videochamada com seu Professor</p>
-                  </div>
-                </div>
-              </Link>
             </div>
           </div>
 
-          <Footer />
-        </div>
+          {/* Upcoming Lessons Section */}
+          <section className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-bold text-gray-900 tracking-tight mb-0">
+                Próximas sessões de aula
+              </h2>
+              {schedules.length > 0 && (
+                <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#5F688F]/10 text-[#5F688F] border border-[#5F688F]/20">
+                  {schedules.length} {schedules.length === 1 ? 'agendamento' : 'agendamentos'}
+                </span>
+              )}
+            </div>
+
+            {loadingSchedules ? (
+              <div className="space-y-3">
+                {[...Array(2)].map((_, i) => (
+                  <div key={i} className="bg-white rounded-2xl border border-gray-100 p-5 shadow-xs animate-pulse flex items-center gap-4">
+                    <div className="size-14 rounded-2xl bg-gray-200 shrink-0" />
+                    <div className="flex-1 space-y-2">
+                      <div className="h-4 bg-gray-200 rounded w-1/3" />
+                      <div className="h-3 bg-gray-100 rounded w-1/2" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : schedules.length === 0 ? (
+              <div className="border-2 border-dashed border-gray-200 rounded-2xl p-8 text-center bg-white flex flex-col items-center justify-center gap-2">
+                <div className="size-12 rounded-2xl bg-[#5F688F]/10 text-[#5F688F] flex items-center justify-center mb-1">
+                  <CalendarPlus className="size-6" />
+                </div>
+                <h3 className="font-bold text-gray-900 text-base mb-0">
+                  Nenhuma aula agendada ainda
+                </h3>
+                <p className="text-gray-500 text-sm max-w-md mb-0">
+                  Você pode solicitar um horário clicando em <strong className="text-[#5F688F] font-semibold">"Agendar Aula"</strong> em qualquer mentoria aceita abaixo.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {schedules.map((schedule) => {
+                  const matchedMentorship = mentorias.find((m) => m.id === schedule.mentorshipId);
+                  const teacherName = matchedMentorship?.teacherName || `Professor (Mentoria #${schedule.mentorshipId})`;
+                  const teacherPhoto = matchedMentorship?.teacherPhoto || '/assets/images/default.webp';
+                  const disciplina = matchedMentorship?.disciplina || 'Mentoria';
+
+                  const statusCfg = getStatusConfig(schedule.status);
+                  const formatCfg = getFormatConfig(schedule.format);
+                  const durationMinutes = calculateDurationMinutes(schedule.startAt, schedule.endAt);
+                  const FormatIcon = schedule.format === 'Online' ? Video : MapPin;
+
+                  return (
+                    <div
+                      key={schedule.id}
+                      className="bg-white border border-gray-200/80 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md hover:border-[#5F688F]/30 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                    >
+                      <div className="flex items-start sm:items-center gap-4 min-w-0">
+                        <img
+                          src={teacherPhoto}
+                          alt={teacherName}
+                          className="size-14 rounded-2xl object-cover border border-gray-200 shrink-0"
+                          onError={(e) => {
+                            e.currentTarget.src = '/assets/images/default.webp';
+                          }}
+                        />
+                        <div className="min-w-0">
+                          <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold border ${statusCfg.badgeClass}`}>
+                              <span className={`size-1.5 rounded-full ${statusCfg.dotClass}`} />
+                              {statusCfg.label}
+                            </span>
+                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium border ${formatCfg.badgeClass}`}>
+                              <FormatIcon className="size-3" />
+                              {formatCfg.label}
+                            </span>
+                          </div>
+
+                          <h3 className="font-bold text-gray-900 text-base truncate mb-0.5">
+                            {teacherName}
+                          </h3>
+                          <p className="text-xs text-gray-500 font-medium mb-2">{disciplina}</p>
+
+                          <div className="flex flex-wrap items-center gap-3 text-xs text-gray-600 font-medium">
+                            <span className="inline-flex items-center gap-1.5 bg-slate-50 px-2.5 py-1 rounded-lg border border-gray-200/80">
+                              <Calendar className="size-3.5 text-[#5F688F]" />
+                              {formatFullDate(schedule.startAt)}
+                            </span>
+                            <span className="inline-flex items-center gap-1.5 bg-slate-50 px-2.5 py-1 rounded-lg border border-gray-200/80">
+                              <Clock className="size-3.5 text-[#5F688F]" />
+                              {formatTimeRange(schedule.startAt, schedule.endAt)}
+                            </span>
+                            <span className="text-gray-400">({formatDuration(durationMinutes)})</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-wrap items-center gap-2 self-end sm:self-center shrink-0">
+                        {schedule.status === 'Approved' && schedule.format === 'Online' && (
+                          <Link
+                            to="/videocall"
+                            className="inline-flex items-center gap-1.5 bg-[#5F688F] hover:bg-[#4d5577] text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-xs transition text-decoration-none"
+                          >
+                            <Video className="size-3.5" />
+                            <span>Entrar na Aula</span>
+                          </Link>
+                        )}
+
+                        {schedule.status === 'PendingApproval' && (
+                          <button
+                            type="button"
+                            onClick={() => handleOpenEditSchedule(schedule)}
+                            className="inline-flex items-center gap-1.5 bg-[#5F688F]/10 hover:bg-[#5F688F]/15 text-[#5F688F] border border-[#5F688F]/20 px-3.5 py-2 rounded-xl text-xs font-semibold transition cursor-pointer"
+                          >
+                            <Pencil className="size-3.5" />
+                            <span>Alterar Horário</span>
+                          </button>
+                        )}
+
+                        {(schedule.status === 'PendingApproval' || schedule.status === 'Approved') && (
+                          <button
+                            type="button"
+                            onClick={() => handleCancelarAgendamento(schedule.id)}
+                            disabled={cancellingScheduleId === schedule.id}
+                            className="inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3.5 py-2 rounded-xl text-xs font-semibold transition cursor-pointer disabled:opacity-50"
+                          >
+                            <Ban className="size-3.5" />
+                            <span>{cancellingScheduleId === schedule.id ? 'Cancelando...' : 'Cancelar'}</span>
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </section>
+
+          {/* My Mentorships Section */}
+          <section className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-bold text-gray-900 tracking-tight mb-0">
+                Minhas Mentorias
+              </h2>
+              {mentorias.length > 0 && (
+                <span className="text-xs font-semibold text-gray-500">
+                  {mentorias.length} {mentorias.length === 1 ? 'mentoria' : 'mentorias'}
+                </span>
+              )}
+            </div>
+
+            <div id="minhasMentorias" className="space-y-3">
+              {loading ? (
+                <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-xs animate-pulse flex items-center gap-4">
+                  <div className="size-14 rounded-2xl bg-gray-200 shrink-0" />
+                  <div className="flex-1 space-y-2">
+                    <div className="h-4 bg-gray-200 rounded w-1/3" />
+                    <div className="h-3 bg-gray-100 rounded w-1/4" />
+                  </div>
+                </div>
+              ) : mentorias.length === 0 ? (
+                <div className="border-2 border-dashed border-gray-200 rounded-2xl p-8 text-center bg-white flex flex-col items-center justify-center gap-3">
+                  <div className="size-12 rounded-2xl bg-[#5F688F]/10 text-[#5F688F] flex items-center justify-center">
+                    <BookOpen className="size-6" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-900 text-base mb-1">
+                      Você ainda não possui mentorias solicitadas
+                    </h3>
+                    <p className="text-sm text-gray-500 max-w-md mb-0">
+                      Encontre o mentor ideal no catálogo para iniciar suas aulas particulares.
+                    </p>
+                  </div>
+                  <Link
+                    to="/catalogo"
+                    className="inline-flex items-center gap-2 bg-[#5F688F] hover:bg-[#4d5577] text-white font-semibold text-xs px-4 py-2.5 rounded-xl transition text-decoration-none"
+                  >
+                    <span>Explorar Catálogo</span>
+                    <ArrowRight className="size-3.5" />
+                  </Link>
+                </div>
+              ) : (
+                mentorias.map((m) => {
+                  const statusBadge =
+                    m.status === 'ACCEPTED'
+                      ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                      : m.status === 'PENDING'
+                      ? 'bg-amber-50 text-amber-700 border-amber-200'
+                      : 'bg-rose-50 text-rose-700 border-rose-200';
+
+                  const statusText =
+                    m.status === 'ACCEPTED'
+                      ? 'Aceita'
+                      : m.status === 'PENDING'
+                      ? 'Pendente'
+                      : m.status === 'CANCELLED'
+                      ? 'Cancelada'
+                      : 'Recusada';
+
+                  return (
+                    <div
+                      key={m.id}
+                      className="bg-white border border-gray-200/80 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md hover:border-[#5F688F]/30 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                    >
+                      <div className="flex items-center gap-4 min-w-0">
+                        <img
+                          src={m.teacherPhoto || '/assets/images/default.webp'}
+                          alt={m.teacherName}
+                          className="size-14 rounded-2xl object-cover border border-gray-200 shrink-0"
+                          onError={(e) => {
+                            e.currentTarget.src = '/assets/images/default.webp';
+                          }}
+                        />
+                        <div className="min-w-0">
+                          <div className="flex flex-wrap items-center gap-2 mb-0.5">
+                            <h3 className="font-bold text-base text-gray-900 truncate mb-0">
+                              {m.teacherName}
+                            </h3>
+                            <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${statusBadge}`}>
+                              {statusText}
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-500 font-medium mb-0">
+                            {m.disciplina || 'Mentoria Geral'}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-wrap items-center gap-2.5 self-end sm:self-center shrink-0">
+                        {m.status === 'ACCEPTED' && (
+                          <button
+                            type="button"
+                            onClick={() => handleOpenCreateSchedule(m)}
+                            className="inline-flex items-center gap-1.5 bg-[#5F688F] hover:bg-[#4d5577] text-white px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer border-0 shadow-xs"
+                          >
+                            <CalendarPlus className="size-3.5" />
+                            <span>Agendar Aula</span>
+                          </button>
+                        )}
+
+                        {m.status !== 'CANCELLED' && (
+                          <button
+                            type="button"
+                            onClick={() => handleCancelarMentoria(m.id)}
+                            disabled={cancellingId === m.id}
+                            className="inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3.5 py-2 rounded-xl text-xs font-semibold transition cursor-pointer disabled:opacity-50"
+                          >
+                            <Ban className="size-3.5" />
+                            <span>{cancellingId === m.id ? 'Cancelando...' : 'Cancelar Mentoria'}</span>
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </section>
+
+          {/* Communication Section */}
+          <section className="space-y-4">
+            <h2 className="text-xl font-bold text-gray-900 tracking-tight mb-0">
+              Comunicação
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Link
+                to="/videocall"
+                className="group bg-white border border-gray-200/80 hover:border-[#5F688F]/40 rounded-2xl p-5 shadow-xs hover:shadow-md transition flex items-center justify-between gap-4 text-decoration-none"
+              >
+                <div className="flex items-center gap-4 min-w-0">
+                  <div className="size-12 rounded-xl bg-[#5F688F]/10 text-[#5F688F] flex items-center justify-center shrink-0">
+                    <Video className="size-6" />
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="text-base font-bold text-gray-900 mb-0.5">Videochamada</h3>
+                    <p className="text-xs text-gray-500 mb-0 line-clamp-2">
+                      Inicie ou entre em uma videochamada com seu professor
+                    </p>
+                  </div>
+                </div>
+                <ArrowRight className="size-4 text-gray-400 group-hover:text-[#5F688F] group-hover:translate-x-1 transition shrink-0" />
+              </Link>
+
+              <div className="bg-white border border-gray-200/80 rounded-2xl p-5 shadow-xs flex items-center justify-between gap-4 opacity-85">
+                <div className="flex items-center gap-4 min-w-0">
+                  <div className="size-12 rounded-xl bg-slate-100 text-gray-500 flex items-center justify-center shrink-0">
+                    <MessageSquare className="size-6" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <h3 className="text-base font-bold text-gray-900 mb-0">Mensagens</h3>
+                      <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 text-gray-500 border border-gray-200">
+                        Em breve
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-500 mb-0 line-clamp-2">
+                      Envie mensagens diretas ao professor pela plataforma
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+
+        <Footer />
       </div>
 
       {/* Modal de Agendamento */}

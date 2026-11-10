@@ -345,13 +345,13 @@ h1 {
 
 /* Responsividade */
 @media (max-width: 600px) {
-    header {
+    header:not(.menthfy-header):not(.menthfy-home-header) {
         display: flex;
         flex-direction: column;
         height: 100px;
     }
 
-    h1 {
+    header:not(.menthfy-header):not(.menthfy-home-header) h1 {
         display: none;
     }
 

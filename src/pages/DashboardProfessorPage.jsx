@@ -1,5 +1,22 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  ArrowRight,
+  Ban,
+  Bell,
+  BookOpen,
+  Calendar,
+  CalendarCheck,
+  Check,
+  CheckCircle2,
+  Clock,
+  Loader2,
+  MapPin,
+  MessageSquare,
+  Users,
+  Video,
+  X,
+} from 'lucide-react';
 import Swal from 'sweetalert2';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -33,7 +50,6 @@ export default function DashboardProfessorPage() {
   const [loading, setLoading] = useState(true);
   const [loadingSchedules, setLoadingSchedules] = useState(true);
 
-  // Estados de carregamento das ações
   const [acceptingId, setAcceptingId] = useState(null);
   const [cancellingId, setCancellingId] = useState(null);
   const [processingScheduleId, setProcessingScheduleId] = useState(null);
@@ -86,6 +102,7 @@ export default function DashboardProfessorPage() {
         icon: 'error',
         title: 'Erro',
         text: err.message || 'Erro ao aceitar a mentoria.',
+        confirmButtonColor: '#5F688F',
       });
     } finally {
       setAcceptingId(null);
@@ -99,7 +116,7 @@ export default function DashboardProfessorPage() {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
+      cancelButtonColor: '#5F688F',
       confirmButtonText: 'Sim, cancelar',
       cancelButtonText: 'Voltar',
     });
@@ -124,13 +141,13 @@ export default function DashboardProfessorPage() {
         icon: 'error',
         title: 'Erro',
         text: err.message || 'Erro ao cancelar a mentoria.',
+        confirmButtonColor: '#5F688F',
       });
     } finally {
       setCancellingId(null);
     }
   }
 
-  // Ações de agendamento de aula do professor
   async function handleAprovarAula(scheduleId) {
     setProcessingScheduleId(scheduleId);
     try {
@@ -149,6 +166,7 @@ export default function DashboardProfessorPage() {
         icon: 'error',
         title: 'Erro ao aprovar aula',
         text: err.message || 'Não foi possível aprovar o agendamento.',
+        confirmButtonColor: '#5F688F',
       });
     } finally {
       setProcessingScheduleId(null);
@@ -162,7 +180,7 @@ export default function DashboardProfessorPage() {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
+      cancelButtonColor: '#5F688F',
       confirmButtonText: 'Sim, recusar horário',
       cancelButtonText: 'Voltar',
     });
@@ -186,6 +204,7 @@ export default function DashboardProfessorPage() {
         icon: 'error',
         title: 'Erro ao recusar',
         text: err.message || 'Não foi possível recusar o agendamento.',
+        confirmButtonColor: '#5F688F',
       });
     } finally {
       setProcessingScheduleId(null);
@@ -199,7 +218,7 @@ export default function DashboardProfessorPage() {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
+      cancelButtonColor: '#5F688F',
       confirmButtonText: 'Sim, cancelar aula',
       cancelButtonText: 'Manter',
     });
@@ -223,6 +242,7 @@ export default function DashboardProfessorPage() {
         icon: 'error',
         title: 'Erro ao cancelar',
         text: err.message || 'Não foi possível cancelar a aula.',
+        confirmButtonColor: '#5F688F',
       });
     } finally {
       setProcessingScheduleId(null);
@@ -239,341 +259,470 @@ export default function DashboardProfessorPage() {
 
   return (
     <AuthGuard requiredRole="Professor">
-      <div className="relative flex size-full min-h-screen flex-col bg-white overflow-x-hidden" style={{ fontFamily: 'Lexend, "Noto Sans", sans-serif' }}>
-        <div className="layout-container flex h-full grow flex-col">
-          <Header />
+      <div className="min-h-screen flex flex-col bg-slate-50/50 text-[#111418] font-['Inter',sans-serif]">
+        <Header />
 
-          <div className="px-40 flex flex-1 justify-center py-5">
-            <div className="layout-content-container flex flex-col max-w-[960px] flex-1">
-              <div className="flex flex-wrap justify-between gap-3 p-4">
-                <p id="welcomeMsg" className="text-[#111418] tracking-light text-[32px] font-bold leading-tight min-w-72">
-                  Bem-vindo(a), {user?.nome || 'Professor'}!
+        {/* Welcome Header Banner */}
+        <section className="bg-gradient-to-b from-[#F4F6FB] via-white to-slate-50/50 py-8 md:py-10 border-b border-gray-100">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-1.5">
+              <span className="text-xs font-bold text-[#5F688F] uppercase tracking-wider bg-[#5F688F]/10 px-3 py-1 rounded-full border border-[#5F688F]/20 inline-block">
+                Painel do Professor
+              </span>
+              <h1 id="welcomeMsg" className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight mb-0">
+                Bem-vindo(a), {user?.nome || 'Professor'}!
+              </h1>
+              <p className="text-sm text-gray-600 mb-0">
+                Aprove solicitações de mentoria, confirme horários e acompanhe suas aulas.
+              </p>
+            </div>
+
+            <Link
+              to="/catalogo"
+              className="inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 font-semibold text-sm px-4 py-2.5 rounded-xl transition shadow-2xs text-decoration-none shrink-0 self-start sm:self-center"
+            >
+              <BookOpen className="size-4 text-[#5F688F]" />
+              <span>Ver Catálogo</span>
+            </Link>
+          </div>
+        </section>
+
+        {/* Main Content */}
+        <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+          {/* Stats Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-xs flex items-center justify-between">
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
+                  Aulas Confirmadas
+                </p>
+                <p className="text-3xl font-black text-gray-900 tracking-tight mb-0">
+                  {approvedSchedules.length}
                 </p>
               </div>
-
-              {/* Cards de estatísticas */}
-              <div className="flex flex-wrap gap-3 px-4 py-3">
-                <div className="flex min-w-[111px] flex-1 basis-[fit-content] flex-col gap-2 rounded-lg border border-[#dce0e5] p-3 items-start">
-                  <p className="text-[#111418] tracking-light text-2xl font-bold leading-tight">{approvedSchedules.length}</p>
-                  <div className="flex items-center gap-2">
-                    <p className="text-[#637588] text-sm font-normal leading-normal">Aulas Confirmadas</p>
-                  </div>
-                </div>
-                <div className="flex min-w-[111px] flex-1 basis-[fit-content] flex-col gap-2 rounded-lg border border-[#dce0e5] p-3 items-start">
-                  <p className="text-[#111418] tracking-light text-2xl font-bold leading-tight">{pendingSchedules.length}</p>
-                  <div className="flex items-center gap-2">
-                    <p className="text-[#637588] text-sm font-normal leading-normal">Solicitações de Aulas</p>
-                  </div>
-                </div>
-                <div className="flex min-w-[111px] flex-1 basis-[fit-content] flex-col gap-2 rounded-lg border border-[#dce0e5] p-3 items-start">
-                  <p className="text-[#111418] tracking-light text-2xl font-bold leading-tight">{totalAlunos}</p>
-                  <div className="flex items-center gap-2">
-                    <p className="text-[#637588] text-sm font-normal leading-normal">Alunos</p>
-                  </div>
-                </div>
+              <div className="size-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                <CalendarCheck className="size-6" />
               </div>
+            </div>
 
-              {/* Solicitações de agendamento de aulas aguardando aprovação */}
-              {pendingSchedules.length > 0 && (
-                <div className="px-4 pt-4">
-                  <div className="border-2 border-amber-300 bg-amber-50/40 rounded-2xl p-5 shadow-sm">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center text-sm shadow-sm">
-                          <i className="fa-solid fa-bell"></i>
-                        </div>
-                        <div>
-                          <h2 className="text-lg font-bold text-gray-900 leading-tight">
-                            Solicitações de Aula Aguardando Sua Aprovação
-                          </h2>
-                          <p className="text-xs text-gray-600">
-                            Alunos solicitaram horários para mentoria. Aprove ou recuse cada proposta abaixo.
-                          </p>
-                        </div>
-                      </div>
-                      <span className="text-xs font-bold px-3 py-1 rounded-full bg-amber-200/80 text-amber-900">
-                        {pendingSchedules.length} pendente{pendingSchedules.length > 1 ? 's' : ''}
-                      </span>
-                    </div>
-
-                    <div className="flex flex-col gap-3">
-                      {pendingSchedules.map((schedule) => {
-                        const matchedMentorship = mentorias.find((m) => m.id === schedule.mentorshipId);
-                        const studentName = matchedMentorship?.studentName || `Aluno (Mentoria #${schedule.mentorshipId})`;
-                        const disciplina = matchedMentorship?.disciplina || 'Mentoria Geral';
-                        const formatCfg = getFormatConfig(schedule.format);
-                        const durationMinutes = calculateDurationMinutes(schedule.startAt, schedule.endAt);
-                        const isProcessing = processingScheduleId === schedule.id;
-
-                        return (
-                          <div
-                            key={schedule.id}
-                            className="bg-white border border-amber-200/80 rounded-xl p-4 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4"
-                          >
-                            <div>
-                              <div className="flex items-center gap-2 mb-1.5">
-                                <span className="font-bold text-base text-gray-900">{studentName}</span>
-                                <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium border ${formatCfg.badgeClass}`}>
-                                  <i className={`${formatCfg.icon} text-[10px]`}></i>
-                                  {formatCfg.label}
-                                </span>
-                              </div>
-                              <p className="text-xs text-gray-500 mb-2">{disciplina}</p>
-                              <div className="flex flex-wrap items-center gap-3 text-xs text-gray-700 font-medium">
-                                <span className="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded border border-gray-200">
-                                  <i className="fa-regular fa-calendar text-amber-600"></i>
-                                  {formatFullDate(schedule.startAt)}
-                                </span>
-                                <span className="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded border border-gray-200">
-                                  <i className="fa-regular fa-clock text-amber-600"></i>
-                                  {formatTimeRange(schedule.startAt, schedule.endAt)}
-                                </span>
-                                <span className="text-gray-500 font-normal">({formatDuration(durationMinutes)})</span>
-                              </div>
-                            </div>
-
-                            <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
-                              <button
-                                type="button"
-                                onClick={() => handleRejeitarAula(schedule.id)}
-                                disabled={isProcessing}
-                                className="inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3.5 py-2 rounded-lg text-xs font-semibold transition cursor-pointer disabled:opacity-50"
-                              >
-                                <i className="fa-solid fa-xmark"></i>
-                                Recusar
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => handleAprovarAula(schedule.id)}
-                                disabled={isProcessing}
-                                className="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow-sm transition cursor-pointer disabled:opacity-50"
-                              >
-                                {isProcessing ? (
-                                  <>
-                                    <i className="fa-solid fa-spinner fa-spin"></i>
-                                    Processando...
-                                  </>
-                                ) : (
-                                  <>
-                                    <i className="fa-solid fa-check"></i>
-                                    Aprovar Horário
-                                  </>
-                                )}
-                              </button>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Próximas sessões confirmadas */}
-              <div className="flex items-center justify-between px-4 pb-2 pt-6">
-                <h2 className="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em]">
-                  Próximas sessões confirmadas
-                </h2>
-                {approvedSchedules.length > 0 && (
-                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-                    {approvedSchedules.length} {approvedSchedules.length === 1 ? 'aula confirmada' : 'aulas confirmadas'}
-                  </span>
-                )}
+            <div className="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-xs flex items-center justify-between">
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
+                  Solicitações de Aulas
+                </p>
+                <p className="text-3xl font-black text-gray-900 tracking-tight mb-0">
+                  {pendingSchedules.length}
+                </p>
               </div>
-
-              <div className="px-4 py-2">
-                {loadingSchedules ? (
-                  <div className="border border-[#dce0e5] rounded-xl p-8 text-center bg-gray-50/50">
-                    <i className="fa-solid fa-spinner fa-spin text-2xl text-blue-600 mb-2"></i>
-                    <p className="text-gray-500 text-sm">Carregando sessões...</p>
-                  </div>
-                ) : approvedSchedules.length === 0 ? (
-                  <div className="border border-dashed border-gray-300 rounded-xl p-8 text-center bg-gray-50/50 flex flex-col items-center justify-center gap-2">
-                    <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 text-xl mb-1">
-                      <i className="fa-regular fa-calendar"></i>
-                    </div>
-                    <h3 className="font-semibold text-gray-800 text-base">Nenhuma aula agendada confirmada</h3>
-                    <p className="text-gray-500 text-sm max-w-md">
-                      Quando seus alunos solicitarem agendamentos e você os aprovar, as próximas sessões aparecerão aqui.
-                    </p>
-                  </div>
-                ) : (
-                  <div className="flex flex-col gap-3">
-                    {approvedSchedules.map((schedule) => {
-                      const matchedMentorship = mentorias.find((m) => m.id === schedule.mentorshipId);
-                      const studentName = matchedMentorship?.studentName || `Aluno (Mentoria #${schedule.mentorshipId})`;
-                      const disciplina = matchedMentorship?.disciplina || 'Mentoria Geral';
-                      const statusCfg = getStatusConfig(schedule.status);
-                      const formatCfg = getFormatConfig(schedule.format);
-                      const durationMinutes = calculateDurationMinutes(schedule.startAt, schedule.endAt);
-                      const isProcessing = processingScheduleId === schedule.id;
-
-                      return (
-                        <div
-                          key={schedule.id}
-                          className="border border-[#dce0e5] rounded-xl p-4 bg-white shadow-sm hover:shadow-md transition flex flex-col sm:flex-row sm:items-center justify-between gap-4"
-                        >
-                          <div>
-                            <div className="flex items-center gap-2 mb-1.5">
-                              <span className="font-semibold text-base text-gray-900">{studentName}</span>
-                              <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium border ${formatCfg.badgeClass}`}>
-                                <i className={`${formatCfg.icon} text-[10px]`}></i>
-                                {formatCfg.label}
-                              </span>
-                              <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border ${statusCfg.badgeClass}`}>
-                                <span className={`w-1.5 h-1.5 rounded-full ${statusCfg.dotClass}`}></span>
-                                {statusCfg.label}
-                              </span>
-                            </div>
-
-                            <p className="text-xs text-gray-500 mb-2">{disciplina}</p>
-
-                            <div className="flex flex-wrap items-center gap-3 text-xs text-gray-600 font-medium">
-                              <span className="flex items-center gap-1">
-                                <i className="fa-regular fa-calendar text-blue-600"></i>
-                                {formatFullDate(schedule.startAt)}
-                              </span>
-                              <span className="flex items-center gap-1">
-                                <i className="fa-regular fa-clock text-blue-600"></i>
-                                {formatTimeRange(schedule.startAt, schedule.endAt)}
-                              </span>
-                              <span className="text-gray-400">({formatDuration(durationMinutes)})</span>
-                            </div>
-                          </div>
-
-                          <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
-                            {schedule.format === 'Online' && (
-                              <Link
-                                to="/videocall"
-                                className="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-1.5 rounded-lg text-xs font-semibold shadow-sm transition no-underline"
-                              >
-                                <i className="fa-solid fa-video"></i>
-                                Videochamada
-                              </Link>
-                            )}
-                            <button
-                              type="button"
-                              onClick={() => handleCancelarAula(schedule.id)}
-                              disabled={isProcessing}
-                              className="inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3 py-1.5 rounded-lg text-xs font-medium transition cursor-pointer disabled:opacity-50"
-                            >
-                              <i className="fa-solid fa-ban"></i>
-                              {isProcessing ? 'Cancelando...' : 'Cancelar'}
-                            </button>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
+              <div className="size-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+                <Bell className="size-6" />
               </div>
+            </div>
 
-              {/* Solicitações de mentoria geral pendentes */}
-              <h2 className="text-[#111418] text-[22px] font-bold px-4 pb-3 pt-6">
-                Solicitações de Mentoria
-              </h2>
-              <div id="solicitacoesMentoria" className="px-4 py-2">
-                {loading ? (
-                  <p className="text-gray-500">Carregando solicitações...</p>
-                ) : pendentesMentoria.length === 0 ? (
-                  <p className="text-gray-500 text-sm">Nenhuma solicitação de mentoria pendente no momento.</p>
-                ) : (
-                  pendentesMentoria.map((m) => (
-                    <div
-                      key={m.id}
-                      className="border rounded-xl p-4 mb-3 flex flex-col sm:flex-row justify-between sm:items-center bg-white shadow-sm gap-3 hover:shadow-md transition"
-                    >
-                      <div>
-                        <strong className="text-base text-gray-900">{m.studentName || 'Aluno'}</strong>
-                        <p className="text-xs text-gray-500 mt-0.5">Solicitou início de mentoria com você</p>
-                      </div>
-                      <div className="flex gap-2 self-end sm:self-center">
-                        <button
-                          onClick={() => handleCancelarMentoria(m.id)}
-                          disabled={cancellingId === m.id || acceptingId === m.id}
-                          className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer disabled:opacity-50"
-                        >
-                          {cancellingId === m.id ? 'Cancelando...' : 'Recusar'}
-                        </button>
-                        <button
-                          onClick={() => handleAceitarMentoria(m.id)}
-                          disabled={acceptingId === m.id || cancellingId === m.id}
-                          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg transition cursor-pointer font-semibold text-xs shadow-sm disabled:opacity-50"
-                        >
-                          {acceptingId === m.id ? 'Aceitando...' : 'Aceitar Mentoria'}
-                        </button>
-                      </div>
-                    </div>
-                  ))
-                )}
+            <div className="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-xs flex items-center justify-between">
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
+                  Alunos
+                </p>
+                <p className="text-3xl font-black text-gray-900 tracking-tight mb-0">
+                  {totalAlunos}
+                </p>
               </div>
-
-              {/* Mentorias em andamento */}
-              {aceitasMentoria.length > 0 && (
-                <>
-                  <h2 className="text-[#111418] text-[22px] font-bold px-4 pb-3 pt-5">Mentorias em Andamento</h2>
-                  <div className="px-4 py-2">
-                    {aceitasMentoria.map((m) => (
-                      <div
-                        key={m.id}
-                        className="border rounded-xl p-4 mb-3 shadow-sm bg-white flex items-center justify-between hover:shadow-md transition"
-                      >
-                        <div>
-                          <h3 className="font-semibold text-base text-gray-900">{m.studentName || 'Aluno'}</h3>
-                          <span className="text-emerald-600 text-xs font-semibold flex items-center gap-1 mt-0.5">
-                            <i className="fa-solid fa-circle-check text-[10px]"></i> Mentoria Ativa
-                          </span>
-                        </div>
-                        <button
-                          onClick={() => handleCancelarMentoria(m.id)}
-                          disabled={cancellingId === m.id}
-                          className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3 py-1.5 rounded-lg text-xs font-medium transition cursor-pointer disabled:opacity-50"
-                        >
-                          {cancellingId === m.id ? 'Cancelando...' : 'Encerrar Mentoria'}
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </>
-              )}
-
-              {/* Comunicação */}
-              <h2 className="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
-                Comunicação
-              </h2>
-              <div className="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2">
-                <div
-                  className="text-[#111418] flex items-center justify-center rounded-lg bg-[#f0f2f4] shrink-0 size-12"
-                  data-icon="ChatCircleDots"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                    <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z"></path>
-                  </svg>
-                </div>
-                <div className="flex flex-col justify-center">
-                  <p className="text-[#111418] text-base font-medium leading-normal line-clamp-1">Mensagens</p>
-                  <p className="text-[#637588] text-sm font-normal leading-normal line-clamp-2">Envie uma mensagem para um Aluno</p>
-                </div>
+              <div className="size-12 rounded-xl bg-[#5F688F]/10 text-[#5F688F] flex items-center justify-center shrink-0">
+                <Users className="size-6" />
               </div>
-
-              <Link to="/videocall" className="no-underline text-inherit" style={{ textDecoration: 'none', color: 'inherit' }}>
-                <div className="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 cursor-pointer hover:bg-[#f9fafb] rounded-lg transition">
-                  <div className="text-[#111418] flex items-center justify-center rounded-lg bg-[#f0f2f4] shrink-0 size-12" data-icon="Video">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                      <path d="M164.44,105.34l-48-32A8,8,0,0,0,104,80v64a8,8,0,0,0,12.44,6.66l48-32a8,8,0,0,0,0-13.32ZM120,129.05V95l25.58,17ZM216,40H40A16,16,0,0,0,24,56V168a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,128H40V56H216V168Zm16,40a8,8,0,0,1-8,8H32a8,8,0,0,1,0-16H224A8,8,0,0,1,232,208Z"></path>
-                    </svg>
-                  </div>
-                  <div className="flex flex-col justify-center">
-                    <p className="text-[#111418] text-base font-medium leading-normal line-clamp-1">Videochamada</p>
-                    <p className="text-[#637588] text-sm font-normal leading-normal line-clamp-2">Inicie uma videochamada com seu Aluno</p>
-                  </div>
-                </div>
-              </Link>
             </div>
           </div>
 
-          <Footer />
-        </div>
+          {/* Pending Schedule Approvals Spotlight */}
+          {pendingSchedules.length > 0 && (
+            <section className="bg-amber-50/70 border-2 border-amber-300 rounded-2xl p-5 sm:p-6 shadow-xs space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="size-10 rounded-xl bg-amber-500 text-white flex items-center justify-center shadow-xs shrink-0">
+                    <Bell className="size-5" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-bold text-gray-900 leading-tight mb-0.5">
+                      Solicitações de Aula Aguardando Sua Aprovação
+                    </h2>
+                    <p className="text-xs text-gray-600 mb-0">
+                      Alunos solicitaram horários para mentoria. Aprove ou recuse cada proposta abaixo.
+                    </p>
+                  </div>
+                </div>
+                <span className="self-start sm:self-center text-xs font-bold px-3 py-1 rounded-full bg-amber-200/80 text-amber-900 shrink-0">
+                  {pendingSchedules.length} {pendingSchedules.length === 1 ? 'pendente' : 'pendentes'}
+                </span>
+              </div>
+
+              <div className="space-y-3">
+                {pendingSchedules.map((schedule) => {
+                  const matchedMentorship = mentorias.find((m) => m.id === schedule.mentorshipId);
+                  const studentName = matchedMentorship?.studentName || `Aluno (Mentoria #${schedule.mentorshipId})`;
+                  const disciplina = matchedMentorship?.disciplina || 'Mentoria Geral';
+                  const formatCfg = getFormatConfig(schedule.format);
+                  const FormatIcon = schedule.format === 'Online' ? Video : MapPin;
+                  const durationMinutes = calculateDurationMinutes(schedule.startAt, schedule.endAt);
+                  const isProcessing = processingScheduleId === schedule.id;
+
+                  return (
+                    <div
+                      key={schedule.id}
+                      className="bg-white border border-amber-200/90 rounded-2xl p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                    >
+                      <div className="flex items-start sm:items-center gap-3.5 min-w-0">
+                        <div className="size-12 rounded-2xl bg-amber-100 text-amber-800 font-bold text-sm flex items-center justify-center shrink-0 uppercase">
+                          {studentName.charAt(0)}
+                        </div>
+                        <div className="min-w-0">
+                          <div className="flex flex-wrap items-center gap-2 mb-1">
+                            <span className="font-bold text-base text-gray-900 truncate">{studentName}</span>
+                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium border ${formatCfg.badgeClass}`}>
+                              <FormatIcon className="size-3" />
+                              {formatCfg.label}
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-500 font-medium mb-2">{disciplina}</p>
+                          <div className="flex flex-wrap items-center gap-3 text-xs text-gray-700 font-medium">
+                            <span className="inline-flex items-center gap-1.5 bg-slate-50 px-2.5 py-1 rounded-lg border border-gray-200">
+                              <Calendar className="size-3.5 text-amber-600" />
+                              {formatFullDate(schedule.startAt)}
+                            </span>
+                            <span className="inline-flex items-center gap-1.5 bg-slate-50 px-2.5 py-1 rounded-lg border border-gray-200">
+                              <Clock className="size-3.5 text-amber-600" />
+                              {formatTimeRange(schedule.startAt, schedule.endAt)}
+                            </span>
+                            <span className="text-gray-400 font-normal">({formatDuration(durationMinutes)})</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
+                        <button
+                          type="button"
+                          onClick={() => handleRejeitarAula(schedule.id)}
+                          disabled={isProcessing}
+                          className="inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3.5 py-2 rounded-xl text-xs font-semibold transition cursor-pointer disabled:opacity-50"
+                        >
+                          <X className="size-3.5" />
+                          <span>Recusar</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleAprovarAula(schedule.id)}
+                          disabled={isProcessing}
+                          className="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-xs transition cursor-pointer border-0 disabled:opacity-50"
+                        >
+                          {isProcessing ? (
+                            <>
+                              <Loader2 className="size-3.5 animate-spin" />
+                              <span>Processando...</span>
+                            </>
+                          ) : (
+                            <>
+                              <Check className="size-3.5" />
+                              <span>Aprovar Horário</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          )}
+
+          {/* Confirmed Sessions Section */}
+          <section className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-bold text-gray-900 tracking-tight mb-0">
+                Próximas sessões confirmadas
+              </h2>
+              {approvedSchedules.length > 0 && (
+                <span className="text-xs font-semibold px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  {approvedSchedules.length} {approvedSchedules.length === 1 ? 'aula confirmada' : 'aulas confirmadas'}
+                </span>
+              )}
+            </div>
+
+            {loadingSchedules ? (
+              <div className="space-y-3">
+                {[...Array(2)].map((_, i) => (
+                  <div key={i} className="bg-white rounded-2xl border border-gray-100 p-5 shadow-xs animate-pulse flex items-center gap-4">
+                    <div className="size-12 rounded-2xl bg-gray-200 shrink-0" />
+                    <div className="flex-1 space-y-2">
+                      <div className="h-4 bg-gray-200 rounded w-1/3" />
+                      <div className="h-3 bg-gray-100 rounded w-1/2" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : approvedSchedules.length === 0 ? (
+              <div className="border-2 border-dashed border-gray-200 rounded-2xl p-8 text-center bg-white flex flex-col items-center justify-center gap-2">
+                <div className="size-12 rounded-2xl bg-slate-100 text-gray-500 flex items-center justify-center mb-1">
+                  <Calendar className="size-6" />
+                </div>
+                <h3 className="font-bold text-gray-900 text-base mb-0">
+                  Nenhuma aula agendada confirmada
+                </h3>
+                <p className="text-gray-500 text-sm max-w-md mb-0">
+                  Quando seus alunos solicitarem agendamentos e você os aprovar, as próximas sessões aparecerão aqui.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {approvedSchedules.map((schedule) => {
+                  const matchedMentorship = mentorias.find((m) => m.id === schedule.mentorshipId);
+                  const studentName = matchedMentorship?.studentName || `Aluno (Mentoria #${schedule.mentorshipId})`;
+                  const disciplina = matchedMentorship?.disciplina || 'Mentoria Geral';
+                  const statusCfg = getStatusConfig(schedule.status);
+                  const formatCfg = getFormatConfig(schedule.format);
+                  const FormatIcon = schedule.format === 'Online' ? Video : MapPin;
+                  const durationMinutes = calculateDurationMinutes(schedule.startAt, schedule.endAt);
+                  const isProcessing = processingScheduleId === schedule.id;
+
+                  return (
+                    <div
+                      key={schedule.id}
+                      className="bg-white border border-gray-200/80 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md hover:border-[#5F688F]/30 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                    >
+                      <div className="flex items-start sm:items-center gap-4 min-w-0">
+                        <div className="size-12 rounded-2xl bg-[#5F688F]/10 text-[#5F688F] font-bold text-base flex items-center justify-center shrink-0 uppercase">
+                          {studentName.charAt(0)}
+                        </div>
+                        <div className="min-w-0">
+                          <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold border ${statusCfg.badgeClass}`}>
+                              <span className={`size-1.5 rounded-full ${statusCfg.dotClass}`} />
+                              {statusCfg.label}
+                            </span>
+                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium border ${formatCfg.badgeClass}`}>
+                              <FormatIcon className="size-3" />
+                              {formatCfg.label}
+                            </span>
+                          </div>
+
+                          <h3 className="font-bold text-base text-gray-900 truncate mb-0.5">
+                            {studentName}
+                          </h3>
+                          <p className="text-xs text-gray-500 font-medium mb-2">{disciplina}</p>
+
+                          <div className="flex flex-wrap items-center gap-3 text-xs text-gray-600 font-medium">
+                            <span className="inline-flex items-center gap-1.5 bg-slate-50 px-2.5 py-1 rounded-lg border border-gray-200/80">
+                              <Calendar className="size-3.5 text-[#5F688F]" />
+                              {formatFullDate(schedule.startAt)}
+                            </span>
+                            <span className="inline-flex items-center gap-1.5 bg-slate-50 px-2.5 py-1 rounded-lg border border-gray-200/80">
+                              <Clock className="size-3.5 text-[#5F688F]" />
+                              {formatTimeRange(schedule.startAt, schedule.endAt)}
+                            </span>
+                            <span className="text-gray-400">({formatDuration(durationMinutes)})</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-wrap items-center gap-2 self-end sm:self-center shrink-0">
+                        {schedule.format === 'Online' && (
+                          <Link
+                            to="/videocall"
+                            className="inline-flex items-center gap-1.5 bg-[#5F688F] hover:bg-[#4d5577] text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-xs transition text-decoration-none"
+                          >
+                            <Video className="size-3.5" />
+                            <span>Videochamada</span>
+                          </Link>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => handleCancelarAula(schedule.id)}
+                          disabled={isProcessing}
+                          className="inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3.5 py-2 rounded-xl text-xs font-semibold transition cursor-pointer disabled:opacity-50"
+                        >
+                          <Ban className="size-3.5" />
+                          <span>{isProcessing ? 'Cancelando...' : 'Cancelar'}</span>
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </section>
+
+          {/* Pending Mentorship Requests */}
+          <section className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-bold text-gray-900 tracking-tight mb-0">
+                Solicitações de Mentoria
+              </h2>
+              {pendentesMentoria.length > 0 && (
+                <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#5F688F]/10 text-[#5F688F] border border-[#5F688F]/20">
+                  {pendentesMentoria.length} {pendentesMentoria.length === 1 ? 'solicitação' : 'solicitações'}
+                </span>
+              )}
+            </div>
+
+            <div id="solicitacoesMentoria" className="space-y-3">
+              {loading ? (
+                <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-xs animate-pulse flex items-center gap-4">
+                  <div className="size-12 rounded-2xl bg-gray-200 shrink-0" />
+                  <div className="flex-1 space-y-2">
+                    <div className="h-4 bg-gray-200 rounded w-1/3" />
+                    <div className="h-3 bg-gray-100 rounded w-1/4" />
+                  </div>
+                </div>
+              ) : pendentesMentoria.length === 0 ? (
+                <div className="border-2 border-dashed border-gray-200 rounded-2xl p-6 text-center bg-white">
+                  <p className="text-gray-500 text-sm mb-0">
+                    Nenhuma solicitação de mentoria pendente no momento.
+                  </p>
+                </div>
+              ) : (
+                pendentesMentoria.map((m) => (
+                  <div
+                    key={m.id}
+                    className="bg-white border border-gray-200/80 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md hover:border-[#5F688F]/30 transition flex flex-col sm:flex-row justify-between sm:items-center gap-4"
+                  >
+                    <div className="flex items-center gap-3.5 min-w-0">
+                      <div className="size-12 rounded-2xl bg-[#5F688F]/10 text-[#5F688F] font-bold text-base flex items-center justify-center shrink-0 uppercase">
+                        {(m.studentName || 'A').charAt(0)}
+                      </div>
+                      <div className="min-w-0">
+                        <strong className="block text-base text-gray-900 truncate">
+                          {m.studentName || 'Aluno'}
+                        </strong>
+                        <p className="text-xs text-gray-500 mb-0">
+                          Solicitou início de mentoria com você
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => handleCancelarMentoria(m.id)}
+                        disabled={cancellingId === m.id || acceptingId === m.id}
+                        className="inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3.5 py-2 rounded-xl text-xs font-semibold transition cursor-pointer disabled:opacity-50"
+                      >
+                        <X className="size-3.5" />
+                        <span>{cancellingId === m.id ? 'Cancelando...' : 'Recusar'}</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleAceitarMentoria(m.id)}
+                        disabled={acceptingId === m.id || cancellingId === m.id}
+                        className="inline-flex items-center gap-1.5 bg-[#5F688F] hover:bg-[#4d5577] text-white px-4 py-2 rounded-xl transition cursor-pointer font-semibold text-xs shadow-xs border-0 disabled:opacity-50"
+                      >
+                        {acceptingId === m.id ? (
+                          <>
+                            <Loader2 className="size-3.5 animate-spin" />
+                            <span>Aceitando...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Check className="size-3.5" />
+                            <span>Aceitar Mentoria</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </section>
+
+          {/* Active Mentorships */}
+          {aceitasMentoria.length > 0 && (
+            <section className="space-y-4">
+              <h2 className="text-xl font-bold text-gray-900 tracking-tight mb-0">
+                Mentorias em Andamento
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {aceitasMentoria.map((m) => (
+                  <div
+                    key={m.id}
+                    className="bg-white border border-gray-200/80 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md hover:border-[#5F688F]/30 transition flex items-center justify-between gap-3"
+                  >
+                    <div className="flex items-center gap-3.5 min-w-0">
+                      <div className="size-11 rounded-2xl bg-emerald-50 text-emerald-700 font-bold text-sm flex items-center justify-center shrink-0 uppercase">
+                        {(m.studentName || 'A').charAt(0)}
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="font-bold text-base text-gray-900 truncate mb-0.5">
+                          {m.studentName || 'Aluno'}
+                        </h3>
+                        <span className="text-emerald-600 text-xs font-semibold inline-flex items-center gap-1">
+                          <CheckCircle2 className="size-3.5" />
+                          Mentoria Ativa
+                        </span>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => handleCancelarMentoria(m.id)}
+                      disabled={cancellingId === m.id}
+                      className="inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3 py-2 rounded-xl text-xs font-semibold transition cursor-pointer disabled:opacity-50 shrink-0"
+                    >
+                      <Ban className="size-3.5" />
+                      <span>{cancellingId === m.id ? 'Cancelando...' : 'Encerrar'}</span>
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Communication Section */}
+          <section className="space-y-4">
+            <h2 className="text-xl font-bold text-gray-900 tracking-tight mb-0">
+              Comunicação
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Link
+                to="/videocall"
+                className="group bg-white border border-gray-200/80 hover:border-[#5F688F]/40 rounded-2xl p-5 shadow-xs hover:shadow-md transition flex items-center justify-between gap-4 text-decoration-none"
+              >
+                <div className="flex items-center gap-4 min-w-0">
+                  <div className="size-12 rounded-xl bg-[#5F688F]/10 text-[#5F688F] flex items-center justify-center shrink-0">
+                    <Video className="size-6" />
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="text-base font-bold text-gray-900 mb-0.5">Videochamada</h3>
+                    <p className="text-xs text-gray-500 mb-0 line-clamp-2">
+                      Inicie ou entre em uma videochamada com seu aluno
+                    </p>
+                  </div>
+                </div>
+                <ArrowRight className="size-4 text-gray-400 group-hover:text-[#5F688F] group-hover:translate-x-1 transition shrink-0" />
+              </Link>
+
+              <div className="bg-white border border-gray-200/80 rounded-2xl p-5 shadow-xs flex items-center justify-between gap-4 opacity-85">
+                <div className="flex items-center gap-4 min-w-0">
+                  <div className="size-12 rounded-xl bg-slate-100 text-gray-500 flex items-center justify-center shrink-0">
+                    <MessageSquare className="size-6" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <h3 className="text-base font-bold text-gray-900 mb-0">Mensagens</h3>
+                      <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 text-gray-500 border border-gray-200">
+                        Em breve
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-500 mb-0 line-clamp-2">
+                      Envie mensagens diretas aos seus alunos pela plataforma
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+
+        <Footer />
       </div>
     </AuthGuard>
   );
