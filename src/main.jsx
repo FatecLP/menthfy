@@ -16,6 +16,7 @@ import './styles/pages/catalog.css';
 import './styles/pages/contato.css';
 import './styles/pages/dashboard.css';
 import './styles/pages/video-call.css';
+import './styles/pages/home.css';
 
 import App from './App';
 
