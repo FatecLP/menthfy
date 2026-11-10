@@ -16,7 +16,7 @@ body {
     flex-direction: column;
 }
 
-header {
+header:not(.menthfy-header):not(.menthfy-home-header) {
     position: relative !important;
     width: 100%;
 }
