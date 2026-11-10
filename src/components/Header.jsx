@@ -1,16 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, X, Users, LogOut, ChevronDown } from 'lucide-react';
 import { getStoredUser, clearStoredUser, getDashboardRoute } from '../utils/auth';
 
-export default function Header({ isHome = false }) {
+/**
+ * Modern navigation header for Menthfy.
+ * Responsive, brand-consistent, with authentication detection and mobile drawer.
+ */
+export default function Header() {
   const [user, setUser] = useState(getStoredUser());
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const menuRef = useRef(null);
 
   useEffect(() => {
     setUser(getStoredUser());
+    setMobileDrawerOpen(false);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -30,97 +37,193 @@ export default function Header({ isHome = false }) {
     navigate('/');
   }
 
-  const isLoginPage = location.pathname === '/login';
-  const isCadastroPage = location.pathname === '/cadastro';
+  const isCurrent = (path) => location.pathname === path;
 
   return (
-    <header className={isHome ? 'home-header' : ''}>
-      <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-        <h1>menthfy</h1>
-      </Link>
-      <div className="header-1">
-        <ul>
-          <li id="li1">
-            <Link to="/">Home</Link>
-          </li>
-          <li id="li2">
-            <Link to="/catalogo">Catálogo</Link>
-          </li>
-          <li id="li3">
-            <Link to="/contato">Contato</Link>
-          </li>
-        </ul>
+    <header className="menthfy-header bg-[#5F688F] text-white border-b border-white/15 shadow-xs sticky top-0 z-50 transition-all">
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+        {/* Logo */}
+        <div className="md:flex-1 flex items-center justify-start">
+          <Link to="/" className="flex items-center gap-2 group text-decoration-none shrink-0">
+            <span className="font-['Baumans'] text-3xl font-bold tracking-tight text-white group-hover:text-white/90 transition-colors">
+              menthfy
+            </span>
+          </Link>
+        </div>
 
-        <div ref={menuRef}>
+        {/* Desktop Navigation Links */}
+        <nav className="hidden md:flex items-center justify-center gap-6 lg:gap-8 text-[15px] font-medium shrink-0">
+          <Link
+            to="/"
+            className={`nav-link-item relative py-1 transition-colors text-decoration-none ${
+              isCurrent('/') ? 'text-white font-bold active after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-white' : 'text-white/80 hover:text-white'
+            }`}
+          >
+            Início
+          </Link>
+          <Link
+            to="/catalogo"
+            className={`nav-link-item relative py-1 transition-colors text-decoration-none ${
+              isCurrent('/catalogo') ? 'text-white font-bold active after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-white' : 'text-white/80 hover:text-white'
+            }`}
+          >
+            Catálogo
+          </Link>
+          <Link
+            to="/contato"
+            className={`nav-link-item relative py-1 transition-colors text-decoration-none ${
+              isCurrent('/contato') ? 'text-white font-bold active after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-white' : 'text-white/80 hover:text-white'
+            }`}
+          >
+            Contato
+          </Link>
+        </nav>
+
+        {/* Auth / Profile Actions */}
+        <div className="hidden md:flex md:flex-1 items-center justify-end gap-3">
           {user ? (
-            <div
-              className="user-profile"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'flex-end',
-                gap: '12px',
-                position: 'relative',
-              }}
-            >
+            <div ref={menuRef} className="relative flex items-center gap-3">
               <Link
                 to={getDashboardRoute(user.tipoUsuario)}
-                className="dashboard-link-btn header-action-btn header-action-btn-primary"
+                className="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white font-semibold px-4 py-2 rounded-xl text-sm transition border border-white/20 text-decoration-none"
               >
-                Dashboard
+                <Users className="size-4" />
+                <span>Dashboard</span>
               </Link>
-              <div
-                className="user-right"
-                style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setMenuOpen(!menuOpen);
-                }}
+              <button
+                type="button"
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-white/25 hover:border-white/40 bg-white/10 text-white text-sm font-medium transition cursor-pointer"
               >
-                <div id="user-menu-trigger" className="user-avatar" title="Abrir menu de usuário">
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="20" cy="20" r="20" fill="#E5E7EB" />
-                    <path
-                      d="M20 20C23.3137 20 26 17.3137 26 14C26 10.6863 23.3137 8 20 8C16.6863 8 14 10.6863 14 14C14 17.3137 16.6863 20 20 20Z"
-                      fill="#9CA3AF"
-                    />
-                    <path
-                      d="M20 22C14.4771 22 10 26.4771 10 32V34C10 35.1046 10.8954 36 12 36H28C29.1046 36 30 35.1046 30 34V32C30 26.4771 25.5229 22 20 22Z"
-                      fill="#9CA3AF"
-                    />
-                  </svg>
+                <div className="size-7 rounded-lg bg-white text-[#5F688F] flex items-center justify-center font-bold text-xs uppercase">
+                  {user.nome?.charAt(0) || 'U'}
                 </div>
-                <h2 id="user-menu-name" style={{ margin: 0, color: '#fff', fontSize: '18px', fontWeight: 500 }}>
-                  {user.nome}
-                </h2>
-              </div>
+                <span className="max-w-[120px] truncate text-white">{user.nome?.split(' ')[0]}</span>
+                <ChevronDown className="size-4 text-white/70" />
+              </button>
 
-              <div className={`user-menu ${menuOpen ? 'user-menu-visible' : 'user-menu-hidden'}`} id="user-menu">
-                <ul>
-                  <li>
-                    <button id="logout-btn" className="menu-action-btn" type="button" onClick={handleLogout}>
-                      Logout
-                    </button>
-                  </li>
-                </ul>
-              </div>
+              {menuOpen && (
+                <div className="header-dropdown absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-1.5 z-50">
+                  <div className="px-3.5 py-2 border-b border-gray-100 text-xs text-gray-500">
+                    Conectado como <strong className="text-gray-900 block truncate">{user.nome}</strong>
+                  </div>
+                  <Link
+                    to={getDashboardRoute(user.tipoUsuario)}
+                    onClick={() => setMenuOpen(false)}
+                    className="dropdown-item block px-3.5 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#5F688F] text-decoration-none font-medium"
+                  >
+                    Meu Painel
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="w-full text-left px-3.5 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 font-medium bg-transparent border-0 cursor-pointer"
+                  >
+                    <LogOut className="size-3.5" />
+                    <span>Sair da conta</span>
+                  </button>
+                </div>
+              )}
             </div>
           ) : (
-            <div style={{ display: 'flex', gap: '8px', alignSelf: 'center', alignItems: 'center' }}>
-              {!isLoginPage && (
-                <Link to="/login" className="login-btn header-action-btn header-action-btn-primary">
-                  Login
-                </Link>
-              )}
-              {!isCadastroPage && (
-                <Link to="/cadastro" className="signup-btn header-action-btn header-action-btn-primary">
-                  Cadastro
-                </Link>
-              )}
+            <div className="flex items-center gap-2">
+              <Link
+                to="/login"
+                className="px-4 py-2 text-sm font-medium text-white/90 hover:text-white transition text-decoration-none"
+              >
+                Entrar
+              </Link>
+              <Link
+                to="/cadastro"
+                className="header-btn-register inline-flex items-center gap-1.5 bg-white text-[#5F688F] hover:bg-gray-100 px-4 py-2 rounded-xl text-sm font-semibold transition text-decoration-none shadow-xs"
+              >
+                Cadastrar Grátis
+              </Link>
             </div>
           )}
         </div>
+
+        {/* Mobile menu trigger */}
+        <button
+          type="button"
+          onClick={() => setMobileDrawerOpen(!mobileDrawerOpen)}
+          className="md:hidden p-2 rounded-lg text-white hover:bg-white/10 transition cursor-pointer bg-transparent border-0"
+          aria-label="Menu"
+        >
+          {mobileDrawerOpen ? <X className="size-6 text-white" /> : <Menu className="size-6 text-white" />}
+        </button>
       </div>
+
+      {/* Mobile Drawer */}
+      {mobileDrawerOpen && (
+        <div className="md:hidden bg-[#5F688F] border-t border-white/10 px-4 pt-3 pb-6 space-y-3 shadow-xl">
+          <Link
+            to="/"
+            onClick={() => setMobileDrawerOpen(false)}
+            className={`block px-3 py-2 rounded-md font-semibold text-decoration-none ${
+              isCurrent('/') ? 'text-white bg-white/20' : 'text-white/80 hover:bg-white/10'
+            }`}
+          >
+            Início
+          </Link>
+          <Link
+            to="/catalogo"
+            onClick={() => setMobileDrawerOpen(false)}
+            className={`block px-3 py-2 rounded-md font-semibold text-decoration-none ${
+              isCurrent('/catalogo') ? 'text-white bg-white/20' : 'text-white/80 hover:bg-white/10'
+            }`}
+          >
+            Catálogo
+          </Link>
+          <Link
+            to="/contato"
+            onClick={() => setMobileDrawerOpen(false)}
+            className={`block px-3 py-2 rounded-md font-semibold text-decoration-none ${
+              isCurrent('/contato') ? 'text-white bg-white/20' : 'text-white/80 hover:bg-white/10'
+            }`}
+          >
+            Contato
+          </Link>
+
+          <div className="pt-3 border-t border-white/10 flex flex-col gap-2">
+            {user ? (
+              <>
+                <Link
+                  to={getDashboardRoute(user.tipoUsuario)}
+                  onClick={() => setMobileDrawerOpen(false)}
+                  className="mobile-btn-register w-full text-center bg-white text-[#5F688F] py-2.5 rounded-xl font-semibold text-decoration-none"
+                >
+                  Dashboard ({user.nome?.split(' ')[0]})
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="w-full text-center text-rose-200 py-2 rounded-xl font-medium border border-rose-300/40 bg-transparent"
+                >
+                  Sair da conta
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  onClick={() => setMobileDrawerOpen(false)}
+                  className="w-full text-center border border-white/30 text-white py-2 rounded-xl font-semibold text-decoration-none hover:bg-white/10"
+                >
+                  Entrar
+                </Link>
+                <Link
+                  to="/cadastro"
+                  onClick={() => setMobileDrawerOpen(false)}
+                  className="mobile-btn-register w-full text-center bg-white text-[#5F688F] py-2.5 rounded-xl font-semibold text-decoration-none hover:bg-gray-100"
+                >
+                  Cadastrar Grátis
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </header>
   );
 }

@@ -1,6 +1,21 @@
 @import url(../global/colors.css);
 @import url(../global/fonts.css);
 
+/* Modern Footer Specificity Override */
+footer.menthfy-footer {
+    display: block !important;
+    min-height: auto !important;
+    background-color: #020617 !important;
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+    margin-top: auto !important;
+}
+
+footer.menthfy-footer a {
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
 footer {
     min-height: 72px;
     margin-top: 0;
