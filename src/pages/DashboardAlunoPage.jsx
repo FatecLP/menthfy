@@ -9,6 +9,7 @@ import {
   CalendarPlus,
   Clock,
   GraduationCap,
+  Loader2,
   MapPin,
   MessageSquare,
   Pencil,
@@ -18,6 +19,7 @@ import {
 import Swal from 'sweetalert2';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import LoadingSpinner from '../components/LoadingSpinner';
 import AuthGuard from '../components/AuthGuard';
 import ScheduleLessonModal from '../components/ScheduleLessonModal';
 import { getStoredUser } from '../utils/auth';
@@ -213,9 +215,13 @@ export default function DashboardAlunoPage() {
                 <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
                   Aulas Confirmadas
                 </p>
-                <p className="text-3xl font-black text-gray-900 tracking-tight mb-0">
-                  {sessoesAprovadas}
-                </p>
+                {loadingSchedules ? (
+                  <Loader2 className="size-6 animate-spin text-[#5F688F]/60 my-1" />
+                ) : (
+                  <p className="text-3xl font-black text-gray-900 tracking-tight mb-0">
+                    {sessoesAprovadas}
+                  </p>
+                )}
               </div>
               <div className="size-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
                 <CalendarCheck className="size-6" />
@@ -227,9 +233,13 @@ export default function DashboardAlunoPage() {
                 <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
                   Aguardando Confirmação
                 </p>
-                <p className="text-3xl font-black text-gray-900 tracking-tight mb-0">
-                  {sessoesPendentes}
-                </p>
+                {loadingSchedules ? (
+                  <Loader2 className="size-6 animate-spin text-[#5F688F]/60 my-1" />
+                ) : (
+                  <p className="text-3xl font-black text-gray-900 tracking-tight mb-0">
+                    {sessoesPendentes}
+                  </p>
+                )}
               </div>
               <div className="size-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
                 <Clock className="size-6" />
@@ -241,9 +251,13 @@ export default function DashboardAlunoPage() {
                 <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
                   Professores
                 </p>
-                <p className="text-3xl font-black text-gray-900 tracking-tight mb-0">
-                  {totalProfessores}
-                </p>
+                {loading ? (
+                  <Loader2 className="size-6 animate-spin text-[#5F688F]/60 my-1" />
+                ) : (
+                  <p className="text-3xl font-black text-gray-900 tracking-tight mb-0">
+                    {totalProfessores}
+                  </p>
+                )}
               </div>
               <div className="size-12 rounded-xl bg-[#5F688F]/10 text-[#5F688F] flex items-center justify-center shrink-0">
                 <GraduationCap className="size-6" />
@@ -257,11 +271,13 @@ export default function DashboardAlunoPage() {
               <h2 className="text-xl font-bold text-gray-900 tracking-tight mb-0">
                 Próximas sessões de aula
               </h2>
-              {schedules.length > 0 && (
+              {loadingSchedules ? (
+                <LoadingSpinner variant="inline" size="sm" label="Consultando agenda..." className="text-xs" />
+              ) : schedules.length > 0 ? (
                 <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#5F688F]/10 text-[#5F688F] border border-[#5F688F]/20">
                   {schedules.length} {schedules.length === 1 ? 'agendamento' : 'agendamentos'}
                 </span>
-              )}
+              ) : null}
             </div>
 
             {loadingSchedules ? (
@@ -375,7 +391,11 @@ export default function DashboardAlunoPage() {
                             disabled={cancellingScheduleId === schedule.id}
                             className="inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3.5 py-2 rounded-xl text-xs font-semibold transition cursor-pointer disabled:opacity-50"
                           >
-                            <Ban className="size-3.5" />
+                            {cancellingScheduleId === schedule.id ? (
+                              <Loader2 className="size-3.5 animate-spin" />
+                            ) : (
+                              <Ban className="size-3.5" />
+                            )}
                             <span>{cancellingScheduleId === schedule.id ? 'Cancelando...' : 'Cancelar'}</span>
                           </button>
                         )}
@@ -393,11 +413,13 @@ export default function DashboardAlunoPage() {
               <h2 className="text-xl font-bold text-gray-900 tracking-tight mb-0">
                 Minhas Mentorias
               </h2>
-              {mentorias.length > 0 && (
+              {loading ? (
+                <LoadingSpinner variant="inline" size="sm" label="Consultando mentorias..." className="text-xs" />
+              ) : mentorias.length > 0 ? (
                 <span className="text-xs font-semibold text-gray-500">
                   {mentorias.length} {mentorias.length === 1 ? 'mentoria' : 'mentorias'}
                 </span>
-              )}
+              ) : null}
             </div>
 
             <div id="minhasMentorias" className="space-y-3">
@@ -496,7 +518,11 @@ export default function DashboardAlunoPage() {
                             disabled={cancellingId === m.id}
                             className="inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3.5 py-2 rounded-xl text-xs font-semibold transition cursor-pointer disabled:opacity-50"
                           >
-                            <Ban className="size-3.5" />
+                            {cancellingId === m.id ? (
+                              <Loader2 className="size-3.5 animate-spin" />
+                            ) : (
+                              <Ban className="size-3.5" />
+                            )}
                             <span>{cancellingId === m.id ? 'Cancelando...' : 'Cancelar Mentoria'}</span>
                           </button>
                         )}

@@ -41,6 +41,17 @@ function sleep(ms) {
 }
 
 let activeColdStartModal = false;
+let activeNetworkRequests = 0;
+
+function notifyNetworkListeners() {
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(
+      new CustomEvent('menthfy:network-loading', {
+        detail: { count: activeNetworkRequests },
+      })
+    );
+  }
+}
 
 /**
  * Performs an HTTP request with retry attempts to tolerate container cold starts.
@@ -59,60 +70,68 @@ export async function customFetch(url, options = {}, config = {}) {
   let lastError = null;
   let lastResponse = null;
 
-  for (let attempt = 1; attempt <= maxRetries + 1; attempt++) {
-    try {
-      const response = await fetch(url, options);
+  activeNetworkRequests += 1;
+  notifyNetworkListeners();
 
-      // Status 429 (Rate Limit / Cold start) ou falhas transitórias 502/503/504
-      const isColdStart = [429, 502, 503, 504].includes(response.status);
+  try {
+    for (let attempt = 1; attempt <= maxRetries + 1; attempt++) {
+      try {
+        const response = await fetch(url, options);
 
-      if (!isColdStart || attempt > maxRetries) {
-        if (activeColdStartModal) {
-          Swal.close();
-          activeColdStartModal = false;
+        // Status 429 (Rate Limit / Cold start) ou falhas transitórias 502/503/504
+        const isColdStart = [429, 502, 503, 504].includes(response.status);
+
+        if (!isColdStart || attempt > maxRetries) {
+          if (activeColdStartModal) {
+            Swal.close();
+            activeColdStartModal = false;
+          }
+          return response;
         }
-        return response;
+
+        lastResponse = response;
+      } catch (error) {
+        lastError = error;
+        if (attempt > maxRetries) {
+          if (activeColdStartModal) {
+            Swal.close();
+            activeColdStartModal = false;
+          }
+          throw error;
+        }
       }
 
-      lastResponse = response;
-    } catch (error) {
-      lastError = error;
-      if (attempt > maxRetries) {
-        if (activeColdStartModal) {
-          Swal.close();
-          activeColdStartModal = false;
+      if (showFeedback) {
+        activeColdStartModal = true;
+        for (let sec = retryIntervalSec; sec > 0; sec--) {
+          Swal.fire({
+            title: 'Servidor Iniciando',
+            html: `O servidor de mentorias está iniciando (cold start gratuito). Por favor, aguarde alguns segundos...<br><br><span style="font-size: 14px; color: #666;">Tentativa ${attempt} de ${maxRetries} &bull; Próxima tentativa em <b>${sec}s</b></span>`,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showConfirmButton: false,
+            didOpen: () => {
+              Swal.showLoading();
+            },
+          });
+          await sleep(1000);
         }
-        throw error;
+      } else {
+        await sleep(retryIntervalSec * 1000);
       }
     }
 
-    if (showFeedback) {
-      activeColdStartModal = true;
-      for (let sec = retryIntervalSec; sec > 0; sec--) {
-        Swal.fire({
-          title: 'Servidor Iniciando',
-          html: `O servidor de mentorias está iniciando (cold start gratuito). Por favor, aguarde alguns segundos...<br><br><span style="font-size: 14px; color: #666;">Tentativa ${attempt} de ${maxRetries} &bull; Próxima tentativa em <b>${sec}s</b></span>`,
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-          showConfirmButton: false,
-          didOpen: () => {
-            Swal.showLoading();
-          },
-        });
-        await sleep(1000);
-      }
-    } else {
-      await sleep(retryIntervalSec * 1000);
+    if (activeColdStartModal) {
+      Swal.close();
+      activeColdStartModal = false;
     }
-  }
 
-  if (activeColdStartModal) {
-    Swal.close();
-    activeColdStartModal = false;
+    if (lastResponse) return lastResponse;
+    throw lastError || new Error('Serviço temporariamente indisponível.');
+  } finally {
+    activeNetworkRequests = Math.max(0, activeNetworkRequests - 1);
+    notifyNetworkListeners();
   }
-
-  if (lastResponse) return lastResponse;
-  throw lastError || new Error('Serviço temporariamente indisponível.');
 }
 
 /**

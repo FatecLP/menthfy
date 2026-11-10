@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { fetchProfessores } from '../services/mentorServices';
 
 const DISCIPLINAS = [
@@ -218,7 +219,7 @@ export default function CatalogoPage() {
             <div className="flex items-center gap-3">
               <span className="text-gray-600 font-medium">
                 {loading ? (
-                  'Buscando mentores...'
+                  <LoadingSpinner variant="inline" size="sm" label="Buscando mentores..." />
                 ) : (
                   <>
                     Mostrando <strong className="text-gray-900 font-bold">{professores.length}</strong> {professores.length === 1 ? 'mentor disponível' : 'mentores disponíveis'}
@@ -271,26 +272,36 @@ export default function CatalogoPage() {
 
         {/* Loading Skeleton State */}
         {loading && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="bg-white rounded-2xl border border-gray-100 p-6 shadow-xs animate-pulse space-y-4">
-                <div className="flex items-center gap-4">
-                  <div className="size-16 rounded-2xl bg-gray-200" />
-                  <div className="flex-1 space-y-2">
-                    <div className="h-4 bg-gray-200 rounded w-3/4" />
-                    <div className="h-3 bg-gray-100 rounded w-1/2" />
+          <div className="space-y-5 pt-2">
+            <div className="flex justify-center">
+              <LoadingSpinner
+                variant="inline"
+                size="sm"
+                label="Carregando catálogo de professores..."
+                className="bg-white px-4 py-2 rounded-full border border-gray-200/80 shadow-xs text-xs"
+              />
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="bg-white rounded-2xl border border-gray-100 p-6 shadow-xs animate-pulse space-y-4">
+                  <div className="flex items-center gap-4">
+                    <div className="size-16 rounded-2xl bg-gray-200" />
+                    <div className="flex-1 space-y-2">
+                      <div className="h-4 bg-gray-200 rounded w-3/4" />
+                      <div className="h-3 bg-gray-100 rounded w-1/2" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-3 bg-gray-100 rounded w-full" />
+                    <div className="h-3 bg-gray-100 rounded w-5/6" />
+                  </div>
+                  <div className="pt-4 border-t border-gray-100 flex justify-between">
+                    <div className="h-4 bg-gray-200 rounded w-1/3" />
+                    <div className="h-4 bg-gray-200 rounded w-1/4" />
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <div className="h-3 bg-gray-100 rounded w-full" />
-                  <div className="h-3 bg-gray-100 rounded w-5/6" />
-                </div>
-                <div className="pt-4 border-t border-gray-100 flex justify-between">
-                  <div className="h-4 bg-gray-200 rounded w-1/3" />
-                  <div className="h-4 bg-gray-200 rounded w-1/4" />
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         )}
 

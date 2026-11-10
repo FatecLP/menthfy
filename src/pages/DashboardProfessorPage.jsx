@@ -20,6 +20,7 @@ import {
 import Swal from 'sweetalert2';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import LoadingSpinner from '../components/LoadingSpinner';
 import AuthGuard from '../components/AuthGuard';
 import { getStoredUser } from '../utils/auth';
 import { cancelMentorship, acceptMentorship } from '../services/mentorshipServices';
@@ -296,9 +297,13 @@ export default function DashboardProfessorPage() {
                 <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
                   Aulas Confirmadas
                 </p>
-                <p className="text-3xl font-black text-gray-900 tracking-tight mb-0">
-                  {approvedSchedules.length}
-                </p>
+                {loadingSchedules ? (
+                  <Loader2 className="size-6 animate-spin text-[#5F688F]/60 my-1" />
+                ) : (
+                  <p className="text-3xl font-black text-gray-900 tracking-tight mb-0">
+                    {approvedSchedules.length}
+                  </p>
+                )}
               </div>
               <div className="size-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
                 <CalendarCheck className="size-6" />
@@ -310,9 +315,13 @@ export default function DashboardProfessorPage() {
                 <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
                   Solicitações de Aulas
                 </p>
-                <p className="text-3xl font-black text-gray-900 tracking-tight mb-0">
-                  {pendingSchedules.length}
-                </p>
+                {loadingSchedules ? (
+                  <Loader2 className="size-6 animate-spin text-[#5F688F]/60 my-1" />
+                ) : (
+                  <p className="text-3xl font-black text-gray-900 tracking-tight mb-0">
+                    {pendingSchedules.length}
+                  </p>
+                )}
               </div>
               <div className="size-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
                 <Bell className="size-6" />
@@ -324,9 +333,13 @@ export default function DashboardProfessorPage() {
                 <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
                   Alunos
                 </p>
-                <p className="text-3xl font-black text-gray-900 tracking-tight mb-0">
-                  {totalAlunos}
-                </p>
+                {loading ? (
+                  <Loader2 className="size-6 animate-spin text-[#5F688F]/60 my-1" />
+                ) : (
+                  <p className="text-3xl font-black text-gray-900 tracking-tight mb-0">
+                    {totalAlunos}
+                  </p>
+                )}
               </div>
               <div className="size-12 rounded-xl bg-[#5F688F]/10 text-[#5F688F] flex items-center justify-center shrink-0">
                 <Users className="size-6" />
@@ -440,11 +453,13 @@ export default function DashboardProfessorPage() {
               <h2 className="text-xl font-bold text-gray-900 tracking-tight mb-0">
                 Próximas sessões confirmadas
               </h2>
-              {approvedSchedules.length > 0 && (
+              {loadingSchedules ? (
+                <LoadingSpinner variant="inline" size="sm" label="Consultando sessões..." className="text-xs" />
+              ) : approvedSchedules.length > 0 ? (
                 <span className="text-xs font-semibold px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
                   {approvedSchedules.length} {approvedSchedules.length === 1 ? 'aula confirmada' : 'aulas confirmadas'}
                 </span>
-              )}
+              ) : null}
             </div>
 
             {loadingSchedules ? (
@@ -539,7 +554,11 @@ export default function DashboardProfessorPage() {
                           disabled={isProcessing}
                           className="inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3.5 py-2 rounded-xl text-xs font-semibold transition cursor-pointer disabled:opacity-50"
                         >
-                          <Ban className="size-3.5" />
+                          {isProcessing ? (
+                            <Loader2 className="size-3.5 animate-spin" />
+                          ) : (
+                            <Ban className="size-3.5" />
+                          )}
                           <span>{isProcessing ? 'Cancelando...' : 'Cancelar'}</span>
                         </button>
                       </div>
@@ -556,11 +575,13 @@ export default function DashboardProfessorPage() {
               <h2 className="text-xl font-bold text-gray-900 tracking-tight mb-0">
                 Solicitações de Mentoria
               </h2>
-              {pendentesMentoria.length > 0 && (
+              {loading ? (
+                <LoadingSpinner variant="inline" size="sm" label="Consultando solicitações..." className="text-xs" />
+              ) : pendentesMentoria.length > 0 ? (
                 <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#5F688F]/10 text-[#5F688F] border border-[#5F688F]/20">
                   {pendentesMentoria.length} {pendentesMentoria.length === 1 ? 'solicitação' : 'solicitações'}
                 </span>
-              )}
+              ) : null}
             </div>
 
             <div id="solicitacoesMentoria" className="space-y-3">
@@ -605,7 +626,11 @@ export default function DashboardProfessorPage() {
                         disabled={cancellingId === m.id || acceptingId === m.id}
                         className="inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3.5 py-2 rounded-xl text-xs font-semibold transition cursor-pointer disabled:opacity-50"
                       >
-                        <X className="size-3.5" />
+                        {cancellingId === m.id ? (
+                          <Loader2 className="size-3.5 animate-spin" />
+                        ) : (
+                          <X className="size-3.5" />
+                        )}
                         <span>{cancellingId === m.id ? 'Cancelando...' : 'Recusar'}</span>
                       </button>
                       <button
@@ -666,7 +691,11 @@ export default function DashboardProfessorPage() {
                       disabled={cancellingId === m.id}
                       className="inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3 py-2 rounded-xl text-xs font-semibold transition cursor-pointer disabled:opacity-50 shrink-0"
                     >
-                      <Ban className="size-3.5" />
+                      {cancellingId === m.id ? (
+                        <Loader2 className="size-3.5 animate-spin" />
+                      ) : (
+                        <Ban className="size-3.5" />
+                      )}
                       <span>{cancellingId === m.id ? 'Cancelando...' : 'Encerrar'}</span>
                     </button>
                   </div>

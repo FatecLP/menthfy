@@ -14,6 +14,7 @@ import {
 import Swal from 'sweetalert2';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { requestMentorship } from '../services/mentorshipServices';
 import { fetchProfessorById } from '../services/mentorServices';
 import { getStoredUser } from '../utils/auth';
@@ -147,23 +148,33 @@ export default function PerfilProfessorPage() {
       {/* Main Content */}
       <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
         {loading ? (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start animate-pulse">
-            <div className="lg:col-span-8 space-y-6">
-              <div className="bg-white rounded-2xl border border-gray-100 p-8 space-y-4">
-                <div className="h-5 bg-gray-200 rounded w-1/4" />
-                <div className="h-8 bg-gray-200 rounded w-1/2" />
-                <div className="h-4 bg-gray-100 rounded w-full" />
-                <div className="h-4 bg-gray-100 rounded w-5/6" />
-              </div>
-              <div className="bg-white rounded-2xl border border-gray-100 p-8 space-y-4">
-                <div className="h-6 bg-gray-200 rounded w-1/3" />
-                <div className="h-20 bg-gray-100 rounded-xl w-full" />
-              </div>
+          <div className="space-y-6">
+            <div className="flex justify-center">
+              <LoadingSpinner
+                variant="inline"
+                size="sm"
+                label="Carregando perfil do mentor..."
+                className="bg-white px-4 py-2 rounded-full border border-gray-200/80 shadow-xs text-xs"
+              />
             </div>
-            <div className="lg:col-span-4 bg-white rounded-2xl border border-gray-100 p-6 space-y-4">
-              <div className="size-24 rounded-2xl bg-gray-200 mx-auto" />
-              <div className="h-6 bg-gray-200 rounded w-1/2 mx-auto" />
-              <div className="h-11 bg-gray-200 rounded-xl w-full" />
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start animate-pulse">
+              <div className="lg:col-span-8 space-y-6">
+                <div className="bg-white rounded-2xl border border-gray-100 p-8 space-y-4">
+                  <div className="h-5 bg-gray-200 rounded w-1/4" />
+                  <div className="h-8 bg-gray-200 rounded w-1/2" />
+                  <div className="h-4 bg-gray-100 rounded w-full" />
+                  <div className="h-4 bg-gray-100 rounded w-5/6" />
+                </div>
+                <div className="bg-white rounded-2xl border border-gray-100 p-8 space-y-4">
+                  <div className="h-6 bg-gray-200 rounded w-1/3" />
+                  <div className="h-20 bg-gray-100 rounded-xl w-full" />
+                </div>
+              </div>
+              <div className="lg:col-span-4 bg-white rounded-2xl border border-gray-100 p-6 space-y-4">
+                <div className="size-24 rounded-2xl bg-gray-200 mx-auto" />
+                <div className="h-6 bg-gray-200 rounded w-1/2 mx-auto" />
+                <div className="h-11 bg-gray-200 rounded-xl w-full" />
+              </div>
             </div>
           </div>
         ) : professor ? (
